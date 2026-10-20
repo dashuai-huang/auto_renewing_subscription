@@ -1,0 +1,4796 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WPS 365 购买页与管理后台 - 连续包月 Demo</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+      background-color: #f5f6fa;
+      color: #1f2329;
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: #3b5ff6;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    a:hover {
+      opacity: 0.85;
+    }
+
+    /* ==================== 顶部演示控制台切换栏（改造点 3） ==================== */
+    .demo-console-bar {
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      height: 44px;
+      background: #1f2329;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    .demo-console-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: #c9cdd4;
+    }
+
+    .demo-console-badge {
+      background: #3b5ff6;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    .demo-console-tabs {
+      display: inline-flex;
+      background: #2f3540;
+      padding: 3px;
+      border-radius: 6px;
+      gap: 4px;
+    }
+
+    .demo-console-tab {
+      border: none;
+      background: transparent;
+      color: #c9cdd4;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .demo-console-tab:hover {
+      color: #ffffff;
+    }
+
+    .demo-console-tab.active {
+      background: #3b5ff6;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .demo-console-right {
+      font-size: 12px;
+      color: #8f959e;
+    }
+
+    /* ==================== 页面 1：额度购买页 ==================== */
+    #page-purchase {
+      max-width: 1180px;
+      margin: 24px auto 48px;
+      padding: 0 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .purchase-left {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .purchase-right {
+      width: 328px;
+      flex-shrink: 0;
+    }
+
+    .section-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+    }
+
+    .section-header-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1f2329;
+      line-height: 26px;
+    }
+
+    .section-header-desc {
+      font-size: 12px;
+      color: #8f959e;
+      margin-top: 4px;
+      margin-bottom: 16px;
+    }
+
+    /* AI 额度包卡片网格 */
+    .quota-cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .quota-card {
+      border: 1px solid #e5e6eb;
+      border-radius: 8px;
+      padding: 18px 20px;
+      background: #fafafa;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .quota-card.active {
+      border: 1.5px solid #3b5ff6;
+      background: linear-gradient(180deg, #f0f5ff 0%, #f7f9ff 100%);
+    }
+
+    .quota-card-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1f2329;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge-recommend {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #3b5ff6;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 1px 6px;
+      border-radius: 4px;
+      line-height: 16px;
+    }
+
+    .quota-card-sub {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1f2329;
+      margin-top: 6px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed #dcdfe6;
+    }
+
+    .quota-feature-list {
+      list-style: none;
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 12px;
+      color: #646a73;
+    }
+
+    .quota-feature-list li::before {
+      content: "· ";
+      font-weight: bold;
+      color: #8f959e;
+    }
+
+    /* 购买参数灰底框 */
+    .controls-box {
+      margin-top: 16px;
+      background: #fafafa;
+      border: 1px solid #eceef2;
+      border-radius: 8px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .control-row {
+      display: flex;
+      align-items: center;
+      font-size: 13px;
+      color: #646a73;
+    }
+
+    .control-label {
+      width: 76px;
+      color: #646a73;
+      flex-shrink: 0;
+    }
+
+    /* 步进器 */
+    .stepper {
+      display: inline-flex;
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid #dcdfe6;
+      border-radius: 4px;
+      height: 32px;
+      overflow: hidden;
+    }
+
+    .stepper-btn {
+      width: 30px;
+      height: 30px;
+      border: none;
+      background: #ffffff;
+      color: #646a73;
+      font-size: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+
+    .stepper-btn:hover {
+      background: #f5f6fa;
+    }
+
+    .stepper-input {
+      width: 42px;
+      height: 30px;
+      border: none;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: #1f2329;
+      outline: none;
+      background: #ffffff;
+    }
+
+    .quota-expand-hint {
+      margin-left: 20px;
+      font-size: 12px;
+      color: #646a73;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .quota-pill-blue {
+      background: #3b5ff6;
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 12px;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    .quota-validity-text {
+      color: #8f959e;
+    }
+
+    /* 购买时长选项按钮 */
+    .duration-options {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .duration-btn {
+      height: 34px;
+      padding: 0 14px;
+      border: 1px solid #dcdfe6;
+      border-radius: 6px;
+      background: #ffffff;
+      font-size: 13px;
+      color: #1f2329;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+
+    .duration-btn.active {
+      border: 1.5px solid #3b5ff6;
+      background: #f0f5ff;
+      color: #3b5ff6;
+      font-weight: 500;
+    }
+
+    /* 连续包月超过金额上限或未开启连续订阅时的置灰状态 + 悬停气泡提示 */
+    .duration-btn-wrap {
+      position: relative;
+      display: inline-flex;
+    }
+
+    .duration-btn.disabled {
+      border: 1px solid #e5e6eb;
+      background: #f2f3f5;
+      color: #c9cdd4;
+      cursor: not-allowed;
+    }
+
+    .duration-btn.disabled .duration-price {
+      color: #c9cdd4;
+    }
+
+    .duration-tooltip {
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(31, 35, 41, 0.94);
+      color: #ffffff;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.15s ease;
+      z-index: 50;
+    }
+
+    .duration-tooltip::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: rgba(31, 35, 41, 0.94);
+    }
+
+    .duration-btn-wrap.show-tooltip:hover .duration-tooltip,
+    .duration-btn-wrap.force-tooltip .duration-tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .duration-price {
+      color: #f04134;
+      font-weight: 500;
+    }
+
+    .discount-tag {
+      background: #f04134;
+      color: #ffffff;
+      font-size: 10px;
+      padding: 0 4px;
+      border-radius: 3px;
+      line-height: 16px;
+      font-weight: 500;
+      margin-left: 2px;
+    }
+
+    /* 底部下载链接行 */
+    .utility-links-row {
+      margin-top: 16px;
+      font-size: 12px;
+      color: #8f959e;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .utility-links-row a {
+      color: #3b5ff6;
+    }
+
+    /* 基础套餐区块 */
+    .package-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .package-header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #1f2329;
+      cursor: pointer;
+    }
+
+    .custom-checkbox {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      border: 1px solid #dcdfe6;
+      background: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .custom-checkbox.checked {
+      background: #3b5ff6;
+      border-color: #3b5ff6;
+    }
+
+    .custom-checkbox.checked::after {
+      content: "";
+      width: 8px;
+      height: 4px;
+      border-left: 1.8px solid #ffffff;
+      border-bottom: 1.8px solid #ffffff;
+      transform: rotate(-45deg);
+      margin-top: -1px;
+    }
+
+    .collapse-link {
+      font-size: 12px;
+      color: #3b5ff6;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    /* 套餐三列卡片与轮播箭头 */
+    .plans-carousel-wrap {
+      position: relative;
+    }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .plan-card {
+      border: 1px solid #e5e6eb;
+      border-radius: 8px;
+      padding: 18px 16px;
+      background: #fafafa;
+      cursor: pointer;
+      position: relative;
+      min-height: 224px;
+    }
+
+    .plan-card.active {
+      border: 1.5px solid #3b5ff6;
+      background: linear-gradient(180deg, #eef3ff 0%, #f8faff 100%);
+    }
+
+    .plan-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1f2329;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge-ai {
+      background: linear-gradient(90deg, #6b5cff 0%, #4e6ef2 100%);
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 1px 5px;
+      border-radius: 3px;
+      line-height: 14px;
+    }
+
+    .plan-price-row {
+      margin-top: 8px;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .plan-price-num {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1f2329;
+    }
+
+    .plan-price-unit {
+      font-size: 12px;
+      color: #8f959e;
+    }
+
+    .plan-detail-link {
+      font-size: 12px;
+      color: #3b5ff6;
+      margin-left: 4px;
+    }
+
+    .plan-tagline {
+      font-size: 12px;
+      color: #8f959e;
+      margin-top: 4px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed #dcdfe6;
+    }
+
+    .plan-features {
+      list-style: none;
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 12px;
+      color: #646a73;
+    }
+
+    .plan-features li {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .plan-features li::before {
+      content: "· ";
+      font-weight: bold;
+      color: #8f959e;
+    }
+
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 1px solid #e5e6eb;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #646a73;
+      font-size: 14px;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .carousel-arrow.left {
+      left: 10px;
+    }
+
+    .carousel-arrow.right {
+      right: 32px;
+    }
+
+    /* 套餐时长分段选择器 */
+    .year-segmented {
+      display: inline-flex;
+      border: 1px solid #dcdfe6;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .year-seg-btn {
+      width: 68px;
+      height: 32px;
+      border: none;
+      border-right: 1px solid #dcdfe6;
+      background: #ffffff;
+      font-size: 13px;
+      color: #1f2329;
+      cursor: pointer;
+    }
+
+    .year-seg-btn:last-child {
+      border-right: none;
+    }
+
+    .year-seg-btn.active {
+      background: #e8f0ff;
+      color: #3b5ff6;
+      font-weight: 600;
+    }
+
+    /* ==================== 右侧：订单详情 ==================== */
+    .order-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 24px 20px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+      position: relative;
+    }
+
+    .order-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1f2329;
+    }
+
+    .enterprise-info {
+      margin-top: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #f0f1f5;
+    }
+
+    .enterprise-name {
+      font-size: 13px;
+      color: #1f2329;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .refresh-icon {
+      color: #8f959e;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .enterprise-current-plan {
+      font-size: 12px;
+      color: #8f959e;
+      margin-top: 4px;
+    }
+
+    .order-items-section {
+      padding: 14px 0;
+      border-bottom: 1px solid #f0f1f5;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .order-item-group-label {
+      font-size: 12px;
+      color: #8f959e;
+      margin-bottom: 6px;
+    }
+
+    .order-item-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+      font-weight: 600;
+      color: #1f2329;
+    }
+
+    .order-item-sub {
+      font-size: 12px;
+      color: #8f959e;
+      margin-top: 2px;
+    }
+
+    /* 优惠区域上方增加自动续费说明 */
+    .auto-renew-order-tip {
+      margin-top: 12px;
+      font-size: 12px;
+      color: #8f959e;
+      line-height: 1.5;
+    }
+
+    .order-extra-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 14px;
+      font-size: 13px;
+      color: #646a73;
+    }
+
+    .vip-service-right {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #1f2329;
+      cursor: pointer;
+    }
+
+    .help-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1px solid #bbbfc4;
+      color: #8f959e;
+      font-size: 10px;
+    }
+
+    /* 购买咨询悬浮胶囊 */
+    .consult-wrap {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+      margin-bottom: 12px;
+    }
+
+    .consult-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #4165f4;
+      color: #ffffff;
+      padding: 6px 8px 6px 14px;
+      border-radius: 24px;
+      font-size: 12px;
+      box-shadow: 0 4px 10px rgba(65, 101, 244, 0.25);
+      cursor: pointer;
+    }
+
+    .consult-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    /* 总价区域 */
+    .total-price-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-top: 8px;
+      margin-bottom: 14px;
+    }
+
+    .total-price-val {
+      font-size: 28px;
+      font-weight: 700;
+      color: #f04134;
+      letter-spacing: -0.5px;
+    }
+
+    .total-price-val .yen {
+      font-size: 18px;
+      margin-right: 2px;
+    }
+
+    .price-detail-link {
+      font-size: 12px;
+      color: #3b5ff6;
+    }
+
+    /* 提交订单按钮 */
+    .submit-order-btn {
+      width: 100%;
+      height: 42px;
+      background: #305ef5;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 500;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .submit-order-btn:hover {
+      background: #244ee0;
+    }
+
+    /* “提交订单”按钮下方协议勾选项 */
+    .agreement-row {
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #646a73;
+      user-select: none;
+    }
+
+    /* ==================== 页面 2：支付订单页 ==================== */
+    #page-payment {
+      display: none;
+      min-height: calc(100vh - 44px);
+      background: #f5f6fa;
+      padding-bottom: 48px;
+      position: relative;
+    }
+
+    .pay-topbar {
+      background: #ffffff;
+      height: 52px;
+      border-bottom: 1px solid #eceef2;
+      display: flex;
+      align-items: center;
+    }
+
+    .pay-topbar-inner {
+      width: 100%;
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #1f2329;
+    }
+
+    .pay-logo-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #3b5ff6;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+
+    .pay-main-card {
+      max-width: 1040px;
+      margin: 16px auto 0;
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 24px 32px 40px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+    }
+
+    .pay-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #646a73;
+      margin-bottom: 14px;
+    }
+
+    .pay-meta-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pay-meta-right {
+      color: #8f959e;
+    }
+
+    /* 支付页订单表格 */
+    .pay-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid #f0f1f5;
+      font-size: 12px;
+    }
+
+    .pay-table th {
+      background: #f7f8fa;
+      color: #646a73;
+      font-weight: 600;
+      text-align: left;
+      padding: 12px 16px;
+      border-bottom: 1px solid #f0f1f5;
+    }
+
+    .pay-table td {
+      padding: 14px 16px;
+      color: #1f2329;
+      border-bottom: 1px solid #f0f1f5;
+    }
+
+    .pay-table-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #dcdfe6;
+    }
+
+    .pay-table-actions a {
+      color: #3b5ff6;
+    }
+
+    /* 支付渠道选项卡 */
+    .pay-channels {
+      margin-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .pay-channel-btn {
+      width: 148px;
+      height: 46px;
+      border: 1px solid #e5e6eb;
+      border-radius: 4px;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      position: relative;
+      font-size: 14px;
+      color: #1f2329;
+    }
+
+    .pay-channel-btn.active {
+      border: 1.5px solid #2b5aed;
+    }
+
+    .pay-channel-btn.active::after {
+      content: "✓";
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 16px;
+      height: 16px;
+      background: #2b5aed;
+      color: #ffffff;
+      font-size: 10px;
+      line-height: 18px;
+      text-align: center;
+      clip-path: polygon(100% 0, 0 100%, 100% 100%);
+      padding-left: 5px;
+      padding-top: 2px;
+    }
+
+    .channel-icon-wx {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #07c160;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .channel-icon-ali {
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      background: #1677ff;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .channel-icon-bank {
+      width: 22px;
+      height: 16px;
+      border-radius: 2px;
+      background: #ff6a00;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    /* 支付金额与倒计时 */
+    .pay-amount-area {
+      margin-top: 26px;
+      text-align: center;
+    }
+
+    .pay-amount-line {
+      font-size: 13px;
+      color: #1f2329;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .pay-amount-number {
+      font-size: 24px;
+      font-weight: 700;
+      color: #d4572a;
+    }
+
+    .pay-countdown-line {
+      margin-top: 6px;
+      font-size: 12px;
+      color: #8f959e;
+    }
+
+    .pay-countdown-red {
+      color: #f04134;
+    }
+
+    /* 二维码与旁边自动续费说明区域 */
+    .pay-qr-section {
+      margin-top: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+    }
+
+    .qr-box-wrapper {
+      width: 184px;
+      flex-shrink: 0;
+    }
+
+    .qr-code-frame {
+      width: 184px;
+      height: 184px;
+      border: 1px solid #e5e6eb;
+      padding: 12px;
+      background: #ffffff;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-center-logo {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      background: #1677ff;
+      border: 2px solid #ffffff;
+      border-radius: 6px;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    }
+
+    .qr-bottom-bar {
+      margin-top: 8px;
+      width: 184px;
+      height: 30px;
+      background: #1677ff;
+      color: #ffffff;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2px;
+    }
+
+    /* 需求 1：二维码旁边的自动续费换行分条说明 */
+    .qr-side-auto-renew-desc {
+      max-width: 380px;
+      padding: 16px 18px;
+      background: #f7f9fc;
+      border: 1px solid #e5e9f2;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #4e5969;
+      line-height: 1.75;
+      text-align: left;
+    }
+
+    .qr-side-auto-renew-desc .desc-title {
+      color: #1f2329;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .qr-side-auto-renew-desc .desc-bullet {
+      display: block;
+    }
+
+    .qr-side-auto-renew-desc .highlight-price {
+      color: #f04134;
+      font-weight: 600;
+    }
+
+    /* 需求 2：支付页悬浮按钮“模拟支付” */
+    .simulate-pay-fab {
+      position: fixed;
+      right: 36px;
+      bottom: 48px;
+      z-index: 800;
+      background: linear-gradient(135deg, #3b5ff6 0%, #1d42d8 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 28px;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 6px 20px rgba(59, 95, 246, 0.38);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .simulate-pay-fab:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(59, 95, 246, 0.48);
+    }
+
+    /* 底部客服卡片 */
+    .pay-footer-card {
+      max-width: 1040px;
+      margin: 14px auto 0;
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+    }
+
+    .service-qr-mini {
+      width: 76px;
+      height: 76px;
+      border: 1px solid #eceef2;
+      padding: 4px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .service-qr-mini-logo {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: #f04134;
+      color: #ffffff;
+      font-size: 10px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid #ffffff;
+    }
+
+    .service-info-text {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .service-line-1 {
+      font-size: 12px;
+      color: #4e5969;
+    }
+
+    .service-phone {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1f2329;
+    }
+
+    .service-phone span {
+      font-size: 12px;
+      font-weight: 400;
+      color: #8f959e;
+      margin-left: 4px;
+    }
+
+    .service-hours {
+      font-size: 12px;
+      color: #8f959e;
+    }
+
+    /* ==================== 需求 2：手机模拟支付弹窗界面（参考截图1微信 & 截图2支付宝） ==================== */
+    .mobile-sim-mask {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 20, 30, 0.58);
+      z-index: 1200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .mobile-sim-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mobile-channel-switcher {
+      display: inline-flex;
+      background: rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(8px);
+      padding: 4px;
+      border-radius: 20px;
+      gap: 6px;
+    }
+
+    .mobile-switch-btn {
+      border: none;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.85);
+      padding: 5px 14px;
+      border-radius: 16px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .mobile-switch-btn.active {
+      background: #ffffff;
+      color: #1f2329;
+      font-weight: 600;
+    }
+
+    .mobile-phone-frame {
+      width: 375px;
+      height: 752px;
+      border-radius: 38px;
+      background: #ffffff;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35), 0 0 0 8px #262930;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .mobile-statusbar {
+      height: 44px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+      font-weight: 600;
+      color: #111111;
+      flex-shrink: 0;
+    }
+
+    .mobile-status-icons {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+    }
+
+    .mobile-battery {
+      background: #222;
+      color: #fff;
+      font-size: 10px;
+      padding: 1px 5px;
+      border-radius: 4px;
+      line-height: 13px;
+    }
+
+    .mobile-navbar {
+      height: 40px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .mobile-back-arrow {
+      font-size: 20px;
+      color: #333333;
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px;
+    }
+
+    /* 微信自动续费手机界面（复刻截图1） */
+    #mobile-view-wx {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+      padding: 0 28px 20px;
+    }
+
+    .wx-header {
+      text-align: center;
+      margin-top: 22px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid #f2f2f2;
+    }
+
+    .wx-title {
+      font-size: 16px;
+      color: #191919;
+      font-weight: 500;
+    }
+
+    .wx-subtitle {
+      font-size: 14px;
+      color: #555555;
+      margin-top: 8px;
+    }
+
+    .wx-amount {
+      margin-top: 12px;
+      font-size: 40px;
+      font-weight: 700;
+      color: #111111;
+      letter-spacing: -0.5px;
+    }
+
+    .wx-amount .yen {
+      font-size: 26px;
+      margin-right: 4px;
+      vertical-align: 4px;
+    }
+
+    .wx-info-list {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .wx-info-row {
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .wx-info-label {
+      width: 78px;
+      color: #888888;
+      flex-shrink: 0;
+    }
+
+    .wx-info-val {
+      flex: 1;
+      color: #191919;
+    }
+
+    .wx-footer {
+      margin-top: auto;
+      text-align: center;
+      padding-bottom: 14px;
+    }
+
+    .wx-agree-text {
+      font-size: 12px;
+      color: #888888;
+      margin-bottom: 18px;
+    }
+
+    .wx-agree-text a {
+      color: #576b95;
+    }
+
+    .wx-submit-btn {
+      width: 192px;
+      height: 46px;
+      background: #07c160;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    /* 支付宝自动续费手机界面（复刻截图2） */
+    #mobile-view-ali {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(180deg, #e9f1ff 0%, #f5f7fa 36%, #f5f7fa 100%);
+      padding: 0 16px 20px;
+    }
+
+    .ali-header {
+      text-align: center;
+      margin-top: 8px;
+      margin-bottom: 24px;
+    }
+
+    .ali-merchant-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      background: #3d7eff;
+      color: #ffffff;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 4px 12px rgba(61, 126, 255, 0.25);
+    }
+
+    .ali-merchant-name {
+      margin-top: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #1f2329;
+    }
+
+    .ali-amount {
+      margin-top: 14px;
+      font-size: 40px;
+      font-weight: 700;
+      color: #1f2329;
+      letter-spacing: -0.5px;
+    }
+
+    .ali-amount .yen {
+      font-size: 26px;
+      margin-right: 2px;
+    }
+
+    .ali-meta-rows {
+      padding: 0 8px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 14px;
+    }
+
+    .ali-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ali-meta-label {
+      color: #646a73;
+    }
+
+    .ali-meta-val {
+      color: #1f2329;
+      font-weight: 500;
+    }
+
+    .ali-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .ali-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .ali-card-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1f2329;
+    }
+
+    .ali-card-note {
+      font-size: 12px;
+      color: #8f959e;
+    }
+
+    .ali-deduct-inner {
+      background: #f6f8fc;
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .ali-deduct-price {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1f2329;
+      flex-shrink: 0;
+    }
+
+    .ali-deduct-price .yen {
+      font-size: 16px;
+      margin-right: 1px;
+    }
+
+    .ali-deduct-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 12px;
+      color: #646a73;
+    }
+
+    .ali-deduct-info strong {
+      font-size: 13px;
+      color: #1f2329;
+      font-weight: 600;
+    }
+
+    .ali-method-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 15px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+    }
+
+    .ali-footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 0 12px 14px;
+    }
+
+    .ali-agree-text {
+      font-size: 12px;
+      color: #4e5969;
+      margin-bottom: 14px;
+    }
+
+    .ali-agree-text a {
+      color: #4b659b;
+    }
+
+    .ali-submit-btn {
+      width: 100%;
+      height: 46px;
+      background: #3678ff;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 500;
+      border: none;
+      border-radius: 24px;
+      cursor: pointer;
+    }
+
+    .mobile-home-indicator {
+      width: 128px;
+      height: 5px;
+      background: #111111;
+      border-radius: 3px;
+      margin: 4px auto 8px;
+      flex-shrink: 0;
+    }
+
+    /* ==================== 需求 3：管理后台（WPS 365 企业管理后台框架 + 订单权益-支付设置） ==================== */
+    #page-admin {
+      display: none;
+      min-height: calc(100vh - 44px);
+      background: #f3f5f9;
+      flex-direction: column;
+    }
+
+    .admin-topbar {
+      height: 60px;
+      background: #f3f5f9;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .admin-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #1f2329;
+    }
+
+    .admin-brand-logo {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: #3b5ff6;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .admin-ent-tag {
+      font-size: 11px;
+      font-weight: 500;
+      color: #3b5ff6;
+      background: #e8f0ff;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .admin-top-search {
+      width: 340px;
+      height: 32px;
+      background: #ffffff;
+      border: 1px solid #e5e6eb;
+      border-radius: 6px;
+      padding: 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #8f959e;
+      font-size: 12px;
+    }
+
+    .admin-user-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: #1f2329;
+    }
+
+    .admin-user-avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #dbe6ff;
+      color: #3b5ff6;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .admin-body {
+      flex: 1;
+      display: flex;
+      min-height: 0;
+    }
+
+    /* 左侧导航栏（212px） */
+    .admin-sidebar {
+      width: 212px;
+      flex-shrink: 0;
+      padding: 4px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .admin-nav-level1 {
+      height: 34px;
+      padding: 0 10px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #1f2329;
+      font-size: 13px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .admin-nav-level1:hover {
+      background: rgba(31, 35, 41, 0.05);
+    }
+
+    .admin-nav-level1-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .admin-nav-icon {
+      width: 16px;
+      height: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #646a73;
+      font-size: 13px;
+    }
+
+    .admin-nav-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-top: 2px;
+    }
+
+    .admin-nav-level2 {
+      height: 32px;
+      padding-left: 34px;
+      padding-right: 10px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      font-size: 13px;
+      color: #4e5969;
+      cursor: pointer;
+    }
+
+    .admin-nav-level2:hover {
+      background: rgba(31, 35, 41, 0.05);
+    }
+
+    .admin-nav-level2.active {
+      background: #e6efff;
+      color: #3b5ff6;
+      font-weight: 600;
+    }
+
+    /* 右侧内容背板 */
+    .admin-content-shell {
+      flex: 1;
+      padding-right: 16px;
+      display: flex;
+      min-width: 0;
+    }
+
+    .admin-content-stack {
+      flex: 1;
+      background: #ffffff;
+      border-radius: 8px 8px 0 0;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+      padding: 16px 24px 32px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .admin-breadcrumb {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #8f959e;
+    }
+
+    .admin-breadcrumb .current {
+      color: #1f2329;
+      font-weight: 500;
+    }
+
+    .admin-desc-bar {
+      margin-top: 4px;
+      font-size: 13px;
+      color: #646a73;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #f0f1f5;
+    }
+
+    /* 支付设置页 - 连续包月订阅卡片与表格 */
+    .admin-section-title {
+      margin-top: 20px;
+      margin-bottom: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #1f2329;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sub-detail-card {
+      border: 1px solid #e5e8ef;
+      border-radius: 10px;
+      background: #fcfdff;
+      padding: 20px 24px;
+    }
+
+    .sub-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #f0f2f5;
+    }
+
+    .sub-product-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sub-product-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1f2329;
+    }
+
+    .status-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 2px 10px;
+      border-radius: 12px;
+    }
+
+    .status-tag.active {
+      background: #e8ffea;
+      color: #00b42a;
+    }
+
+    .status-tag.canceled {
+      background: #f2f3f5;
+      color: #86909c;
+    }
+
+    .sub-actions-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .admin-btn {
+      height: 32px;
+      padding: 0 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      border: 1px solid #dcdfe6;
+      background: #ffffff;
+      color: #1f2329;
+      transition: all 0.15s ease;
+    }
+
+    .admin-btn:hover {
+      border-color: #3b5ff6;
+      color: #3b5ff6;
+    }
+
+    .admin-btn.primary {
+      background: #3b5ff6;
+      border-color: #3b5ff6;
+      color: #ffffff;
+    }
+
+    .admin-btn.primary:hover {
+      background: #2b4ee6;
+    }
+
+    .admin-btn.danger-outline {
+      color: #f53f3f;
+      border-color: #f53f3f;
+    }
+
+    .admin-btn.danger-outline:hover {
+      background: #fff2f0;
+    }
+
+    .sub-info-grid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .sub-info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sub-info-label {
+      font-size: 12px;
+      color: #8f959e;
+    }
+
+    .sub-info-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1f2329;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .sub-info-subtext {
+      font-size: 12px;
+      color: #8f959e;
+    }
+
+    .sub-rule-banner {
+      margin-top: 18px;
+      padding: 10px 14px;
+      background: #f7f8fa;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #646a73;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* ==================== 管理后台：发票合同 > 发票管理（复刻截图2） ==================== */
+    .admin-ent-unverified {
+      font-size: 11px;
+      color: #646a73;
+      background: #f2f3f5;
+      border: 1px solid #e5e6eb;
+      padding: 1px 6px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .admin-role-badge-green {
+      font-size: 11px;
+      color: #009a29;
+      background: #e8ffea;
+      border: 1px solid #aff0b5;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    .admin-nav-section-label {
+      margin: 12px 0 4px 10px;
+      font-size: 12px;
+      color: #8f959e;
+      font-weight: 500;
+    }
+
+    .admin-sidebar-footer {
+      margin-top: auto;
+      padding-top: 10px;
+      border-top: 1px solid #e5e6eb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #646a73;
+      font-size: 13px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    .invoice-tabs-bar {
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      border-bottom: 1px solid #f0f1f5;
+    }
+
+    .invoice-tab-item {
+      padding: 10px 0;
+      font-size: 14px;
+      color: #4e5969;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .invoice-tab-item.active {
+      color: #3b5ff6;
+      font-weight: 600;
+    }
+
+    .invoice-tab-item.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2px;
+      background: #3b5ff6;
+    }
+
+    .invoice-notice-box {
+      margin-top: 16px;
+      background: #fff9eb;
+      border: 1px solid #ffe7ba;
+      border-radius: 6px;
+      padding: 14px 18px;
+    }
+
+    .invoice-notice-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #1f2329;
+      margin-bottom: 6px;
+    }
+
+    .invoice-notice-icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #ff9a2e;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .invoice-notice-list {
+      list-style: none;
+      padding-left: 24px;
+      font-size: 12px;
+      color: #4e5969;
+      line-height: 1.75;
+    }
+
+    .invoice-notice-list li::before {
+      content: "• ";
+      color: #ff7d00;
+      font-weight: bold;
+    }
+
+    .invoice-toolbar-row {
+      margin-top: 18px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      color: #4e5969;
+    }
+
+    .invoice-type-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .invoice-type-tag.sub {
+      background: #e8f3ff;
+      color: #165dff;
+      border: 1px solid #bedaff;
+    }
+
+    .invoice-type-tag.onetime {
+      background: #f2f3f5;
+      color: #4e5969;
+      border: 1px solid #e5e6eb;
+    }
+
+    .invoice-bottom-bar {
+      margin-top: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .invoice-action-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 13px;
+      color: #1f2329;
+    }
+
+    .invoice-issue-btn {
+      height: 34px;
+      padding: 0 18px;
+      border-radius: 6px;
+      border: none;
+      background: #3b5ff6;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .invoice-issue-btn.disabled {
+      background: #b7c8ff;
+      cursor: not-allowed;
+    }
+
+    .invoice-amount-green {
+      color: #529b2e;
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0 2px;
+    }
+
+    .invoice-pagination {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #8f959e;
+    }
+
+    .invoice-page-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 4px;
+      background: #e8f0ff;
+      color: #3b5ff6;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .contact-us-float {
+      position: fixed;
+      right: 18px;
+      bottom: 72px;
+      width: 44px;
+      background: #ffffff;
+      border: 1px solid #e5e6eb;
+      border-radius: 22px;
+      padding: 10px 6px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: #1f2329;
+      line-height: 1.25;
+      cursor: pointer;
+      z-index: 700;
+    }
+
+    /* ==================== 需求 1：W365 系统后台（复刻截图1） ==================== */
+    #page-sysadmin {
+      display: none;
+      min-height: calc(100vh - 44px);
+      background: #f0f2f5;
+      flex-direction: column;
+    }
+
+    .sys-topbar {
+      height: 48px;
+      background: #0b1933;
+      color: #ffffff;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .sys-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .sys-brand-w {
+      font-weight: 800;
+      font-size: 16px;
+      color: #ffffff;
+    }
+
+    .sys-user-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #e5e6eb;
+    }
+
+    .sys-user-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #36cfc9;
+      color: #ffffff;
+      font-size: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sys-body {
+      flex: 1;
+      display: flex;
+      min-height: 0;
+    }
+
+    .sys-sidebar {
+      width: 186px;
+      background: #ffffff;
+      border-right: 1px solid #e8e8e8;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      padding: 8px 0;
+    }
+
+    .sys-nav-parent {
+      height: 40px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      color: #1f2329;
+      cursor: pointer;
+    }
+
+    .sys-nav-item {
+      height: 38px;
+      padding-left: 34px;
+      padding-right: 14px;
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+      color: #595959;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .sys-nav-item:hover {
+      color: #1890ff;
+      background: #f5f9ff;
+    }
+
+    .sys-nav-item.active {
+      background: #e6f7ff;
+      color: #1890ff;
+      font-weight: 600;
+    }
+
+    .sys-nav-item.active::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: #1890ff;
+    }
+
+    .sys-main {
+      flex: 1;
+      padding: 12px;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sys-card {
+      flex: 1;
+      background: #ffffff;
+      border-radius: 4px;
+      padding: 18px 22px 28px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .sys-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .sys-page-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #262626;
+      margin-right: 6px;
+    }
+
+    .sys-top-btn {
+      height: 28px;
+      padding: 0 12px;
+      background: #409eff;
+      color: #ffffff;
+      border: none;
+      border-radius: 3px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .sys-top-btn:hover {
+      background: #2b85e4;
+    }
+
+    .sys-tabs-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e8e8e8;
+      margin-top: 6px;
+    }
+
+    .sys-tabs-left {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .sys-tab {
+      padding: 10px 4px;
+      font-size: 13px;
+      color: #595959;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .sys-tab.active {
+      color: #1890ff;
+      font-weight: 600;
+    }
+
+    .sys-tab.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2px;
+      background: #1890ff;
+    }
+
+    /* 连续订阅设置：全局自动扣款金额上限设置卡片 */
+    .sys-cap-config-bar {
+      margin-top: 14px;
+      background: #f0f7ff;
+      border: 1px solid #bae0ff;
+      border-radius: 4px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .sys-cap-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .sys-cap-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1f2329;
+    }
+
+    .sys-cap-input-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #262626;
+    }
+
+    .sys-cap-input {
+      width: 110px;
+      height: 30px;
+      border: 1px solid #91caff;
+      border-radius: 4px;
+      padding: 0 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #1890ff;
+      background: #ffffff;
+      outline: none;
+    }
+
+    .sys-cap-hint {
+      font-size: 12px;
+      color: #595959;
+    }
+
+    .sys-filter-box {
+      margin-top: 14px;
+      background: #f5f6f8;
+      border-radius: 4px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .sys-filter-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 280px);
+      gap: 12px 24px;
+      align-items: center;
+    }
+
+    .sys-filter-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #595959;
+    }
+
+    .sys-filter-label {
+      width: 64px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .sys-filter-control {
+      flex: 1;
+      height: 28px;
+      border: 1px solid #d9d9d9;
+      border-radius: 3px;
+      background: #ffffff;
+      padding: 0 8px;
+      font-size: 12px;
+      color: #262626;
+      outline: none;
+    }
+
+    .sys-filter-btns {
+      padding-left: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sys-btn-query {
+      height: 28px;
+      padding: 0 14px;
+      background: #409eff;
+      color: #ffffff;
+      border: none;
+      border-radius: 3px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .sys-btn-clear {
+      height: 28px;
+      padding: 0 14px;
+      background: #ffffff;
+      color: #595959;
+      border: 1px solid #d9d9d9;
+      border-radius: 3px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .sys-result-count {
+      margin-top: 14px;
+      margin-bottom: 10px;
+      font-size: 12px;
+      color: #595959;
+    }
+
+    .sys-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .sys-table th {
+      color: #8c8c8c;
+      font-weight: 500;
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .sys-table td {
+      padding: 12px 12px;
+      color: #262626;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    /* Switch 开关 */
+    .sys-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .sys-switch-track {
+      width: 36px;
+      height: 18px;
+      border-radius: 9px;
+      background: #bfbfbf;
+      position: relative;
+      transition: background 0.15s ease;
+    }
+
+    .sys-switch.on .sys-switch-track {
+      background: #1890ff;
+    }
+
+    .sys-switch-thumb {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #ffffff;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: left 0.15s ease;
+    }
+
+    .sys-switch.on .sys-switch-thumb {
+      left: 20px;
+    }
+
+    /* 协议弹窗与操作弹窗 */
+    .toast-tip {
+      position: fixed;
+      top: 56px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(31, 35, 41, 0.92);
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 13px;
+      z-index: 9999;
+      display: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .modal-mask {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1500;
+    }
+
+    .modal-box {
+      width: 520px;
+      max-width: 92vw;
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 16px;
+      font-weight: 600;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #f0f1f5;
+    }
+
+    .modal-close {
+      cursor: pointer;
+      color: #8f959e;
+      font-size: 18px;
+    }
+
+    .modal-body {
+      margin-top: 14px;
+      font-size: 13px;
+      color: #4e5969;
+      line-height: 1.7;
+      max-height: 360px;
+      overflow-y: auto;
+    }
+
+    .form-field {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-field label {
+      font-size: 12px;
+      color: #646a73;
+    }
+
+    .form-input, .form-select {
+      height: 34px;
+      padding: 0 12px;
+      border: 1px solid #dcdfe6;
+      border-radius: 6px;
+      font-size: 13px;
+      color: #1f2329;
+      outline: none;
+    }
+
+    .form-input:focus, .form-select:focus {
+      border-color: #3b5ff6;
+    }
+
+    .modal-footer {
+      margin-top: 20px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .modal-btn {
+      padding: 7px 18px;
+      background: #305ef5;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .modal-btn.secondary {
+      background: #f2f3f5;
+      color: #4e5969;
+    }
+
+    .modal-btn.danger {
+      background: #f53f3f;
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="toast" class="toast-tip"></div>
+
+  <!-- ==================== 顶部演示控制台切换栏（购买页 / 管理后台 / 系统后台） ==================== -->
+  <div class="demo-console-bar">
+    <div class="demo-console-left">
+      <span class="demo-console-badge">演示控制台</span>
+      <span>WPS 365 AI 额度包 · 连续包月方案 Demo</span>
+    </div>
+    <div class="demo-console-tabs">
+      <button type="button" class="demo-console-tab active" id="console-tab-purchase" onclick="switchConsoleView('purchase')">购买页</button>
+      <button type="button" class="demo-console-tab" id="console-tab-admin" onclick="switchConsoleView('admin')">管理后台</button>
+      <button type="button" class="demo-console-tab" id="console-tab-sys" onclick="switchConsoleView('sys')">系统后台</button>
+    </div>
+    <div class="demo-console-right">支持在「购买页 / 支付页 / 手机模拟支付 / 管理后台 / 系统后台」间完整闭环体验</div>
+  </div>
+
+  <!-- ==================== 页面 1：额度包购买页 ==================== -->
+  <div id="page-purchase">
+    <!-- 左侧选购区 -->
+    <div class="purchase-left">
+      <!-- 模块 1：AI 额度包 · 全企业共享 -->
+      <div class="section-card">
+        <div class="section-header-title">AI 额度包 · 全企业共享</div>
+        <div class="section-header-desc">免费企业最多支持 50 人共享，更多席位或其他 WPS 365 付费权益请按需购买套餐</div>
+
+        <div class="quota-cards-grid">
+          <!-- AI 智点基础包 -->
+          <div class="quota-card active" id="quota-card-basic" onclick="selectQuotaPack('basic')">
+            <div class="quota-card-title">AI 智点基础包</div>
+            <div class="quota-card-sub">1.5万智点/月 · 18万智点/年</div>
+            <ul class="quota-feature-list">
+              <li>Comate智能助手、应用开发、Wiki知识库</li>
+              <li>连接器、数据治理、定时任务</li>
+              <li>AI编辑办公文档</li>
+            </ul>
+          </div>
+
+          <!-- AI 智点高级包 -->
+          <div class="quota-card" id="quota-card-pro" onclick="selectQuotaPack('pro')">
+            <div class="quota-card-title">
+              AI 智点高级包
+              <span class="badge-recommend">推荐</span>
+            </div>
+            <div class="quota-card-sub">200万智点/年</div>
+            <ul class="quota-feature-list">
+              <li>包含标准套餐所有权益</li>
+              <li>Comate Studio智能体、API Hub</li>
+              <li>DataHub、AI安全管控</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 购买套数 & 购买时长 -->
+        <div class="controls-box">
+          <div class="control-row">
+            <span class="control-label">购买套数</span>
+            <div class="stepper">
+              <button class="stepper-btn" type="button" onclick="changeQuotaSets(-1)">-</button>
+              <input class="stepper-input" id="quota-sets-input" type="text" value="1" readonly />
+              <button class="stepper-btn" type="button" onclick="changeQuotaSets(1)">+</button>
+            </div>
+            <div class="quota-expand-hint">
+              <span>购买后企业智点扩容</span>
+              <span class="quota-pill-blue" id="quota-points-pill">1.5万</span>
+              <span class="quota-validity-text" id="quota-validity-label">（有效期1个月）</span>
+            </div>
+          </div>
+
+          <div class="control-row">
+            <span class="control-label">购买时长</span>
+            <div class="duration-options">
+              <div class="duration-btn-wrap" id="dur-continuous-wrap">
+                <button type="button" class="duration-btn active" id="dur-btn-continuous" onclick="selectQuotaDuration('continuous')">
+                  <span>连续包月</span>
+                  <span class="duration-price" id="dur-price-continuous">¥980</span>
+                </button>
+                <div class="duration-tooltip" id="dur-continuous-tooltip">订单金额超过2000元，无法选择自动续费，可选择单次采购</div>
+              </div>
+              <button type="button" class="duration-btn" id="dur-btn-month" onclick="selectQuotaDuration('month')">
+                <span>1个月</span>
+                <span class="duration-price" id="dur-price-month">¥980</span>
+              </button>
+              <button type="button" class="duration-btn" id="dur-btn-year" onclick="selectQuotaDuration('year')">
+                <span>1年</span>
+                <span class="duration-price" id="dur-price-year">¥9,800</span>
+                <span class="discount-tag">省17%</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="utility-links-row">
+          <span>提交订单可</span>
+          <a href="javascript:void(0)">下载合同</a>
+          <a href="javascript:void(0)">下载发票</a>
+          <a href="javascript:void(0)">下载报价单</a>
+        </div>
+      </div>
+
+      <!-- 模块 2：WPS 365 基础套餐 · 按席位增购 -->
+      <div class="section-card">
+        <div class="package-header-row">
+          <div class="package-header-left" onclick="toggleBasePackage()">
+            <span class="custom-checkbox checked" id="base-pkg-checkbox"></span>
+            <span id="base-pkg-header-text">WPS 365 基础套餐 · 按席位增购（商业协作版，1年，5人）</span>
+          </div>
+          <span class="collapse-link">收起 <span>^</span></span>
+        </div>
+
+        <div class="plans-carousel-wrap">
+          <div class="carousel-arrow left">&lt;</div>
+          <div class="carousel-arrow right">&gt;</div>
+
+          <div class="plans-grid">
+            <!-- 商业协作版 -->
+            <div class="plan-card active" id="plan-card-collab" onclick="selectBasePlan('collab')">
+              <div class="plan-name">商业协作版</div>
+              <div class="plan-price-row">
+                <span class="plan-price-num">¥199</span>
+                <span class="plan-price-unit">/人/年</span>
+                <a class="plan-detail-link" href="javascript:void(0)">详情 &gt;</a>
+              </div>
+              <div class="plan-tagline">全面提升团队协作效能</div>
+              <ul class="plan-features">
+                <li>空间50G/人，智能问答20次/人</li>
+                <li>IM、邮箱、会议 完整功能</li>
+                <li>水印/加密保护等基础安全管控</li>
+              </ul>
+            </div>
+
+            <!-- 商业高级版 -->
+            <div class="plan-card" id="plan-card-adv" onclick="selectBasePlan('adv')">
+              <div class="plan-name">商业高级版</div>
+              <div class="plan-price-row">
+                <span class="plan-price-num">¥399</span>
+                <span class="plan-price-unit">/人/年</span>
+                <a class="plan-detail-link" href="javascript:void(0)">详情 &gt;</a>
+              </div>
+              <div class="plan-tagline">授权认证，200+会员权益</div>
+              <ul class="plan-features">
+                <li>包含WPS 365商业协作版能力</li>
+                <li>空间365G/人，高级安全管控</li>
+                <li>AI知识库，私域知识智能问答</li>
+                <li>PDF / WPS听记等200+会员权益</li>
+              </ul>
+            </div>
+
+            <!-- 商业旗舰版 -->
+            <div class="plan-card" id="plan-card-flag" onclick="selectBasePlan('flag')">
+              <div class="plan-name">
+                商业旗舰版
+                <span class="badge-ai">AI</span>
+              </div>
+              <div class="plan-price-row">
+                <span class="plan-price-num">¥599</span>
+                <span class="plan-price-unit">/人/年</span>
+                <a class="plan-detail-link" href="javascript:void(0)">详情 &gt;</a>
+              </div>
+              <div class="plan-tagline">AI办公，全面安全护航</div>
+              <ul class="plan-features">
+                <li>包含WPS 365商业高级版能力</li>
+                <li>空间2T/人，全面安全管控</li>
+                <li>完整AI知识库，打造智能企业大脑</li>
+                <li>AI助手、专享模板库等高级权益</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="controls-box">
+          <div class="control-row">
+            <span class="control-label">购买人数</span>
+            <div class="stepper">
+              <button class="stepper-btn" type="button" onclick="changeSeatCount(-1)">-</button>
+              <input class="stepper-input" id="seat-count-input" type="text" value="5" readonly />
+              <button class="stepper-btn" type="button" onclick="changeSeatCount(1)">+</button>
+            </div>
+          </div>
+
+          <div class="control-row">
+            <span class="control-label">购买时长</span>
+            <div class="year-segmented">
+              <button type="button" class="year-seg-btn active" id="year-btn-1" onclick="selectSeatYears(1)">1年</button>
+              <button type="button" class="year-seg-btn" id="year-btn-2" onclick="selectSeatYears(2)">2年</button>
+              <button type="button" class="year-seg-btn" id="year-btn-3" onclick="selectSeatYears(3)">3年</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右侧订单详情模块 -->
+    <div class="purchase-right">
+      <div class="order-card">
+        <div class="order-title">订单详情</div>
+
+        <div class="enterprise-info">
+          <div class="enterprise-name">
+            <span>香香的测试企业</span>
+            <span class="refresh-icon" title="切换企业">↺</span>
+          </div>
+          <div class="enterprise-current-plan">当前套餐：WPS 365 体验版</div>
+        </div>
+
+        <div class="order-items-section">
+          <div>
+            <div class="order-item-group-label">已选权益包</div>
+            <div class="order-item-main">
+              <span id="summary-quota-name">AI 智点基础包</span>
+              <span id="summary-quota-price">¥980.00</span>
+            </div>
+            <div class="order-item-sub" id="summary-quota-sub">1套 × 连续包月</div>
+          </div>
+
+          <div id="summary-base-pkg-block">
+            <div class="order-item-group-label">已选套餐</div>
+            <div class="order-item-main">
+              <span id="summary-plan-name">WPS 365 商业协作版</span>
+              <span id="summary-plan-price">¥995.00</span>
+            </div>
+            <div class="order-item-sub" id="summary-plan-sub">5人 × 1年</div>
+          </div>
+        </div>
+
+        <div class="auto-renew-order-tip" id="auto-renew-order-tip">
+          *自动续费下次扣款时间:<span id="next-deduct-date">2026/11/20</span> 金额￥<span id="next-deduct-amount">980</span>元
+        </div>
+
+        <div class="order-extra-row">
+          <span>优惠</span>
+          <a href="javascript:void(0)">+ 添加</a>
+        </div>
+
+        <div class="order-extra-row">
+          <span>1V1尊享服务</span>
+          <div class="vip-service-right" onclick="toggleCheckbox('vip-checkbox')">
+            <span class="custom-checkbox checked" id="vip-checkbox"></span>
+            <span>加入企业专属 VIP 服务群</span>
+            <span class="help-icon">?</span>
+          </div>
+        </div>
+
+        <div class="consult-wrap">
+          <div class="consult-pill">
+            <span>点击购买咨询</span>
+            <span class="consult-avatar">👩‍💼</span>
+          </div>
+        </div>
+
+        <div class="total-price-row">
+          <div class="total-price-val">
+            <span class="yen">¥</span><span id="summary-total-price">1,975.00</span>
+          </div>
+          <a class="price-detail-link" href="javascript:void(0)">价格明细 ▾</a>
+        </div>
+
+        <button type="button" class="submit-order-btn" id="submit-order-btn" onclick="goToPaymentPage()">
+          提交订单
+        </button>
+
+        <div class="agreement-row" id="auto-renew-agreement-row">
+          <span class="custom-checkbox checked" id="agree-renew-checkbox" onclick="toggleCheckbox('agree-renew-checkbox')"></span>
+          <span onclick="toggleCheckbox('agree-renew-checkbox')" style="cursor:pointer;">我已阅读并同意</span>
+          <a href="javascript:void(0)" onclick="openAgreementModal(event)">《自动续费协议》</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 页面 2：支付订单页 ==================== -->
+  <div id="page-payment">
+    <div class="pay-topbar">
+      <div class="pay-topbar-inner">
+        <span class="pay-logo-icon">✈</span>
+        <span>支付订单</span>
+      </div>
+    </div>
+
+    <div class="pay-main-card">
+      <div class="pay-meta-row">
+        <div class="pay-meta-left">
+          <span>订单编号：P20261020120541000001</span>
+          <a href="javascript:void(0)" onclick="backToPurchasePage()">返回重新下单&gt;</a>
+        </div>
+        <div class="pay-meta-right">
+          * 本产品为虚拟服务，购买后不支持7天无理由退货，敬请谅解
+        </div>
+      </div>
+
+      <table class="pay-table">
+        <thead>
+          <tr>
+            <th>购买内容</th>
+            <th>购买数量</th>
+            <th>购买时长</th>
+            <th>到期时间</th>
+            <th>优惠类型</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="pay-table-tbody">
+          <!-- 动态同步或展示订单明细 -->
+        </tbody>
+      </table>
+
+      <!-- 支付渠道切换 -->
+      <div class="pay-channels">
+        <div class="pay-channel-btn" id="channel-wx" onclick="selectPayChannel('wx')">
+          <span class="channel-icon-wx">微</span>
+          <span>微信支付</span>
+        </div>
+        <div class="pay-channel-btn active" id="channel-ali" onclick="selectPayChannel('ali')">
+          <span class="channel-icon-ali">支</span>
+          <div style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.1;">
+            <span style="font-weight:600;font-size:13px;">支付宝</span>
+            <span style="font-size:9px;color:#8f959e;letter-spacing:0.5px;">ALIPAY</span>
+          </div>
+        </div>
+        <div class="pay-channel-btn" id="channel-bank" onclick="selectPayChannel('bank')">
+          <span class="channel-icon-bank">卡</span>
+          <span>汇款支付</span>
+        </div>
+      </div>
+
+      <!-- 支付金额与倒计时 -->
+      <div class="pay-amount-area">
+        <div class="pay-amount-line">
+          <span>支付金额：</span>
+          <span class="pay-amount-number">¥ <span id="pay-page-amount">1,975.00</span></span>
+          <a href="javascript:void(0)" style="font-size:12px;margin-left:4px;">价格明细</a>
+        </div>
+        <div class="pay-countdown-line">
+          订单将于 <span class="pay-countdown-red" id="countdown-text">14天23:59:56</span> 后自动关闭，请尽快支付
+        </div>
+      </div>
+
+      <!-- 二维码及旁边新增的自动续费说明（需求 1：换行分条展示） -->
+      <div class="pay-qr-section">
+        <div class="qr-box-wrapper">
+          <div class="qr-code-frame">
+            <svg width="156" height="156" viewBox="0 0 33 33" fill="#000000" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+              <path d="M0 0h7v7H0V0zm1 1v5h5V1H1zm1 1h3v3H2V2z"/>
+              <path d="M26 0h7v7h-7V0zm1 1v5h5V1h-5zm1 1h3v3h-3V2z"/>
+              <path d="M0 26h7v7H0v-7zm1 1v5h5v-5H1zm1 1h3v3H2v-3z"/>
+              <rect x="8" y="0" width="2" height="1"/><rect x="11" y="0" width="1" height="2"/><rect x="14" y="0" width="3" height="1"/><rect x="19" y="0" width="2" height="2"/><rect x="23" y="0" width="1" height="1"/>
+              <rect x="8" y="2" width="1" height="2"/><rect x="10" y="3" width="3" height="1"/><rect x="15" y="2" width="2" height="2"/><rect x="18" y="3" width="1" height="2"/><rect x="21" y="2" width="3" height="1"/>
+              <rect x="9" y="5" width="2" height="1"/><rect x="12" y="5" width="2" height="2"/><rect x="16" y="5" width="1" height="1"/><rect x="20" y="5" width="2" height="2"/><rect x="24" y="5" width="1" height="2"/>
+              <rect x="0" y="8" width="2" height="2"/><rect x="3" y="8" width="1" height="1"/><rect x="6" y="8" width="1" height="2"/><rect x="8" y="8" width="2" height="1"/><rect x="11" y="8" width="3" height="1"/><rect x="16" y="8" width="2" height="2"/><rect x="20" y="8" width="1" height="1"/><rect x="23" y="8" width="2" height="2"/><rect x="27" y="8" width="2" height="1"/><rect x="31" y="8" width="2" height="2"/>
+              <rect x="1" y="11" width="2" height="1"/><rect x="4" y="10" width="2" height="2"/><rect x="8" y="10" width="1" height="2"/><rect x="10" y="11" width="2" height="1"/><rect x="14" y="10" width="1" height="1"/><rect x="19" y="11" width="2" height="1"/><rect x="22" y="10" width="1" height="2"/><rect x="25" y="11" width="3" height="1"/><rect x="29" y="10" width="2" height="2"/>
+              <rect x="0" y="13" width="1" height="2"/><rect x="3" y="13" width="2" height="1"/><rect x="6" y="13" width="2" height="2"/><rect x="9" y="14" width="2" height="1"/><rect x="22" y="13" width="2" height="1"/><rect x="26" y="13" width="1" height="2"/><rect x="28" y="14" width="3" height="1"/><rect x="32" y="13" width="1" height="2"/>
+              <rect x="1" y="16" width="2" height="2"/><rect x="5" y="16" width="1" height="1"/><rect x="8" y="16" width="2" height="2"/><rect x="11" y="16" width="1" height="1"/><rect x="21" y="16" width="2" height="1"/><rect x="24" y="16" width="2" height="2"/><rect x="27" y="17" width="2" height="1"/><rect x="30" y="16" width="2" height="2"/>
+              <rect x="0" y="19" width="2" height="1"/><rect x="3" y="20" width="3" height="1"/><rect x="7" y="19" width="1" height="2"/><rect x="10" y="20" width="2" height="1"/><rect x="22" y="19" width="1" height="2"/><rect x="25" y="20" width="2" height="1"/><rect x="29" y="19" width="1" height="2"/><rect x="31" y="20" width="2" height="1"/>
+              <rect x="1" y="22" width="1" height="2"/><rect x="4" y="22" width="2" height="1"/><rect x="8" y="22" width="2" height="2"/><rect x="11" y="22" width="2" height="1"/><rect x="14" y="22" width="2" height="2"/><rect x="18" y="22" width="2" height="1"/><rect x="21" y="22" width="2" height="2"/><rect x="24" y="23" width="2" height="1"/><rect x="27" y="22" width="2" height="2"/><rect x="31" y="23" width="2" height="1"/>
+              <rect x="8" y="25" width="2" height="1"/><rect x="12" y="25" width="1" height="2"/><rect x="15" y="25" width="3" height="1"/><rect x="19" y="25" width="1" height="2"/><rect x="22" y="25" width="2" height="1"/><rect x="25" y="25" width="2" height="2"/><rect x="29" y="25" width="2" height="1"/><rect x="32" y="26" width="1" height="2"/>
+              <rect x="9" y="28" width="2" height="2"/><rect x="13" y="28" width="2" height="1"/><rect x="16" y="27" width="1" height="2"/><rect x="18" y="28" width="2" height="1"/><rect x="21" y="28" width="2" height="2"/><rect x="24" y="28" width="1" height="1"/><rect x="27" y="28" width="3" height="1"/><rect x="31" y="29" width="2" height="1"/>
+              <rect x="8" y="31" width="3" height="2"/><rect x="12" y="30" width="2" height="2"/><rect x="15" y="31" width="2" height="1"/><rect x="19" y="30" width="2" height="2"/><rect x="23" y="31" width="2" height="2"/><rect x="26" y="30" width="2" height="2"/><rect x="29" y="31" width="3" height="2"/>
+            </svg>
+            <div class="qr-center-logo" id="qr-center-logo">支</div>
+          </div>
+          <div class="qr-bottom-bar" id="qr-bottom-bar">请打开手机支付宝，扫一扫完成支付</div>
+        </div>
+
+        <!-- 需求 1：支付页自动续费说明换行格式 -->
+        <div class="qr-side-auto-renew-desc" id="pay-auto-renew-desc">
+          <div class="desc-title">自动续费：</div>
+          <span class="desc-bullet">· 下个月开始，按照<span class="highlight-price" id="pay-monthly-deduct-text">￥980/月</span>发起自动扣费；</span>
+          <span class="desc-bullet">· 每月将持续按月定期扣款，直至您根据我们的服务条款取消服务；</span>
+          <span class="desc-bullet">· 您可在续费日前至少 3 天，前往「<a href="javascript:void(0)" onclick="switchConsoleView('admin')">管理后台-订单权益-支付设置页</a>」关闭自动续费</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部客服信息卡片 -->
+    <div class="pay-footer-card">
+      <div class="service-qr-mini">
+        <svg width="64" height="64" viewBox="0 0 21 21" fill="#222" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+          <path d="M0 0h7v7H0V0zm1 1v5h5V1H1zm1 1h3v3H2V2z"/>
+          <path d="M14 0h7v7h-7V0zm1 1v5h5V1h-5zm1 1h3v3h-3V2z"/>
+          <path d="M0 14h7v7H0v-7zm1 1v5h5v-5H1zm1 1h3v3H2v-3z"/>
+          <rect x="8" y="1" width="2" height="2"/><rect x="11" y="2" width="2" height="1"/>
+          <rect x="8" y="5" width="3" height="1"/><rect x="2" y="8" width="2" height="2"/>
+          <rect x="6" y="9" width="2" height="2"/><rect x="14" y="9" width="2" height="2"/>
+          <rect x="18" y="8" width="2" height="3"/><rect x="9" y="14" width="2" height="2"/>
+          <rect x="13" y="15" width="3" height="2"/><rect x="17" y="14" width="3" height="2"/>
+          <rect x="8" y="18" width="3" height="2"/><rect x="14" y="18" width="2" height="3"/>
+          <rect x="18" y="18" width="3" height="3"/>
+        </svg>
+        <div class="service-qr-mini-logo">企</div>
+      </div>
+      <div class="service-info-text">
+        <div class="service-line-1">汇款支付有疑问，扫码或电话联系人工客服</div>
+        <div class="service-phone">400-677-5005<span>（人工客服）</span></div>
+        <div class="service-hours">工作时间：周一至周日 9:00 - 18:00</div>
+      </div>
+    </div>
+
+    <!-- 需求 2：悬浮按钮“模拟支付” -->
+    <button type="button" class="simulate-pay-fab" id="simulate-pay-fab" onclick="openMobileSimulateModal()">
+      <span>📱</span>
+      <span>模拟支付</span>
+    </button>
+  </div>
+
+  <!-- ==================== 需求 2：手机端模拟支付弹窗（微信截图1 & 支付宝截图2） ==================== -->
+  <div class="mobile-sim-mask" id="mobile-sim-mask" onclick="closeMobileSimulateOnMask(event)">
+    <div class="mobile-sim-wrapper">
+      <div class="mobile-channel-switcher">
+        <button type="button" class="mobile-switch-btn" id="mob-tab-wx" onclick="switchMobilePreviewChannel('wx')">微信支付界面（参考截图1）</button>
+        <button type="button" class="mobile-switch-btn active" id="mob-tab-ali" onclick="switchMobilePreviewChannel('ali')">支付宝界面（参考截图2）</button>
+      </div>
+
+      <div class="mobile-phone-frame">
+        <div class="mobile-statusbar" id="mobile-statusbar">
+          <span>15:41 ◀</span>
+          <div class="mobile-status-icons">
+            <span>⋮⋮⋮ 5G</span>
+            <span class="mobile-battery">90</span>
+          </div>
+        </div>
+        <div class="mobile-navbar" id="mobile-navbar">
+          <span class="mobile-back-arrow" onclick="closeMobileSimulateModal()">‹</span>
+        </div>
+
+        <!-- 微信自动续费手机界面（参考截图1，内容换成 WPS 365） -->
+        <div id="mobile-view-wx" style="display:none;">
+          <div class="wx-header">
+            <div class="wx-title">自动续费服务-WPS 365</div>
+            <div class="wx-subtitle">金山办公企业账户-移动支付</div>
+            <div class="wx-amount"><span class="yen">¥</span><span id="wx-mobile-total-amount">1975.00</span></div>
+          </div>
+
+          <div class="wx-info-list">
+            <div class="wx-info-row">
+              <span class="wx-info-label">开通账号</span>
+              <span class="wx-info-val">香香的测试企业（303022330519）</span>
+            </div>
+            <div class="wx-info-row">
+              <span class="wx-info-label">服务名称</span>
+              <span class="wx-info-val" id="wx-mobile-service-name">WPS 365 AI 智点基础包每月自动续费</span>
+            </div>
+            <div class="wx-info-row">
+              <span class="wx-info-label">服务介绍</span>
+              <span class="wx-info-val" id="wx-mobile-service-desc">
+                该线上 AI 额度包服务每月自动续费，扣费金额为980元/月。服务到期当天自动通过微信支付为你发起扣费，自动延长服务有效期。服务关闭后将不再继续扣费。
+              </span>
+            </div>
+            <div class="wx-info-row">
+              <span class="wx-info-label">扣费方式</span>
+              <span class="wx-info-val">优先从零钱扣费，扣费失败时将从你的其他支付方式扣除。</span>
+            </div>
+          </div>
+
+          <div class="wx-footer">
+            <div class="wx-agree-text">开通即视为你已阅读并同意 <a href="javascript:void(0)" onclick="openAgreementModal(event)">《扣款授权确认书》</a></div>
+            <button type="button" class="wx-submit-btn" onclick="completeMobilePayment('wx')">支付并开通</button>
+          </div>
+        </div>
+
+        <!-- 支付宝自动续费手机界面（参考截图2，内容换成 WPS 365） -->
+        <div id="mobile-view-ali">
+          <div class="ali-header">
+            <div class="ali-merchant-icon">🏪</div>
+            <div class="ali-merchant-name">WPS 365 | 金山办公</div>
+            <div class="ali-amount"><span class="yen">¥</span><span id="ali-mobile-total-amount">1975.00</span></div>
+          </div>
+
+          <div class="ali-meta-rows">
+            <div class="ali-meta-row">
+              <span class="ali-meta-label">服务内容</span>
+              <span class="ali-meta-val" id="ali-mobile-service-name">AI 智点基础包</span>
+            </div>
+            <div class="ali-meta-row">
+              <span class="ali-meta-label">服务商户</span>
+              <span class="ali-meta-val">WPS 365 | 金山办公</span>
+            </div>
+          </div>
+
+          <div class="ali-card">
+            <div class="ali-card-head">
+              <span class="ali-card-title">扣款详情</span>
+              <span class="ali-card-note">可随时取消，取消后不再扣款</span>
+            </div>
+            <div class="ali-deduct-inner">
+              <div class="ali-deduct-price"><span class="yen">¥</span><span id="ali-mobile-monthly-price">980.00</span></div>
+              <div class="ali-deduct-info">
+                <strong>每隔1个月扣款</strong>
+                <span id="ali-mobile-sets-text">共计1套额度包</span>
+                <span>预计下次扣款时间 2026-11-20</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ali-method-card">
+            <span style="font-weight:600;color:#1f2329;">扣款方式</span>
+            <span style="color:#646a73;font-size:13px;">按照支付设置的顺序扣款 &gt;</span>
+          </div>
+
+          <div class="ali-footer">
+            <div class="ali-agree-text">查看并同意协议<a href="javascript:void(0)" onclick="openAgreementModal(event)">《付款授权服务协议》</a></div>
+            <button type="button" class="ali-submit-btn" onclick="completeMobilePayment('ali')">付款并开通</button>
+          </div>
+        </div>
+
+        <div class="mobile-home-indicator"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 管理后台（支持「订单权益 > 支付设置」与「订单权益 > 发票合同 > 发票管理」切换，参考截图2） ==================== -->
+  <div id="page-admin">
+    <!-- 顶部信息栏（复刻截图2） -->
+    <div class="admin-topbar">
+      <div class="admin-brand">
+        <span class="admin-brand-logo">🏢</span>
+        <span>小猿最可爱</span>
+        <span class="admin-ent-unverified">🛡️ 未认证</span>
+      </div>
+      <div class="admin-top-search">
+        <span>🔍</span>
+        <span>搜索功能或应用</span>
+      </div>
+      <div class="admin-user-area">
+        <span style="color:#646a73;cursor:pointer;" title="帮助中心">?</span>
+        <span style="color:#646a73;cursor:pointer;" title="在线客服">🎧</span>
+        <span class="admin-user-avatar">👩</span>
+        <span>黄雅娟</span>
+        <span class="admin-role-badge-green">超级管理员</span>
+        <span style="font-size:11px;color:#8f959e;">▾</span>
+      </div>
+    </div>
+
+    <!-- 基础区：左侧导航 + 右侧内容区 -->
+    <div class="admin-body">
+      <aside class="admin-sidebar" data-kd-component="Navigation">
+        <div class="admin-nav-level1">
+          <div class="admin-nav-level1-left">
+            <span class="admin-nav-icon">🏢</span>
+            <span>企业概况</span>
+          </div>
+        </div>
+        <div class="admin-nav-level1">
+          <div class="admin-nav-level1-left">
+            <span class="admin-nav-icon">📒</span>
+            <span>通讯录</span>
+          </div>
+          <span style="font-size:11px;color:#8f959e;">▾</span>
+        </div>
+        <div class="admin-nav-level1">
+          <div class="admin-nav-level1-left">
+            <span class="admin-nav-icon">🛡️</span>
+            <span>安全管控</span>
+          </div>
+          <span style="font-size:11px;color:#8f959e;">▾</span>
+        </div>
+        <div class="admin-nav-level1">
+          <div class="admin-nav-level1-left">
+            <span class="admin-nav-icon">📋</span>
+            <span>审计合规</span>
+          </div>
+          <span style="font-size:11px;color:#8f959e;">▾</span>
+        </div>
+        <div class="admin-nav-level1">
+          <div class="admin-nav-level1-left">
+            <span class="admin-nav-icon">📊</span>
+            <span>数据报表</span>
+          </div>
+          <span style="font-size:11px;color:#8f959e;">▾</span>
+        </div>
+        <div class="admin-nav-level1">
+          <div class="admin-nav-level1-left">
+            <span class="admin-nav-icon">🤖</span>
+            <span>AI管理</span>
+          </div>
+          <span style="font-size:11px;color:#8f959e;">▾</span>
+        </div>
+        <div class="admin-nav-level1">
+          <div class="admin-nav-level1-left">
+            <span class="admin-nav-icon">💎</span>
+            <span>高级功能</span>
+          </div>
+          <span style="font-size:11px;color:#8f959e;">▾</span>
+        </div>
+
+        <!-- 一级导航：订单权益（展开） -->
+        <div class="admin-nav-level1" style="font-weight:600;">
+          <div class="admin-nav-level1-left">
+            <span class="admin-nav-icon">🧾</span>
+            <span>订单权益</span>
+          </div>
+          <span style="font-size:11px;color:#646a73;">▴</span>
+        </div>
+        <div class="admin-nav-group">
+          <div class="admin-nav-level2" onclick="showToast('当前演示重点为「发票合同」与「支付设置」')">订单管理</div>
+          <div class="admin-nav-level2" id="admin-nav-invoice" onclick="switchAdminSubPage('invoice')">发票合同</div>
+          <div class="admin-nav-level2" onclick="showToast('当前演示重点为「发票合同」与「支付设置」')">优惠券码</div>
+          <div class="admin-nav-level2" onclick="showToast('当前演示重点为「发票合同」与「支付设置」')">权益分配</div>
+          <div class="admin-nav-level2" onclick="showToast('当前演示重点为「发票合同」与「支付设置」')">授权与保障</div>
+          <div class="admin-nav-level2 active" id="admin-nav-paysettings" onclick="switchAdminSubPage('paysettings')">支付设置</div>
+        </div>
+
+        <div class="admin-nav-level1">
+          <div class="admin-nav-level1-left">
+            <span class="admin-nav-icon">✅</span>
+            <span>审批管理</span>
+          </div>
+          <span style="font-size:11px;color:#8f959e;">▾</span>
+        </div>
+        <div class="admin-nav-level1">
+          <div class="admin-nav-level1-left">
+            <span class="admin-nav-icon">⚙️</span>
+            <span>企业设置</span>
+          </div>
+          <span style="font-size:11px;color:#8f959e;">▾</span>
+        </div>
+
+        <div class="admin-nav-section-label">办公套件</div>
+        <div class="admin-nav-level1">
+          <div class="admin-nav-level1-left">
+            <span class="admin-nav-icon">📄</span>
+            <span>文档与团队</span>
+          </div>
+          <span style="font-size:11px;color:#8f959e;">▾</span>
+        </div>
+        <div class="admin-nav-level1">
+          <div class="admin-nav-level1-left">
+            <span class="admin-nav-icon">💬</span>
+            <span>WPS协作</span>
+          </div>
+          <span style="font-size:11px;color:#8f959e;">▾</span>
+        </div>
+        <div class="admin-nav-level1">
+          <div class="admin-nav-level1-left">
+            <span class="admin-nav-icon">🪟</span>
+            <span>工作台</span>
+          </div>
+          <span style="font-size:11px;color:#8f959e;">▾</span>
+        </div>
+        <div class="admin-nav-level1">
+          <div class="admin-nav-level1-left">
+            <span class="admin-nav-icon">📚</span>
+            <span>WPS知识库</span>
+          </div>
+          <span style="font-size:11px;color:#8f959e;">▾</span>
+        </div>
+
+        <div class="admin-sidebar-footer">
+          <span>☰ 查看全部</span>
+          <span>&laquo;</span>
+        </div>
+      </aside>
+
+      <!-- 右侧内容区 -->
+      <main class="admin-content-shell">
+        <!-- 子页面 A：订单权益 > 支付设置 -->
+        <div class="admin-content-stack" id="admin-subview-paysettings">
+          <!-- 面包屑 -->
+          <div class="admin-breadcrumb">
+            <span>订单权益</span>
+            <span>&gt;</span>
+            <span class="current">支付设置</span>
+          </div>
+
+          <!-- 描述栏 -->
+          <div class="admin-desc-bar">
+            管理企业当前正在生效的连续包月订阅协议、查看扣款周期提醒及金额明细，支持关闭自动续费或更换扣款人支付账户。
+          </div>
+
+          <!-- 正在生效的连续包月订阅卡片 -->
+          <div class="admin-section-title">
+            <span>连续包月订阅管理</span>
+            <div style="display:flex;align-items:center;gap:16px;">
+              <a href="javascript:void(0)" onclick="switchAdminSubPage('invoice')" style="font-size:13px;font-weight:400;">前往「发票合同 &gt; 发票管理」开票 &rarr;</a>
+              <a href="javascript:void(0)" onclick="switchConsoleView('purchase')" style="font-size:13px;font-weight:400;">+ 前往购买页增购额度包</a>
+            </div>
+          </div>
+
+          <div class="sub-detail-card">
+            <div class="sub-card-top">
+              <div class="sub-product-info">
+                <span class="sub-product-name" id="admin-sub-name">AI 智点基础包（连续包月）</span>
+                <span class="status-tag active" id="admin-sub-status-tag">● 自动续费生效中</span>
+              </div>
+              <div class="sub-actions-group">
+                <button type="button" class="admin-btn" onclick="openChangePayerModal()">更换扣款人信息</button>
+                <button type="button" class="admin-btn danger-outline" id="admin-toggle-renew-btn" onclick="openCancelRenewModal()">关闭自动续费</button>
+              </div>
+            </div>
+
+            <div class="sub-info-grid">
+              <div class="sub-info-item">
+                <span class="sub-info-label">扣款账号与扣款人</span>
+                <div class="sub-info-value" id="admin-payer-account">支付宝（138****4247 · 张珊）</div>
+                <span class="sub-info-subtext" id="admin-payer-role">企业超级管理员 · 签约绑定账户</span>
+              </div>
+
+              <div class="sub-info-item">
+                <span class="sub-info-label">扣款周期提醒</span>
+                <div class="sub-info-value" id="admin-deduct-cycle">每月 20 日定期自动扣款</div>
+                <span class="sub-info-subtext" id="admin-deduct-remind">下次扣款日：2026-11-20（扣款前 5 日短信/站内信提醒超管与扣款人）</span>
+              </div>
+
+              <div class="sub-info-item">
+                <span class="sub-info-label">每期扣款金额</span>
+                <div class="sub-info-value" style="color:#f04134;font-size:18px;font-weight:700;" id="admin-deduct-amount">¥980.00 / 月</div>
+                <span class="sub-info-subtext" id="admin-deduct-spec">1套 × 1.5万智点/月（到期自动续期）</span>
+              </div>
+
+              <div class="sub-info-item">
+                <span class="sub-info-label">订阅协议编号</span>
+                <div class="sub-info-value">SUB20261020098001</div>
+                <span class="sub-info-subtext">签约时间：2026-10-20 12:08</span>
+              </div>
+            </div>
+
+            <div class="sub-rule-banner">
+              <span>💡 规则说明：您可在下次续费日前至少 3 天关闭自动续费，关闭后当期已生效智点权益可继续使用至本周期结束（2026-11-20）；若原签约扣款人离职，请及时点击「更换扣款人信息」重新扫码签约，过渡期企业权益不中断。</span>
+            </div>
+          </div>
+
+          <!-- 近期履约与扣款记录表格 -->
+          <div class="admin-section-title" style="margin-top:28px;">
+            <span>订阅履约与扣款记录</span>
+          </div>
+          <table class="pay-table">
+            <thead>
+              <tr>
+                <th>履约单号</th>
+                <th>订阅商品</th>
+                <th>计费周期</th>
+                <th>扣款时间</th>
+                <th>扣款账号</th>
+                <th>扣款金额</th>
+                <th>状态</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>INV20261020001</td>
+                <td id="admin-log-product">AI 智点基础包（1套）</td>
+                <td>2026-10-20 至 2026-11-20</td>
+                <td>2026-10-20 12:08:15</td>
+                <td id="admin-log-payer">支付宝（138****4247 · 张珊）</td>
+                <td id="admin-log-amount">¥980.00</td>
+                <td><span style="color:#00b42a;font-weight:500;">扣款成功 · 智点已发放</span></td>
+                <td>
+                  <div class="pay-table-actions">
+                    <a href="javascript:void(0)" onclick="switchAdminSubPage('invoice')">去开具发票</a>|
+                    <a href="javascript:void(0)" onclick="openAgreementModal(event)">查看协议</a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 子页面 B：订单权益 > 发票合同 > 发票管理（复刻截图2 + 连续订阅按月/汇总开票 & 与一次性订单分拆不合并） -->
+        <div class="admin-content-stack" id="admin-subview-invoice" style="display:none;">
+          <!-- 面包屑 -->
+          <div class="admin-breadcrumb">
+            <span>订单权益</span>
+            <span>&gt;</span>
+            <span>发票合同</span>
+            <span>&gt;</span>
+            <span class="current">发票管理</span>
+          </div>
+
+          <!-- 顶部 Tabs -->
+          <div class="invoice-tabs-bar">
+            <div class="invoice-tab-item active" id="inv-tab-apply" onclick="switchInvoiceTab('apply')">发票申请</div>
+            <div class="invoice-tab-item" id="inv-tab-records" onclick="switchInvoiceTab('records')">发票记录</div>
+            <div class="invoice-tab-item" id="inv-tab-title" onclick="switchInvoiceTab('title')">发票抬头管理</div>
+            <div class="invoice-tab-item" id="inv-tab-recipient" onclick="switchInvoiceTab('recipient')">收件人管理</div>
+          </div>
+
+          <!-- 发票申请主面板 -->
+          <div id="invoice-panel-apply">
+            <!-- 发票申请注意事项（复刻截图2 + 连续订阅分拆开票规则说明） -->
+            <div class="invoice-notice-box">
+              <div class="invoice-notice-title">
+                <span class="invoice-notice-icon">!</span>
+                <span>发票申请注意事项</span>
+              </div>
+              <ul class="invoice-notice-list">
+                <li>完成支付后，可在12个月内提交发票申请</li>
+                <li>请正确填写发票信息，已提交的发票申请不支持修改和撤回</li>
+                <li>请正确填写收件信息，开具的发票为全国数字化的电子发票，将发送至收件人的邮箱</li>
+                <li><strong style="color:#d46b08;">连续订阅开票规则：</strong>连续订阅履约订单支持<strong>按月单笔开票</strong>或勾选多期<strong>汇总合并开票</strong>；<strong>连续订阅履约票与一次性订单发票严格分拆开具，不支持合并勾选。</strong></li>
+              </ul>
+            </div>
+
+            <!-- 快捷操作与提示栏 -->
+            <div class="invoice-toolbar-row">
+              <div style="display:flex;align-items:center;gap:12px;">
+                <span>勾选订单进行开票，支持单页全选</span>
+                <span id="invoice-split-rule-badge" style="font-size:12px;color:#165dff;background:#e8f3ff;padding:3px 10px;border-radius:4px;">
+                  当前规则：连续订阅履约单与一次性订单分拆开票，不可跨类型合并
+                </span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <button type="button" class="admin-btn" style="padding:4px 10px;font-size:12px;" onclick="quickSelectInvoiceMode('monthly')">快捷演示：连续订阅按月单开（1期）</button>
+                <button type="button" class="admin-btn" style="padding:4px 10px;font-size:12px;" onclick="quickSelectInvoiceMode('summary')">快捷演示：连续订阅跨月汇总开（3期）</button>
+                <button type="button" class="admin-btn" style="padding:4px 10px;font-size:12px;" onclick="quickSelectInvoiceMode('onetime')">快捷演示：一次性订单开票</button>
+              </div>
+            </div>
+
+            <!-- 订单开票列表（复刻截图2表头：勾选、订单编号、订购内容、实付金额、订单状态、下单时间） -->
+            <table class="pay-table" id="invoice-order-table">
+              <thead>
+                <tr>
+                  <th style="width:42px;">
+                    <span class="custom-checkbox" id="inv-select-all-cb" onclick="toggleSelectAllInvoices()"></span>
+                  </th>
+                  <th>订单编号</th>
+                  <th>订购内容</th>
+                  <th>实付金额</th>
+                  <th>订单状态：</th>
+                  <th>下单时间</th>
+                </tr>
+              </thead>
+              <tbody id="invoice-orders-tbody">
+                <!-- 由 JS 渲染 -->
+              </tbody>
+            </table>
+
+            <!-- 底部操作栏与分页（复刻截图2） -->
+            <div class="invoice-bottom-bar">
+              <div class="invoice-action-left">
+                <button type="button" class="invoice-issue-btn" id="btn-issue-invoice" onclick="openIssueInvoiceModal()">开具发票</button>
+                <span>
+                  已选<strong id="inv-selected-count" style="margin:0 3px;">2</strong>个订单，待开票金额
+                  <span class="invoice-amount-green" id="inv-selected-amount">1960.00</span> 元
+                </span>
+                <span id="inv-mode-indicator" style="font-size:12px;color:#165dff;background:#f0f6ff;border:1px solid #bedaff;padding:2px 8px;border-radius:4px;">
+                  开票方式：连续订阅 · 跨月汇总开票
+                </span>
+              </div>
+
+              <div class="invoice-pagination">
+                <span>&lt;</span>
+                <span class="invoice-page-num">1</span>
+                <span>&gt;</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 发票记录面板 -->
+          <div id="invoice-panel-records" style="display:none;margin-top:16px;">
+            <table class="pay-table">
+              <thead>
+                <tr>
+                  <th>发票申请单号</th>
+                  <th>发票类型 / 开具方式</th>
+                  <th>关联订单号</th>
+                  <th>发票抬头</th>
+                  <th>开票金额</th>
+                  <th>申请时间</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="invoice-records-tbody">
+                <!-- 由 JS 渲染 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- 右下角悬浮联系我们（复刻截图2） -->
+    <div class="contact-us-float" onclick="showToast('正在为您连接专属企业顾问...')">
+      <span style="font-size:15px;">💬</span>
+      <span>联系<br/>我们</span>
+    </div>
+  </div>
+
+  <!-- ==================== 需求 1：W365 系统后台（参考截图1，运营管理 > 连续订阅设置） ==================== -->
+  <div id="page-sysadmin">
+    <!-- 顶部深蓝色导航栏（复刻截图1） -->
+    <div class="sys-topbar">
+      <div class="sys-brand">
+        <span class="sys-brand-w">W</span>
+        <span>365 系统后台</span>
+      </div>
+      <div class="sys-user-right">
+        <span>黄雅娟 (管理员)</span>
+        <span class="sys-user-avatar">雅娟</span>
+        <span style="font-size:10px;color:#8c8c8c;">▾</span>
+      </div>
+    </div>
+
+    <!-- 主体：左侧运营管理菜单 + 右侧内容卡片 -->
+    <div class="sys-body">
+      <aside class="sys-sidebar">
+        <div class="sys-nav-parent">
+          <span>📊 运营管理</span>
+          <span style="font-size:11px;color:#8c8c8c;">^</span>
+        </div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">策略任务管理</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">活动管理列表</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">抽奖配置</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">企业激活推广配置</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">轮播广告管理</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">帮助中心配置</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">使用指南配置</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">企业助手配置</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">团队模板配置</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">共享文件夹配置</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">企业信息</div>
+        <div class="sys-nav-item" id="sys-nav-pkg" onclick="switchSysSubPage('pkg')">套餐配置</div>
+        <div class="sys-nav-item active" id="sys-nav-sub" onclick="switchSysSubPage('sub')">连续订阅设置</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">标签管理</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">企业模板配置</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">企业用户查询</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">重名企业申诉</div>
+      </aside>
+
+      <main class="sys-main">
+        <div class="sys-card">
+          <!-- 顶部标题与操作按钮行 -->
+          <div class="sys-title-row">
+            <span class="sys-page-title" id="sys-page-title-text">连续订阅设置</span>
+            <button type="button" class="sys-top-btn" onclick="SwitchToPurchaseVerify()">前往购买页验证拦截效果</button>
+          </div>
+
+          <!-- 自动扣款金额上限全局配置栏（直接可视化编辑 & 联动购买页） -->
+          <div class="sys-cap-config-bar">
+            <div class="sys-cap-left">
+              <span class="sys-cap-title">🛡️ 连续包月自动扣款金额上限设置：</span>
+              <div class="sys-cap-input-group">
+                <span>单笔自动续费订单金额上限</span>
+                <input type="number" class="sys-cap-input" id="sys-cap-limit-input" value="2000" min="100" step="100" />
+                <span>元</span>
+                <button type="button" class="sys-btn-query" onclick="saveAutoDebitCap()">保存上限配置</button>
+              </div>
+              <span class="sys-cap-hint" id="sys-cap-rule-desc">
+                （当前生效上限：<strong id="sys-cap-current-val" style="color:#1890ff;">2000</strong> 元；当购买页所选连续包月商品金额超过该上限时，将自动置灰“连续包月”并切换至“1个月”，悬停提示“订单金额超过<span id="sys-cap-tip-preview">2000</span>元，无法选择自动续费，可选择单次采购”）
+              </span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <button type="button" class="sys-btn-clear" style="border-color:#91caff;color:#1890ff;" onclick="quickTestOverLimitOnPurchase()">
+                ⚡ 一键模拟超限并跳转购买页预览
+              </button>
+            </div>
+          </div>
+
+          <!-- 灰底筛选区（复刻截图1） -->
+          <div class="sys-filter-box">
+            <div class="sys-filter-grid">
+              <div class="sys-filter-item">
+                <span class="sys-filter-label">关键字：</span>
+                <input type="text" class="sys-filter-control" id="sys-keyword-input" placeholder="请输入套餐编号/名称" />
+              </div>
+              <div class="sys-filter-item">
+                <span class="sys-filter-label">套餐类型：</span>
+                <select class="sys-filter-control">
+                  <option>全部</option>
+                  <option>套餐叠加包</option>
+                  <option>基础套餐</option>
+                </select>
+              </div>
+              <div class="sys-filter-item">
+                <span class="sys-filter-label">授权产品：</span>
+                <select class="sys-filter-control">
+                  <option>全部</option>
+                  <option>云办公（公有云）</option>
+                  <option>云办公（私有云）</option>
+                </select>
+              </div>
+              <div class="sys-filter-item">
+                <span class="sys-filter-label">套餐分类：</span>
+                <select class="sys-filter-control">
+                  <option>全部</option>
+                  <option>AI 额度包</option>
+                </select>
+              </div>
+              <div class="sys-filter-item">
+                <span class="sys-filter-label">连续订阅：</span>
+                <select class="sys-filter-control" id="sys-filter-sub-status" onchange="renderSysProductTable()">
+                  <option value="all">全部</option>
+                  <option value="allowed">允许自动连续订阅</option>
+                  <option value="disabled">不允许连续订阅</option>
+                </select>
+              </div>
+              <div class="sys-filter-item">
+                <span class="sys-filter-label">渠道：</span>
+                <select class="sys-filter-control">
+                  <option>全部</option>
+                  <option>官网在线购买</option>
+                </select>
+              </div>
+            </div>
+            <div class="sys-filter-btns">
+              <button type="button" class="sys-btn-query" onclick="renderSysProductTable()">查询</button>
+              <button type="button" class="sys-btn-clear" onclick="resetSysFilter()">清空</button>
+            </div>
+          </div>
+
+          <!-- 结果数量与表格（复刻截图1列结构 + 允许自动连续订阅配置列） -->
+          <div class="sys-result-count">共 <span id="sys-total-count">910</span> 条结果</div>
+
+          <table class="sys-table">
+            <thead>
+              <tr>
+                <th>套餐编码</th>
+                <th>套餐名称</th>
+                <th>套餐类型</th>
+                <th>权益包类型</th>
+                <th>单月标准价</th>
+                <th>允许自动连续订阅</th>
+                <th>自动扣款金额上限</th>
+                <th>授权产品</th>
+                <th>新增时间</th>
+                <th>状态</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="sys-product-tbody">
+              <!-- 由 JS 渲染 -->
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- 自动续费协议弹窗 -->
+  <div class="modal-mask" id="agreement-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span>《自动续费协议》</span>
+        <span class="modal-close" onclick="closeAgreementModal()">×</span>
+      </div>
+      <div class="modal-body">
+        <p><strong>1. 服务说明：</strong>您开通 AI 额度包连续包月服务后，即授权金山办公在每个计费周期届满前，从您签约绑定的支付账户（支付宝/微信支付）中按照届时有效的页面价格发起下一计费周期的自动扣款。</p>
+        <p style="margin-top:8px;"><strong>2. 扣款规则与周期：</strong>自动续费按月度周期定期发起扣款，每期扣款成功后自动发放当期对应的企业智点额度，当期智点有效期为 1 个月。</p>
+        <p style="margin-top:8px;"><strong>3. 取消与退订：</strong>您可在续费日前至少 3 天，前往「管理后台-订单权益-支付设置页」或对应支付渠道内关闭自动续费。关闭后不再进行下一周期扣款，当期已生效权益保留至本周期结束。</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="modal-btn" onclick="closeAgreementModal()">我知道了</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 管理后台：关闭自动续费确认弹窗 -->
+  <div class="modal-mask" id="cancel-renew-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span>关闭自动续费</span>
+        <span class="modal-close" onclick="closeCancelRenewModal()">×</span>
+      </div>
+      <div class="modal-body">
+        <p>确认要关闭「<strong id="cancel-modal-pack-name">AI 智点基础包</strong>」的连续包月自动续费服务吗？</p>
+        <p style="margin-top:8px;color:#646a73;">· 关闭后，下个计费周期（2026-11-20）起将不再自动扣款；</p>
+        <p style="color:#646a73;">· 当前周期已发放的智点额度仍可正常使用至 <strong>2026-11-20</strong>；</p>
+        <p style="color:#646a73;">· 系统将同步解除原绑定支付账户的委托代扣协议。</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="modal-btn secondary" onclick="closeCancelRenewModal()">暂不关闭</button>
+        <button type="button" class="modal-btn danger" onclick="confirmCancelRenew()">确认关闭自动续费</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 管理后台：更换扣款人信息弹窗 -->
+  <div class="modal-mask" id="change-payer-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span>更换扣款人信息</span>
+        <span class="modal-close" onclick="closeChangePayerModal()">×</span>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:12px;color:#646a73;background:#f7f8fa;padding:8px 12px;border-radius:6px;">
+          更换扣款人将由新管理员扫码签署新的连续包月代扣协议，新协议生效后系统自动解约原扣款人协议，过渡期企业智点权益不中断。
+        </p>
+
+        <div class="form-field">
+          <label>新扣款人姓名（企业管理员）</label>
+          <input type="text" class="form-input" id="input-payer-name" value="李明" placeholder="请输入新扣款人姓名" />
+        </div>
+
+        <div class="form-field">
+          <label>扣款支付渠道</label>
+          <select class="form-select" id="input-payer-channel">
+            <option value="支付宝">支付宝（推荐）</option>
+            <option value="微信支付">微信支付</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label>新扣款人手机号 / 支付账号</label>
+          <input type="text" class="form-input" id="input-payer-phone" value="139****8866" placeholder="请输入绑定手机号或账号" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="modal-btn secondary" onclick="closeChangePayerModal()">取消</button>
+        <button type="button" class="modal-btn" onclick="confirmChangePayer()">确认更换并完成签约</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 管理后台：开具发票申请弹窗（支持连续订阅按月单开 / 跨月汇总开票，且与一次性订单发票分拆） -->
+  <div class="modal-mask" id="issue-invoice-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span>开具数字化电子发票</span>
+        <span class="modal-close" onclick="closeIssueInvoiceModal()">×</span>
+      </div>
+      <div class="modal-body">
+        <div style="background:#f0f6ff;border:1px solid #bedaff;border-radius:6px;padding:10px 14px;font-size:12px;color:#1d42d8;margin-bottom:12px;" id="issue-modal-rule-tip">
+          📌 当前开票模式：<strong>连续订阅履约票 · 跨月汇总合并开票</strong>（已与一次性套餐订单发票严格分拆，不合并开具）
+        </div>
+
+        <div class="form-field">
+          <label>开具方式与订单范围</label>
+          <input type="text" class="form-input" id="issue-modal-scope" value="连续订阅履约单（共 2 笔汇总开具）" readonly style="background:#f7f8fa;color:#1f2329;font-weight:500;" />
+        </div>
+
+        <div class="form-field">
+          <label>开票总金额</label>
+          <input type="text" class="form-input" id="issue-modal-amount" value="¥1,960.00" readonly style="background:#f7f8fa;color:#f04134;font-weight:700;" />
+        </div>
+
+        <div class="form-field">
+          <label>发票类型</label>
+          <select class="form-select" id="issue-modal-type">
+            <option value="增值税电子普通发票（数电票）">增值税电子普通发票（数电票）</option>
+            <option value="增值税电子专用发票（数电票）">增值税电子专用发票（数电票）</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label>发票抬头（企业名称 &amp; 税号）</label>
+          <input type="text" class="form-input" id="issue-modal-title" value="小猿最可爱科技有限公司（91110108MA01XXXX88）" />
+        </div>
+
+        <div class="form-field">
+          <label>接收人电子邮箱</label>
+          <input type="text" class="form-input" id="issue-modal-email" value="finance@xiaoyuan-tech.com" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="modal-btn secondary" onclick="closeIssueInvoiceModal()">取消</button>
+        <button type="button" class="modal-btn" onclick="confirmIssueInvoice()">提交开票申请</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 系统后台：设置自动扣款金额上限弹窗 -->
+  <div class="modal-mask" id="sys-cap-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span>设置连续订阅自动扣款金额上限</span>
+        <span class="modal-close" onclick="closeSysCapModal()">×</span>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:12px;color:#595959;background:#f5f7fa;padding:10px 12px;border-radius:6px;">
+          设置用户在购买页选购「连续包月」商品时的单笔自动续费金额上限。当用户所选连续包月商品价格超过该金额上限时，系统将置灰「连续包月」选项并自动切换到「1个月」，同时悬停提示“订单金额超过XXX元，无法选择自动续费，可选择单次采购”。
+        </p>
+        <div class="form-field">
+          <label>自动扣款金额上限（元）</label>
+          <input type="number" class="form-input" id="modal-cap-input" value="2000" min="100" step="100" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="modal-btn secondary" onclick="closeSysCapModal()">取消</button>
+        <button type="button" class="modal-btn" onclick="confirmModalCap()">保存并生效</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 状态管理
+    const state = {
+      consoleView: 'purchase',     // 'purchase' | 'admin' | 'sys'
+      adminSubPage: 'paysettings', // 'paysettings' | 'invoice'
+      invoiceTab: 'apply',         // 'apply' | 'records' | 'title' | 'recipient'
+      sysSubPage: 'sub',           // 'sub' (连续订阅设置) | 'pkg' (套餐配置)
+      autoDebitLimit: 2000,        // 自动扣款金额上限（元），默认 2000 元
+      quotaPack: 'basic',          // 'basic' | 'pro'
+      quotaSets: 1,
+      quotaDuration: 'continuous', // 'continuous' | 'month' | 'year'
+      basePkgChecked: true,
+      basePlan: 'collab',          // 'collab' | 'adv' | 'flag'
+      seatCount: 5,
+      seatYears: 1,
+      payChannel: 'ali',           // 'wx' | 'ali' | 'bank'
+      mobileChannel: 'ali',        // 'wx' | 'ali'
+      subActive: true,
+      payerName: '张珊',
+      payerChannel: '支付宝',
+      payerAccount: '138****4247',
+      // 系统后台商品列表（参考截图1 + 连续订阅开关配置）
+      sysProducts: [
+        { code: '33109', name: 'wps 365 AI 智点基础包001', type: '套餐叠加包', pkgType: '不可分配', monthPrice: 980, allowContinuous: true, product: '云办公（公有云）', time: '2026-10-20 11:30:23', status: '在售中', bindKey: null },
+        { code: '33107', name: '额度测试（特殊权益）', type: '套餐叠加包', pkgType: '不可分配', monthPrice: 980, allowContinuous: false, product: '云办公（公有云）', time: '2026-10-19 15:30:52', status: '在售中', bindKey: null },
+        { code: '33105', name: 'WPS 365 AI 智点基础包', type: '套餐叠加包', pkgType: '不可分配', monthPrice: 980, allowContinuous: true, product: '云办公（公有云）', time: '2026-10-16 17:06:45', status: '在售中', bindKey: 'basic' },
+        { code: '33104', name: 'AI 智点高级包', type: '套餐叠加包', pkgType: '不可分配', monthPrice: 980, allowContinuous: true, product: '云办公（公有云）', time: '2026-10-16 14:49:12', status: '在售中', bindKey: 'pro' },
+        { code: '33102', name: '大额度权益包（套数）', type: '套餐叠加包', pkgType: '不可分配', monthPrice: 2980, allowContinuous: false, product: '云办公（公有云）', time: '2026-10-13 16:41:49', status: '在售中', bindKey: null },
+        { code: '33096', name: '涉密文档分级保护-单权益叠加包', type: '套餐叠加包', pkgType: '不可分配', monthPrice: 1500, allowContinuous: false, product: '云办公（私有云）', time: '2026-09-23 14:52:28', status: '在售中', bindKey: null },
+        { code: '33095', name: '【分保】知识库', type: '套餐叠加包', pkgType: '不可分配', monthPrice: 1200, allowContinuous: false, product: '云办公（公有云）', time: '2026-09-17 17:47:49', status: '在售中', bindKey: null },
+        { code: '33093', name: '【分保】模板库', type: '套餐叠加包', pkgType: '不可分配', monthPrice: 800, allowContinuous: false, product: '云办公（公有云）', time: '2026-09-15 10:34:05', status: '在售中', bindKey: null }
+      ],
+      // 管理后台：待开票订单列表（包含连续订阅按月履约单 & 一次性订单，支持按月/汇总开票，且两类严格分拆不合并）
+      invoiceOrders: [
+        { id: 'SUB-20261020-001', category: 'sub', period: '2026-10月期', content: 'AI 智点基础包（连续包月 · 第1期履约单 2026/10/20-2026/11/20）', amount: 980.00, status: '已支付（履约完成）', time: '2026-10-20 12:08:15', checked: true, invoiced: false },
+        { id: 'SUB-20260920-002', category: 'sub', period: '2026-09月期', content: 'AI 智点基础包（连续包月 · 第2期履约单 2026/09/20-2026/10/20）', amount: 980.00, status: '已支付（履约完成）', time: '2026-09-20 10:00:03', checked: true, invoiced: false },
+        { id: 'SUB-20260820-003', category: 'sub', period: '2026-08月期', content: 'AI 智点基础包（连续包月 · 第3期履约单 2026/08/20-2026/09/20）', amount: 980.00, status: '已支付（履约完成）', time: '2026-08-20 10:00:01', checked: false, invoiced: false },
+        { id: 'ORD-20261020-889', category: 'onetime', period: '一次性年单', content: 'WPS 365 商业协作版（5人 × 1年 · 一次性采购订单）', amount: 995.00, status: '已支付', time: '2026-10-20 12:08:15', checked: false, invoiced: false },
+        { id: 'ORD-20261008-512', category: 'onetime', period: '单次月包', content: 'AI 智点基础包（1个月 · 单次采购订单）', amount: 980.00, status: '已支付', time: '2026-10-08 16:22:40', checked: false, invoiced: false }
+      ],
+      // 已开具发票记录
+      invoiceRecords: [
+        { applyNo: 'FP202607250018', modeText: '连续订阅履约票（按月单开）', orderIds: 'SUB-20260720-001', title: '小猿最可爱科技有限公司', amount: 980.00, time: '2026-07-25 14:20:11', status: '已开票（数电票已发邮箱）' },
+        { applyNo: 'FP202606120009', modeText: '一次性订单发票（独立分拆）', orderIds: 'ORD-20260610-102', title: '小猿最可爱科技有限公司', amount: 1990.00, time: '2026-06-12 09:45:30', status: '已开票（数电票已发邮箱）' }
+      ]
+    };
+
+    const PLAN_CONFIG = {
+      collab: { name: '商业协作版', fullName: 'WPS 365 商业协作版', price: 199 },
+      adv:    { name: '商业高级版', fullName: 'WPS 365 商业高级版', price: 399 },
+      flag:   { name: '商业旗舰版', fullName: 'WPS 365 商业旗舰版', price: 599 }
+    };
+
+    function formatMoney(num) {
+      return num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function showToast(msg) {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.style.display = 'block';
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => {
+        el.style.display = 'none';
+      }, 2800);
+    }
+
+    /* 顶部控制台切换（购买页 / 管理后台 / 系统后台） */
+    function switchConsoleView(view) {
+      state.consoleView = view;
+      document.getElementById('console-tab-purchase').classList.toggle('active', view === 'purchase');
+      document.getElementById('console-tab-admin').classList.toggle('active', view === 'admin');
+      document.getElementById('console-tab-sys').classList.toggle('active', view === 'sys');
+
+      document.getElementById('page-purchase').style.display = view === 'purchase' ? 'flex' : 'none';
+      document.getElementById('page-payment').style.display = 'none';
+      document.getElementById('page-admin').style.display = view === 'admin' ? 'flex' : 'none';
+      document.getElementById('page-sysadmin').style.display = view === 'sys' ? 'flex' : 'none';
+
+      updateUI();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* 管理后台内部子页面切换：订单权益 > 支付设置 vs 订单权益 > 发票合同 > 发票管理 */
+    function switchAdminSubPage(subPage) {
+      state.adminSubPage = subPage;
+      document.getElementById('admin-nav-paysettings').classList.toggle('active', subPage === 'paysettings');
+      document.getElementById('admin-nav-invoice').classList.toggle('active', subPage === 'invoice');
+
+      document.getElementById('admin-subview-paysettings').style.display = subPage === 'paysettings' ? 'block' : 'none';
+      document.getElementById('admin-subview-invoice').style.display = subPage === 'invoice' ? 'block' : 'none';
+
+      if (subPage === 'invoice') {
+        renderInvoiceOrderTable();
+        renderInvoiceRecordsTable();
+      }
+    }
+
+    function switchInvoiceTab(tab) {
+      state.invoiceTab = tab;
+      document.getElementById('inv-tab-apply').classList.toggle('active', tab === 'apply');
+      document.getElementById('inv-tab-records').classList.toggle('active', tab === 'records');
+      document.getElementById('inv-tab-title').classList.toggle('active', tab === 'title');
+      document.getElementById('inv-tab-recipient').classList.toggle('active', tab === 'recipient');
+
+      if (tab === 'apply' || tab === 'title' || tab === 'recipient') {
+        document.getElementById('invoice-panel-apply').style.display = 'block';
+        document.getElementById('invoice-panel-records').style.display = 'none';
+        if (tab === 'title') showToast('发票抬头默认使用：小猿最可爱科技有限公司');
+        if (tab === 'recipient') showToast('默认收件邮箱：finance@xiaoyuan-tech.com');
+      } else {
+        document.getElementById('invoice-panel-apply').style.display = 'none';
+        document.getElementById('invoice-panel-records').style.display = 'block';
+        renderInvoiceRecordsTable();
+      }
+    }
+
+    /* 判断当前所选商品是否允许连续订阅 & 是否超过自动扣款金额上限 */
+    function getContinuousAvailability() {
+      const prodObj = state.sysProducts.find(p => p.bindKey === state.quotaPack);
+      const allowedByProduct = prodObj ? prodObj.allowContinuous : true;
+      const monthlyOrderPrice = state.quotaSets * 980;
+      const overLimit = monthlyOrderPrice > state.autoDebitLimit;
+      return {
+        allowedByProduct,
+        overLimit,
+        monthlyOrderPrice,
+        canSelectContinuous: allowedByProduct && !overLimit
+      };
+    }
+
+    function selectQuotaPack(pack) {
+      state.quotaPack = pack;
+      document.getElementById('quota-card-basic').classList.toggle('active', pack === 'basic');
+      document.getElementById('quota-card-pro').classList.toggle('active', pack === 'pro');
+      checkAndEnforceContinuousLimit();
+      updateUI();
+    }
+
+    function changeQuotaSets(delta) {
+      const next = state.quotaSets + delta;
+      if (next < 1) return;
+      state.quotaSets = next;
+      document.getElementById('quota-sets-input').value = next;
+      checkAndEnforceContinuousLimit();
+      updateUI();
+    }
+
+    function checkAndEnforceContinuousLimit() {
+      const status = getContinuousAvailability();
+      if (!status.canSelectContinuous && state.quotaDuration === 'continuous') {
+        state.quotaDuration = 'month';
+        if (status.overLimit) {
+          showToast(`订单金额超过${state.autoDebitLimit}元，无法选择自动续费，已为您自动切换到「1个月」`);
+        } else if (!status.allowedByProduct) {
+          showToast('该商品在系统后台已关闭自动连续订阅，已为您自动切换到「1个月」');
+        }
+      }
+    }
+
+    function selectQuotaDuration(dur) {
+      if (dur === 'continuous') {
+        const status = getContinuousAvailability();
+        if (status.overLimit) {
+          showToast(`订单金额超过${state.autoDebitLimit}元，无法选择自动续费，可选择单次采购`);
+          return;
+        }
+        if (!status.allowedByProduct) {
+          showToast('该商品暂不支持自动连续订阅，可选择单次采购');
+          return;
+        }
+      }
+      state.quotaDuration = dur;
+      updateUI();
+    }
+
+    function toggleBasePackage() {
+      state.basePkgChecked = !state.basePkgChecked;
+      document.getElementById('base-pkg-checkbox').classList.toggle('checked', state.basePkgChecked);
+      updateUI();
+    }
+
+    function selectBasePlan(plan) {
+      state.basePlan = plan;
+      document.getElementById('plan-card-collab').classList.toggle('active', plan === 'collab');
+      document.getElementById('plan-card-adv').classList.toggle('active', plan === 'adv');
+      document.getElementById('plan-card-flag').classList.toggle('active', plan === 'flag');
+      updateUI();
+    }
+
+    function changeSeatCount(delta) {
+      const next = state.seatCount + delta;
+      if (next < 1) return;
+      state.seatCount = next;
+      document.getElementById('seat-count-input').value = next;
+      updateUI();
+    }
+
+    function selectSeatYears(years) {
+      state.seatYears = years;
+      document.getElementById('year-btn-1').classList.toggle('active', years === 1);
+      document.getElementById('year-btn-2').classList.toggle('active', years === 2);
+      document.getElementById('year-btn-3').classList.toggle('active', years === 3);
+      updateUI();
+    }
+
+    function toggleCheckbox(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('checked');
+    }
+
+    function updateUI() {
+      // 0. 校验连续包月金额上限与商品开关状态
+      const contStatus = getContinuousAvailability();
+      if (!contStatus.canSelectContinuous && state.quotaDuration === 'continuous') {
+        state.quotaDuration = 'month';
+      }
+
+      const btnCont = document.getElementById('dur-btn-continuous');
+      const wrapCont = document.getElementById('dur-continuous-wrap');
+      const btnMonth = document.getElementById('dur-btn-month');
+      const btnYear = document.getElementById('dur-btn-year');
+      const tooltipEl = document.getElementById('dur-continuous-tooltip');
+
+      btnCont.classList.toggle('disabled', !contStatus.canSelectContinuous);
+      if (wrapCont) {
+        wrapCont.classList.toggle('show-tooltip', !contStatus.canSelectContinuous);
+        if (contStatus.canSelectContinuous) wrapCont.classList.remove('force-tooltip');
+      }
+      btnCont.classList.toggle('active', state.quotaDuration === 'continuous');
+      btnMonth.classList.toggle('active', state.quotaDuration === 'month');
+      btnYear.classList.toggle('active', state.quotaDuration === 'year');
+
+      if (contStatus.overLimit) {
+        tooltipEl.textContent = `订单金额超过${state.autoDebitLimit}元，无法选择自动续费，可选择单次采购`;
+      } else if (!contStatus.allowedByProduct) {
+        tooltipEl.textContent = '该商品未开启自动连续订阅，可选择单次采购';
+      } else {
+        tooltipEl.textContent = `订单金额超过${state.autoDebitLimit}元，无法选择自动续费，可选择单次采购`;
+      }
+
+      // 动态更新时长按钮上的价格展示
+      const curMonthlyPrice = state.quotaSets * 980;
+      const curYearlyPrice = state.quotaSets * 9800;
+      const elPriceCont = document.getElementById('dur-price-continuous');
+      const elPriceMonth = document.getElementById('dur-price-month');
+      const elPriceYear = document.getElementById('dur-price-year');
+      if (elPriceCont) elPriceCont.textContent = '¥' + curMonthlyPrice.toLocaleString('en-US');
+      if (elPriceMonth) elPriceMonth.textContent = '¥' + curMonthlyPrice.toLocaleString('en-US');
+      if (elPriceYear) elPriceYear.textContent = '¥' + curYearlyPrice.toLocaleString('en-US');
+
+      // 1. 计算 AI 额度包价格与文案
+      const unitQuotaPrice = state.quotaDuration === 'year' ? 9800 : 980;
+      const quotaTotal = state.quotaSets * unitQuotaPrice;
+      const pointsPerSet = state.quotaDuration === 'year' ? 18 : 1.5;
+      const totalPoints = +(state.quotaSets * pointsPerSet).toFixed(1);
+      const quotaPackTitle = state.quotaPack === 'basic' ? 'AI 智点基础包' : 'AI 智点高级包';
+
+      document.getElementById('quota-points-pill').textContent = totalPoints + '万';
+      document.getElementById('quota-validity-label').textContent =
+        state.quotaDuration === 'year' ? '（有效期1年）' : '（有效期1个月）';
+
+      document.getElementById('summary-quota-name').textContent = quotaPackTitle;
+      document.getElementById('summary-quota-price').textContent = '¥' + formatMoney(quotaTotal);
+
+      let durLabel = '连续包月';
+      if (state.quotaDuration === 'month') durLabel = '1个月';
+      if (state.quotaDuration === 'year') durLabel = '1年';
+      document.getElementById('summary-quota-sub').textContent = `${state.quotaSets}套 × ${durLabel}`;
+
+      // 2. 连续包月下：优惠区域上方显示下次扣款时间与金额，按钮下方显示自动续费协议
+      const isContinuous = state.quotaDuration === 'continuous';
+      const tipEl = document.getElementById('auto-renew-order-tip');
+      const agreeRowEl = document.getElementById('auto-renew-agreement-row');
+
+      tipEl.style.display = isContinuous ? 'block' : 'none';
+      agreeRowEl.style.display = isContinuous ? 'flex' : 'none';
+
+      document.getElementById('next-deduct-date').textContent = '2026/11/20';
+      document.getElementById('next-deduct-amount').textContent = String(quotaTotal);
+
+      // 3. 计算 WPS 365 基础套餐
+      const planInfo = PLAN_CONFIG[state.basePlan];
+      document.getElementById('base-pkg-header-text').textContent =
+        `WPS 365 基础套餐 · 按席位增购（${planInfo.name}，${state.seatYears}年，${state.seatCount}人）`;
+
+      const basePkgBlock = document.getElementById('summary-base-pkg-block');
+      basePkgBlock.style.display = state.basePkgChecked ? 'block' : 'none';
+
+      const baseTotal = state.basePkgChecked ? planInfo.price * state.seatCount * state.seatYears : 0;
+      document.getElementById('summary-plan-name').textContent = planInfo.fullName;
+      document.getElementById('summary-plan-price').textContent = '¥' + formatMoney(baseTotal);
+      document.getElementById('summary-plan-sub').textContent = `${state.seatCount}人 × ${state.seatYears}年`;
+
+      // 4. 总计金额
+      const grandTotal = quotaTotal + baseTotal;
+      document.getElementById('summary-total-price').textContent = formatMoney(grandTotal);
+
+      // 5. 同步支付页数据
+      const monthlyAmount = state.quotaSets * 980;
+      document.getElementById('pay-page-amount').textContent = formatMoney(grandTotal);
+      document.getElementById('pay-monthly-deduct-text').textContent = `￥${monthlyAmount}/月`;
+      document.getElementById('pay-auto-renew-desc').style.display = isContinuous ? 'block' : 'none';
+
+      // 6. 同步手机模拟支付界面文案（WPS 365 内容）
+      document.getElementById('wx-mobile-total-amount').textContent = grandTotal.toFixed(2);
+      document.getElementById('wx-mobile-service-name').textContent = `WPS 365 ${quotaPackTitle}每月自动续费`;
+      document.getElementById('wx-mobile-service-desc').textContent =
+        `该线上 ${quotaPackTitle}服务每月自动续费，扣费金额为${monthlyAmount}元/月。服务到期当天自动通过微信支付为你发起扣费，自动延长服务有效期。服务关闭后将不再继续扣费。`;
+
+      document.getElementById('ali-mobile-total-amount').textContent = grandTotal.toFixed(2);
+      document.getElementById('ali-mobile-service-name').textContent = quotaPackTitle;
+      document.getElementById('ali-mobile-monthly-price').textContent = monthlyAmount.toFixed(2);
+      document.getElementById('ali-mobile-sets-text').textContent = `共计${state.quotaSets}套额度包`;
+
+      // 7. 同步管理后台支付设置页数据
+      document.getElementById('admin-sub-name').textContent = `${quotaPackTitle}（连续包月）`;
+      document.getElementById('cancel-modal-pack-name').textContent = quotaPackTitle;
+      document.getElementById('admin-payer-account').textContent = `${state.payerChannel}（${state.payerAccount} · ${state.payerName}）`;
+      document.getElementById('admin-deduct-amount').textContent = `¥${formatMoney(monthlyAmount)} / 月`;
+      document.getElementById('admin-deduct-spec').textContent = `${state.quotaSets}套 × ${totalPoints}万智点/月（到期自动续期）`;
+      document.getElementById('admin-log-product').textContent = `${quotaPackTitle}（${state.quotaSets}套）`;
+      document.getElementById('admin-log-payer').textContent = `${state.payerChannel}（${state.payerAccount} · ${state.payerName}）`;
+      document.getElementById('admin-log-amount').textContent = `¥${formatMoney(monthlyAmount)}`;
+
+      const statusTag = document.getElementById('admin-sub-status-tag');
+      const toggleBtn = document.getElementById('admin-toggle-renew-btn');
+      const remindText = document.getElementById('admin-deduct-remind');
+      if (state.subActive) {
+        statusTag.className = 'status-tag active';
+        statusTag.textContent = '● 自动续费生效中';
+        toggleBtn.className = 'admin-btn danger-outline';
+        toggleBtn.textContent = '关闭自动续费';
+        toggleBtn.onclick = openCancelRenewModal;
+        remindText.textContent = '下次扣款日：2026-11-20（扣款前 5 日短信/站内信提醒超管与扣款人）';
+      } else {
+        statusTag.className = 'status-tag canceled';
+        statusTag.textContent = '● 已关闭自动续费（当期至 2026-11-20）';
+        toggleBtn.className = 'admin-btn primary';
+        toggleBtn.textContent = '重新开启自动续费';
+        toggleBtn.onclick = reopenAutoRenew;
+        remindText.textContent = '已停止下期自动扣款，当期智点权益保留至 2026-11-20';
+      }
+
+      // 8. 同步系统后台配置展示与表格
+      const capInput = document.getElementById('sys-cap-limit-input');
+      const capCurVal = document.getElementById('sys-cap-current-val');
+      const capTipPreview = document.getElementById('sys-cap-tip-preview');
+      if (capInput && document.activeElement !== capInput) {
+        capInput.value = state.autoDebitLimit;
+      }
+      if (capCurVal) capCurVal.textContent = state.autoDebitLimit;
+      if (capTipPreview) capTipPreview.textContent = state.autoDebitLimit;
+
+      renderPaymentTable(planInfo, durLabel);
+      renderSysProductTable();
+      renderInvoiceOrderTable();
+      renderInvoiceRecordsTable();
+    }
+
+    /* ==================== 系统后台：连续订阅设置交互逻辑 ==================== */
+    function switchSysSubPage(sub) {
+      state.sysSubPage = sub;
+      document.getElementById('sys-nav-pkg').classList.toggle('active', sub === 'pkg');
+      document.getElementById('sys-nav-sub').classList.toggle('active', sub === 'sub');
+      document.getElementById('sys-page-title-text').textContent = sub === 'pkg' ? '套餐配置' : '连续订阅设置';
+      renderSysProductTable();
+    }
+
+    function renderSysProductTable() {
+      const tbody = document.getElementById('sys-product-tbody');
+      if (!tbody) return;
+      const kwEl = document.getElementById('sys-keyword-input');
+      const filterEl = document.getElementById('sys-filter-sub-status');
+      const kw = kwEl ? kwEl.value.trim().toLowerCase() : '';
+      const subFilter = filterEl ? filterEl.value : 'all';
+
+      const filtered = state.sysProducts.filter(item => {
+        if (kw && !item.code.toLowerCase().includes(kw) && !item.name.toLowerCase().includes(kw)) {
+          return false;
+        }
+        if (subFilter === 'allowed' && !item.allowContinuous) return false;
+        if (subFilter === 'disabled' && item.allowContinuous) return false;
+        return true;
+      });
+
+      tbody.innerHTML = filtered.map(item => `
+        <tr>
+          <td><a href="javascript:void(0)" style="color:#1890ff;">${item.code}</a></td>
+          <td>
+            ${item.name}
+            ${item.bindKey ? '<span style="margin-left:6px;font-size:11px;color:#1890ff;background:#e6f7ff;border:1px solid #91caff;padding:1px 6px;border-radius:3px;">联动购买页</span>' : ''}
+          </td>
+          <td>${item.type}</td>
+          <td>${item.pkgType}</td>
+          <td>¥${item.monthPrice.toLocaleString('en-US')}/月</td>
+          <td>
+            <div class="sys-switch ${item.allowContinuous ? 'on' : ''}" onclick="toggleProductContinuous('${item.code}')">
+              <div class="sys-switch-track">
+                <div class="sys-switch-thumb"></div>
+              </div>
+              <span style="font-size:12px;color:${item.allowContinuous ? '#1890ff' : '#8c8c8c'};font-weight:${item.allowContinuous ? '600' : '400'};">
+                ${item.allowContinuous ? '允许连续订阅' : '未开启'}
+              </span>
+            </div>
+          </td>
+          <td>
+            ${item.allowContinuous
+              ? `<span style="color:#262626;font-weight:500;">¥${state.autoDebitLimit.toLocaleString('en-US')}</span> <span style="color:#8c8c8c;font-size:11px;">(超限置灰)</span>`
+              : `<span style="color:#bfbfbf;">—</span>`}
+          </td>
+          <td>${item.product}</td>
+          <td>${item.time}</td>
+          <td>${item.status}</td>
+          <td>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <a href="javascript:void(0)" style="color:#1890ff;" onclick="openSysCapModal()">设置上限</a>
+              <a href="javascript:void(0)" style="color:#1890ff;" onclick="toggleProductContinuous('${item.code}')">${item.allowContinuous ? '关闭续订' : '开启续订'}</a>
+              <a href="javascript:void(0)" style="color:#ff4d4f;" onclick="showToast('演示环境暂不下架在售商品')">下架</a>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function toggleProductContinuous(code) {
+      const target = state.sysProducts.find(p => p.code === code);
+      if (!target) return;
+      target.allowContinuous = !target.allowContinuous;
+      checkAndEnforceContinuousLimit();
+      updateUI();
+      showToast(`已${target.allowContinuous ? '开启' : '关闭'}「${target.name}」的自动连续订阅权限`);
+    }
+
+    function batchAllowContinuous(flag) {
+      state.sysProducts.forEach(p => { p.allowContinuous = flag; });
+      updateUI();
+      showToast('已批量开启全部在售套餐的自动连续订阅');
+    }
+
+    function saveAutoDebitCap() {
+      const val = parseInt(document.getElementById('sys-cap-limit-input').value, 10);
+      if (!val || val < 100) {
+        showToast('请输入有效的自动扣款金额上限（至少 100 元）');
+        return;
+      }
+      state.autoDebitLimit = val;
+      checkAndEnforceContinuousLimit();
+      updateUI();
+      showToast(`自动扣款金额上限已更新为 ${val} 元！超过该金额将自动置灰「连续包月」并切换至「1个月」`);
+    }
+
+    function openSysCapModal() {
+      document.getElementById('modal-cap-input').value = state.autoDebitLimit;
+      document.getElementById('sys-cap-modal').style.display = 'flex';
+    }
+
+    function closeSysCapModal() {
+      document.getElementById('sys-cap-modal').style.display = 'none';
+    }
+
+    function confirmModalCap() {
+      const val = parseInt(document.getElementById('modal-cap-input').value, 10);
+      if (!val || val < 100) {
+        showToast('请输入有效的金额上限');
+        return;
+      }
+      state.autoDebitLimit = val;
+      document.getElementById('sys-cap-limit-input').value = val;
+      closeSysCapModal();
+      checkAndEnforceContinuousLimit();
+      updateUI();
+      showToast(`已保存自动扣款金额上限：${val} 元`);
+    }
+
+    function resetSysFilter() {
+      const kwEl = document.getElementById('sys-keyword-input');
+      const filterEl = document.getElementById('sys-filter-sub-status');
+      if (kwEl) kwEl.value = '';
+      if (filterEl) filterEl.value = 'all';
+      renderSysProductTable();
+    }
+
+    function SwitchToPurchaseVerify() {
+      switchConsoleView('purchase');
+    }
+
+    function quickTestOverLimitOnPurchase() {
+      // 确保购买套数 3 套（3 × 980 = 2940 元 > 2000 元上限），跳转购买页直接展示置灰与自动切换 1 个月效果
+      if (state.autoDebitLimit >= 2940) {
+        state.autoDebitLimit = 2000;
+      }
+      state.quotaSets = Math.floor(state.autoDebitLimit / 980) + 1;
+      document.getElementById('quota-sets-input').value = state.quotaSets;
+      state.quotaDuration = 'month';
+      switchConsoleView('purchase');
+      showToast(`已模拟选购 ${state.quotaSets} 套（¥${state.quotaSets * 980} > 上限 ¥${state.autoDebitLimit}），「连续包月」已置灰并自动切换到「1个月」`);
+    }
+
+    /* ==================== 管理后台：发票合同 > 发票管理（按月/汇总开票 & 与一次性订单分拆不合并） ==================== */
+    function renderInvoiceOrderTable() {
+      const tbody = document.getElementById('invoice-orders-tbody');
+      if (!tbody) return;
+
+      const availableOrders = state.invoiceOrders.filter(o => !o.invoiced);
+      const selectedOrders = availableOrders.filter(o => o.checked);
+      const activeCategory = selectedOrders.length > 0 ? selectedOrders[0].category : null;
+
+      if (availableOrders.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:48px 0;color:#8f959e;">暂无数据</td></tr>`;
+      } else {
+        tbody.innerHTML = availableOrders.map(order => {
+          const isSub = order.category === 'sub';
+          const isCrossTypeConflict = activeCategory && activeCategory !== order.category;
+          return `
+            <tr style="${order.checked ? 'background:#f7faff;' : ''}">
+              <td>
+                <span
+                  class="custom-checkbox ${order.checked ? 'checked' : ''}"
+                  style="${isCrossTypeConflict ? 'opacity:0.45;' : ''}"
+                  title="${isCrossTypeConflict ? '连续订阅履约票与一次性订单发票需分拆开具，不支持合并勾选' : '点击勾选开票'}"
+                  onclick="toggleInvoiceOrderSelect('${order.id}')"
+                ></span>
+              </td>
+              <td style="font-weight:500;">${order.id}</td>
+              <td>
+                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                  <span class="invoice-type-tag ${isSub ? 'sub' : 'onetime'}">
+                    ${isSub ? '连续订阅履约单 · ' + order.period : '一次性订单 · ' + order.period}
+                  </span>
+                  <span>${order.content}</span>
+                </div>
+              </td>
+              <td style="font-weight:600;color:#1f2329;">¥${formatMoney(order.amount)}</td>
+              <td><span style="color:#00b42a;">${order.status}</span></td>
+              <td style="color:#646a73;">${order.time}</td>
+            </tr>
+          `;
+        }).join('');
+      }
+
+      // 更新全选框与底部统计栏
+      const totalAmount = selectedOrders.reduce((sum, o) => sum + o.amount, 0);
+      const countEl = document.getElementById('inv-selected-count');
+      const amountEl = document.getElementById('inv-selected-amount');
+      const modeEl = document.getElementById('inv-mode-indicator');
+      const issueBtn = document.getElementById('btn-issue-invoice');
+      const selectAllCb = document.getElementById('inv-select-all-cb');
+
+      if (countEl) countEl.textContent = String(selectedOrders.length);
+      if (amountEl) amountEl.textContent = formatMoney(totalAmount);
+      if (issueBtn) issueBtn.classList.toggle('disabled', selectedOrders.length === 0);
+
+      if (selectAllCb) {
+        const sameCategoryOrders = activeCategory
+          ? availableOrders.filter(o => o.category === activeCategory)
+          : availableOrders.filter(o => o.category === 'sub');
+        const allChecked = sameCategoryOrders.length > 0 && sameCategoryOrders.every(o => o.checked);
+        selectAllCb.classList.toggle('checked', allChecked && selectedOrders.length > 0);
+      }
+
+      if (modeEl) {
+        if (selectedOrders.length === 0) {
+          modeEl.textContent = '请勾选要开票的订单（连续订阅与一次性订单分拆开具）';
+          modeEl.style.color = '#8f959e';
+          modeEl.style.background = '#f2f3f5';
+          modeEl.style.borderColor = '#e5e6eb';
+        } else if (activeCategory === 'sub') {
+          modeEl.style.color = '#165dff';
+          modeEl.style.background = '#f0f6ff';
+          modeEl.style.borderColor = '#bedaff';
+          modeEl.textContent = selectedOrders.length === 1
+            ? '当前开票方式：连续订阅履约票 · 按月单期开票（已与一次性订单分拆）'
+            : `当前开票方式：连续订阅履约票 · 跨月汇总合并开票（共 ${selectedOrders.length} 期汇总，已与一次性订单分拆）`;
+        } else {
+          modeEl.style.color = '#009a29';
+          modeEl.style.background = '#e8ffea';
+          modeEl.style.borderColor = '#aff0b5';
+          modeEl.textContent = `当前开票方式：一次性订单发票（共 ${selectedOrders.length} 笔，已与连续订阅履约票分拆）`;
+        }
+      }
+    }
+
+    function toggleInvoiceOrderSelect(orderId) {
+      const target = state.invoiceOrders.find(o => o.id === orderId && !o.invoiced);
+      if (!target) return;
+
+      const selectedOrders = state.invoiceOrders.filter(o => !o.invoiced && o.checked);
+      const activeCategory = selectedOrders.length > 0 ? selectedOrders[0].category : null;
+
+      // 核心业务规则校验：连续订阅履约票与一次性订单发票分拆，不合并
+      if (!target.checked && activeCategory && activeCategory !== target.category) {
+        showToast('⚠️ 连续订阅履约票与一次性订单发票必须分拆开具，不支持合并勾选！');
+        return;
+      }
+
+      target.checked = !target.checked;
+      renderInvoiceOrderTable();
+    }
+
+    function toggleSelectAllInvoices() {
+      const availableOrders = state.invoiceOrders.filter(o => !o.invoiced);
+      if (availableOrders.length === 0) return;
+
+      const selectedOrders = availableOrders.filter(o => o.checked);
+      if (selectedOrders.length > 0) {
+        const activeCategory = selectedOrders[0].category;
+        const sameCat = availableOrders.filter(o => o.category === activeCategory);
+        const allChecked = sameCat.every(o => o.checked);
+        if (allChecked) {
+          availableOrders.forEach(o => { o.checked = false; });
+        } else {
+          sameCat.forEach(o => { o.checked = true; });
+          showToast(activeCategory === 'sub'
+            ? '已全选所有「连续订阅履约单」进行汇总合并开票（一次性订单已自动分拆排除）'
+            : '已全选所有「一次性订单」（连续订阅履约单已自动分拆排除）');
+        }
+      } else {
+        // 默认全选连续订阅履约单展示汇总开票，自动分拆排除一次性订单
+        availableOrders.forEach(o => {
+          o.checked = (o.category === 'sub');
+        });
+        showToast('已全选全部「连续订阅履约单」进行汇总开票（连续订阅履约票与一次性订单发票分拆不合并）');
+      }
+      renderInvoiceOrderTable();
+    }
+
+    function quickSelectInvoiceMode(mode) {
+      const available = state.invoiceOrders.filter(o => !o.invoiced);
+      available.forEach(o => { o.checked = false; });
+
+      if (mode === 'monthly') {
+        const firstSub = available.find(o => o.category === 'sub');
+        if (firstSub) firstSub.checked = true;
+        showToast('已切换为：连续订阅订单「按月开票」（单期履约单独立开票）');
+      } else if (mode === 'summary') {
+        available.filter(o => o.category === 'sub').forEach(o => { o.checked = true; });
+        showToast('已切换为：连续订阅订单「跨月汇总开发票」（多期履约单合并汇总开票，且与一次性订单分拆）');
+      } else if (mode === 'onetime') {
+        available.filter(o => o.category === 'onetime').forEach(o => { o.checked = true; });
+        showToast('已切换为：一次性采购订单开票（与连续订阅履约票严格分拆，不合并）');
+      }
+      renderInvoiceOrderTable();
+    }
+
+    function openIssueInvoiceModal() {
+      const selected = state.invoiceOrders.filter(o => !o.invoiced && o.checked);
+      if (selected.length === 0) {
+        showToast('请先勾选需要开具发票的订单');
+        return;
+      }
+
+      const isSub = selected[0].category === 'sub';
+      const total = selected.reduce((s, o) => s + o.amount, 0);
+      const ruleTip = document.getElementById('issue-modal-rule-tip');
+      const scopeInput = document.getElementById('issue-modal-scope');
+      const amountInput = document.getElementById('issue-modal-amount');
+
+      if (isSub) {
+        const modeTitle = selected.length === 1 ? '按月单期开票' : `跨月汇总合并开票（共 ${selected.length} 期）`;
+        ruleTip.innerHTML = `📌 当前开票模式：<strong>连续订阅履约票 · ${modeTitle}</strong>（已与一次性订单发票严格分拆，不合并开具）`;
+        scopeInput.value = `连续订阅履约单 · ${modeTitle}（${selected.map(o => o.period).join('、')}）`;
+      } else {
+        ruleTip.innerHTML = `📌 当前开票模式：<strong>一次性采购订单发票</strong>（已与连续订阅履约票严格分拆，不合并开具）`;
+        scopeInput.value = `一次性采购订单（共 ${selected.length} 笔：${selected.map(o => o.id).join('、')}）`;
+      }
+
+      amountInput.value = '¥' + formatMoney(total);
+      document.getElementById('issue-invoice-modal').style.display = 'flex';
+    }
+
+    function closeIssueInvoiceModal() {
+      document.getElementById('issue-invoice-modal').style.display = 'none';
+    }
+
+    function confirmIssueInvoice() {
+      const selected = state.invoiceOrders.filter(o => !o.invoiced && o.checked);
+      if (selected.length === 0) return;
+
+      const isSub = selected[0].category === 'sub';
+      const total = selected.reduce((s, o) => s + o.amount, 0);
+      const modeText = isSub
+        ? (selected.length === 1 ? '连续订阅履约票（按月单开）' : `连续订阅履约票（${selected.length}期汇总开票）`)
+        : '一次性订单发票（独立分拆）';
+
+      state.invoiceRecords.unshift({
+        applyNo: 'FP20261020' + String(Math.floor(1000 + Math.random() * 9000)),
+        modeText,
+        orderIds: selected.map(o => o.id).join('、'),
+        title: document.getElementById('issue-modal-title').value || '小猿最可爱科技有限公司',
+        amount: total,
+        time: '2026-10-20 13:55:00',
+        status: '已开票（数电票已发邮箱）'
+      });
+
+      selected.forEach(o => {
+        o.invoiced = true;
+        o.checked = false;
+      });
+
+      closeIssueInvoiceModal();
+      renderInvoiceOrderTable();
+      renderInvoiceRecordsTable();
+      showToast(`开票成功！已为您开具「${modeText}」，金额 ¥${formatMoney(total)}`);
+    }
+
+    function renderInvoiceRecordsTable() {
+      const tbody = document.getElementById('invoice-records-tbody');
+      if (!tbody) return;
+      tbody.innerHTML = state.invoiceRecords.map(rec => `
+        <tr>
+          <td style="font-weight:500;">${rec.applyNo}</td>
+          <td><span class="invoice-type-tag ${rec.modeText.includes('连续订阅') ? 'sub' : 'onetime'}">${rec.modeText}</span></td>
+          <td style="color:#646a73;font-size:12px;">${rec.orderIds}</td>
+          <td>${rec.title}</td>
+          <td style="font-weight:600;">¥${formatMoney(rec.amount)}</td>
+          <td style="color:#646a73;">${rec.time}</td>
+          <td><span style="color:#00b42a;">${rec.status}</span></td>
+          <td>
+            <div class="pay-table-actions">
+              <a href="javascript:void(0)" onclick="showToast('已下载数电发票 PDF 文件')">下载发票</a>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function renderPaymentTable(planInfo, durLabel) {
+      const tbody = document.getElementById('pay-table-tbody');
+      const quotaName = state.quotaPack === 'basic' ? 'AI 智点基础包' : 'AI 智点高级包';
+      const quotaExpire = state.quotaDuration === 'year' ? '2027-10-20' : '2026-11-20';
+      const rows = [];
+
+      rows.push(`
+        <tr>
+          <td>${quotaName}</td>
+          <td>${state.quotaSets}套</td>
+          <td>${durLabel}</td>
+          <td>${quotaExpire}</td>
+          <td>/</td>
+          <td>
+            <div class="pay-table-actions">
+              <a href="javascript:void(0)">申请电子合同</a>|
+              <a href="javascript:void(0)">下载报价单</a>|
+              <a href="javascript:void(0)">申请先用后款</a>
+            </div>
+          </td>
+        </tr>
+      `);
+
+      if (state.basePkgChecked) {
+        const pkgExpireYear = 2026 + state.seatYears;
+        rows.push(`
+          <tr>
+            <td>${planInfo.fullName}</td>
+            <td>${state.seatCount}人</td>
+            <td>${state.seatYears}年</td>
+            <td>${pkgExpireYear}-10-20</td>
+            <td>/</td>
+            <td>
+              <div class="pay-table-actions">
+                <a href="javascript:void(0)">申请电子合同</a>|
+                <a href="javascript:void(0)">下载报价单</a>|
+                <a href="javascript:void(0)">申请先用后款</a>
+              </div>
+            </td>
+          </tr>
+        `);
+      }
+
+      tbody.innerHTML = rows.join('');
+    }
+
+    function goToPaymentPage() {
+      if (state.quotaDuration === 'continuous') {
+        const agreed = document.getElementById('agree-renew-checkbox').classList.contains('checked');
+        if (!agreed) {
+          showToast('请先阅读并勾选同意《自动续费协议》');
+          return;
+        }
+      }
+      state.consoleView = 'purchase';
+      document.getElementById('console-tab-purchase').classList.add('active');
+      document.getElementById('console-tab-admin').classList.remove('active');
+      updateUI();
+      document.getElementById('page-purchase').style.display = 'none';
+      document.getElementById('page-admin').style.display = 'none';
+      document.getElementById('page-payment').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function backToPurchasePage() {
+      document.getElementById('page-payment').style.display = 'none';
+      document.getElementById('page-admin').style.display = 'none';
+      document.getElementById('page-purchase').style.display = 'flex';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function selectPayChannel(channel) {
+      state.payChannel = channel;
+      document.getElementById('channel-wx').classList.toggle('active', channel === 'wx');
+      document.getElementById('channel-ali').classList.toggle('active', channel === 'ali');
+      document.getElementById('channel-bank').classList.toggle('active', channel === 'bank');
+
+      const logo = document.getElementById('qr-center-logo');
+      const bar = document.getElementById('qr-bottom-bar');
+      if (channel === 'wx') {
+        logo.textContent = '微';
+        logo.style.background = '#07c160';
+        bar.textContent = '请打开手机微信，扫一扫完成支付';
+        bar.style.background = '#07c160';
+      } else if (channel === 'ali') {
+        logo.textContent = '支';
+        logo.style.background = '#1677ff';
+        bar.textContent = '请打开手机支付宝，扫一扫完成支付';
+        bar.style.background = '#1677ff';
+      } else {
+        logo.textContent = '汇';
+        logo.style.background = '#ff6a00';
+        bar.textContent = '请使用对公账户完成汇款支付';
+        bar.style.background = '#ff6a00';
+      }
+    }
+
+    /* 需求 2：手机模拟支付弹窗控制 */
+    function openMobileSimulateModal() {
+      const targetChannel = state.payChannel === 'wx' ? 'wx' : 'ali';
+      switchMobilePreviewChannel(targetChannel);
+      document.getElementById('mobile-sim-mask').style.display = 'flex';
+    }
+
+    function closeMobileSimulateModal() {
+      document.getElementById('mobile-sim-mask').style.display = 'none';
+    }
+
+    function closeMobileSimulateOnMask(e) {
+      if (e.target.id === 'mobile-sim-mask') {
+        closeMobileSimulateModal();
+      }
+    }
+
+    function switchMobilePreviewChannel(ch) {
+      state.mobileChannel = ch;
+      document.getElementById('mob-tab-wx').classList.toggle('active', ch === 'wx');
+      document.getElementById('mob-tab-ali').classList.toggle('active', ch === 'ali');
+
+      document.getElementById('mobile-view-wx').style.display = ch === 'wx' ? 'flex' : 'none';
+      document.getElementById('mobile-view-ali').style.display = ch === 'ali' ? 'flex' : 'none';
+
+      const statusbar = document.getElementById('mobile-statusbar');
+      const navbar = document.getElementById('mobile-navbar');
+      if (ch === 'ali') {
+        statusbar.style.background = '#e9f1ff';
+        navbar.style.background = '#e9f1ff';
+      } else {
+        statusbar.style.background = '#ffffff';
+        navbar.style.background = '#ffffff';
+      }
+    }
+
+    function completeMobilePayment(ch) {
+      state.payerChannel = ch === 'wx' ? '微信支付' : '支付宝';
+      state.subActive = true;
+      closeMobileSimulateModal();
+      showToast(`已通过${state.payerChannel}完成支付并开通连续包月！正在为您跳转至管理后台-支付设置页...`);
+      setTimeout(() => {
+        switchConsoleView('admin');
+      }, 900);
+    }
+
+    /* 管理后台：关闭自动续费 & 更换扣款人 */
+    function openCancelRenewModal() {
+      document.getElementById('cancel-renew-modal').style.display = 'flex';
+    }
+
+    function closeCancelRenewModal() {
+      document.getElementById('cancel-renew-modal').style.display = 'none';
+    }
+
+    function confirmCancelRenew() {
+      state.subActive = false;
+      closeCancelRenewModal();
+      updateUI();
+      showToast('已成功关闭自动续费，当期智点权益保留至 2026-11-20');
+    }
+
+    function reopenAutoRenew() {
+      state.subActive = true;
+      updateUI();
+      showToast('已重新开启自动续费服务');
+    }
+
+    function openChangePayerModal() {
+      document.getElementById('change-payer-modal').style.display = 'flex';
+    }
+
+    function closeChangePayerModal() {
+      document.getElementById('change-payer-modal').style.display = 'none';
+    }
+
+    function confirmChangePayer() {
+      const nameVal = document.getElementById('input-payer-name').value.trim() || '李明';
+      const channelVal = document.getElementById('input-payer-channel').value;
+      const phoneVal = document.getElementById('input-payer-phone').value.trim() || '139****8866';
+
+      state.payerName = nameVal;
+      state.payerChannel = channelVal;
+      state.payerAccount = phoneVal;
+      state.subActive = true;
+      closeChangePayerModal();
+      updateUI();
+      showToast(`已成功更换扣款人为：${channelVal}（${phoneVal} · ${nameVal}）`);
+    }
+
+    function openAgreementModal(e) {
+      if (e) e.stopPropagation();
+      document.getElementById('agreement-modal').style.display = 'flex';
+    }
+
+    function closeAgreementModal() {
+      document.getElementById('agreement-modal').style.display = 'none';
+    }
+
+    // 初始化及路由锚点支持（便于截图与直接预览指定状态）
+    updateUI();
+    if (window.location.hash === '#payment') {
+      goToPaymentPage();
+    } else if (window.location.hash === '#mobile-wx') {
+      goToPaymentPage();
+      selectPayChannel('wx');
+      openMobileSimulateModal();
+      switchMobilePreviewChannel('wx');
+    } else if (window.location.hash === '#mobile-ali') {
+      goToPaymentPage();
+      selectPayChannel('ali');
+      openMobileSimulateModal();
+      switchMobilePreviewChannel('ali');
+    } else if (window.location.hash === '#admin') {
+      switchConsoleView('admin');
+      switchAdminSubPage('paysettings');
+    } else if (window.location.hash === '#admin-invoice') {
+      switchConsoleView('admin');
+      switchAdminSubPage('invoice');
+    } else if (window.location.hash === '#sys') {
+      switchConsoleView('sys');
+    } else if (window.location.hash === '#purchase-overlimit') {
+      state.autoDebitLimit = 2000;
+      state.quotaSets = 3;
+      document.getElementById('quota-sets-input').value = 3;
+      state.quotaDuration = 'month';
+      switchConsoleView('purchase');
+      document.getElementById('dur-continuous-wrap').classList.add('force-tooltip');
+    }
+  </script>
+</body>
+</html>
