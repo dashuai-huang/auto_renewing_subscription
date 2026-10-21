@@ -691,9 +691,9 @@
       margin-top: 2px;
     }
 
-    /* 优惠区域上方增加自动续费说明 */
+    /* 已选连续包月商品下方增加自动续费说明 */
     .auto-renew-order-tip {
-      margin-top: 12px;
+      margin-top: 6px;
       font-size: 12px;
       color: #8f959e;
       line-height: 1.5;
@@ -2740,7 +2740,7 @@
               <div class="duration-btn-wrap" id="dur-continuous-wrap">
                 <button type="button" class="duration-btn active" id="dur-btn-continuous" onclick="selectQuotaDuration('continuous')">
                   <span>连续包月</span>
-                  <span class="duration-price" id="dur-price-continuous">¥980</span>
+                  <span class="duration-price" id="dur-price-continuous">¥833</span>
                 </button>
                 <div class="duration-tooltip" id="dur-continuous-tooltip">订单金额超过2000元，无法选择自动续费，可选择单次采购</div>
               </div>
@@ -2875,9 +2875,12 @@
             <div class="order-item-group-label">已选权益包</div>
             <div class="order-item-main">
               <span id="summary-quota-name">AI 智点基础包</span>
-              <span id="summary-quota-price">¥980.00</span>
+              <span id="summary-quota-price">¥833.00</span>
             </div>
             <div class="order-item-sub" id="summary-quota-sub">1套 × 连续包月</div>
+            <div class="auto-renew-order-tip" id="auto-renew-order-tip">
+              *自动续费下次扣款时间:<span id="next-deduct-date">2026/11/20</span> 金额￥<span id="next-deduct-amount">833</span>元
+            </div>
           </div>
 
           <div id="summary-base-pkg-block">
@@ -2888,10 +2891,6 @@
             </div>
             <div class="order-item-sub" id="summary-plan-sub">5人 × 1年</div>
           </div>
-        </div>
-
-        <div class="auto-renew-order-tip" id="auto-renew-order-tip">
-          *自动续费下次扣款时间:<span id="next-deduct-date">2026/11/20</span> 金额￥<span id="next-deduct-amount">980</span>元
         </div>
 
         <div class="order-extra-row">
@@ -3872,18 +3871,23 @@
       ],
       // 管理后台：待开票订单列表（包含连续订阅按月履约单 & 一次性订单，支持按月/汇总开票，且两类严格分拆不合并）
       invoiceOrders: [
-        { id: 'SUB-20261020-001', category: 'sub', period: '2026-10月期', content: 'AI 智点基础包（连续包月 · 第1期履约单 2026/10/20-2026/11/20）', amount: 980.00, status: '已支付（履约完成）', time: '2026-10-20 12:08:15', checked: true, invoiced: false },
-        { id: 'SUB-20260920-002', category: 'sub', period: '2026-09月期', content: 'AI 智点基础包（连续包月 · 第2期履约单 2026/09/20-2026/10/20）', amount: 980.00, status: '已支付（履约完成）', time: '2026-09-20 10:00:03', checked: true, invoiced: false },
-        { id: 'SUB-20260820-003', category: 'sub', period: '2026-08月期', content: 'AI 智点基础包（连续包月 · 第3期履约单 2026/08/20-2026/09/20）', amount: 980.00, status: '已支付（履约完成）', time: '2026-08-20 10:00:01', checked: false, invoiced: false },
+        { id: 'SUB-20261020-001', category: 'sub', period: '2026-10月期', content: 'AI 智点基础包（连续包月 · 第1期履约单 2026/10/20-2026/11/20）', amount: 833.00, status: '已支付（履约完成）', time: '2026-10-20 12:08:15', checked: true, invoiced: false },
+        { id: 'SUB-20260920-002', category: 'sub', period: '2026-09月期', content: 'AI 智点基础包（连续包月 · 第2期履约单 2026/09/20-2026/10/20）', amount: 833.00, status: '已支付（履约完成）', time: '2026-09-20 10:00:03', checked: true, invoiced: false },
+        { id: 'SUB-20260820-003', category: 'sub', period: '2026-08月期', content: 'AI 智点基础包（连续包月 · 第3期履约单 2026/08/20-2026/09/20）', amount: 833.00, status: '已支付（履约完成）', time: '2026-08-20 10:00:01', checked: false, invoiced: false },
         { id: 'ORD-20261020-889', category: 'onetime', period: '一次性年单', content: 'WPS 365 商业协作版（5人 × 1年 · 一次性采购订单）', amount: 995.00, status: '已支付', time: '2026-10-20 12:08:15', checked: false, invoiced: false },
         { id: 'ORD-20261008-512', category: 'onetime', period: '单次月包', content: 'AI 智点基础包（1个月 · 单次采购订单）', amount: 980.00, status: '已支付', time: '2026-10-08 16:22:40', checked: false, invoiced: false }
       ],
       // 已开具发票记录
       invoiceRecords: [
-        { applyNo: 'FP202607250018', modeText: '连续订阅履约票（按月单开）', orderIds: 'SUB-20260720-001', title: '小猿最可爱科技有限公司', amount: 980.00, time: '2026-07-25 14:20:11', status: '已开票（数电票已发邮箱）' },
+        { applyNo: 'FP202607250018', modeText: '连续订阅履约票（按月单开）', orderIds: 'SUB-20260720-001', title: '小猿最可爱科技有限公司', amount: 833.00, time: '2026-07-25 14:20:11', status: '已开票（数电票已发邮箱）' },
         { applyNo: 'FP202606120009', modeText: '一次性订单发票（独立分拆）', orderIds: 'ORD-20260610-102', title: '小猿最可爱科技有限公司', amount: 1990.00, time: '2026-06-12 09:45:30', status: '已开票（数电票已发邮箱）' }
       ]
     };
+
+    // 单月原价与连续包月单价（1个月单价的 85 折，向下取整：Math.floor(980 * 0.85) = 833）
+    const SINGLE_MONTH_UNIT_PRICE = 980;
+    const CONTINUOUS_MONTH_UNIT_PRICE = Math.floor(SINGLE_MONTH_UNIT_PRICE * 0.85); // 833
+    const YEAR_UNIT_PRICE = 9800;
 
     const PLAN_CONFIG = {
       collab: { name: '商业协作版', fullName: 'WPS 365 商业协作版', price: 199 },
@@ -3959,7 +3963,7 @@
     function getContinuousAvailability() {
       const prodObj = state.sysProducts.find(p => p.bindKey === state.quotaPack);
       const allowedByProduct = prodObj ? prodObj.allowContinuous : true;
-      const monthlyOrderPrice = state.quotaSets * 980;
+      const monthlyOrderPrice = state.quotaSets * CONTINUOUS_MONTH_UNIT_PRICE;
       const overLimit = monthlyOrderPrice > state.autoDebitLimit;
       return {
         allowedByProduct,
@@ -4079,18 +4083,21 @@
         tooltipEl.textContent = `订单金额超过${state.autoDebitLimit}元，无法选择自动续费，可选择单次采购`;
       }
 
-      // 动态更新时长按钮上的价格展示
-      const curMonthlyPrice = state.quotaSets * 980;
-      const curYearlyPrice = state.quotaSets * 9800;
+      // 动态更新时长按钮上的价格展示（连续包月单价为1个月单价的85折向下取整：833元）
+      const curContinuousPrice = state.quotaSets * CONTINUOUS_MONTH_UNIT_PRICE;
+      const curMonthlyPrice = state.quotaSets * SINGLE_MONTH_UNIT_PRICE;
+      const curYearlyPrice = state.quotaSets * YEAR_UNIT_PRICE;
       const elPriceCont = document.getElementById('dur-price-continuous');
       const elPriceMonth = document.getElementById('dur-price-month');
       const elPriceYear = document.getElementById('dur-price-year');
-      if (elPriceCont) elPriceCont.textContent = '¥' + curMonthlyPrice.toLocaleString('en-US');
+      if (elPriceCont) elPriceCont.textContent = '¥' + curContinuousPrice.toLocaleString('en-US');
       if (elPriceMonth) elPriceMonth.textContent = '¥' + curMonthlyPrice.toLocaleString('en-US');
       if (elPriceYear) elPriceYear.textContent = '¥' + curYearlyPrice.toLocaleString('en-US');
 
       // 1. 计算 AI 额度包价格与文案
-      const unitQuotaPrice = state.quotaDuration === 'year' ? 9800 : 980;
+      let unitQuotaPrice = SINGLE_MONTH_UNIT_PRICE;
+      if (state.quotaDuration === 'continuous') unitQuotaPrice = CONTINUOUS_MONTH_UNIT_PRICE;
+      if (state.quotaDuration === 'year') unitQuotaPrice = YEAR_UNIT_PRICE;
       const quotaTotal = state.quotaSets * unitQuotaPrice;
       const pointsPerSet = state.quotaDuration === 'year' ? 18 : 1.5;
       const totalPoints = +(state.quotaSets * pointsPerSet).toFixed(1);
@@ -4108,7 +4115,7 @@
       if (state.quotaDuration === 'year') durLabel = '1年';
       document.getElementById('summary-quota-sub').textContent = `${state.quotaSets}套 × ${durLabel}`;
 
-      // 2. 连续包月下：优惠区域上方显示下次扣款时间与金额，按钮下方显示自动续费协议
+      // 2. 连续包月下：已选连续包月商品下方显示下次扣款时间与金额，按钮下方显示自动续费协议
       const isContinuous = state.quotaDuration === 'continuous';
       const tipEl = document.getElementById('auto-renew-order-tip');
       const agreeRowEl = document.getElementById('auto-renew-agreement-row');
@@ -4117,7 +4124,7 @@
       agreeRowEl.style.display = isContinuous ? 'flex' : 'none';
 
       document.getElementById('next-deduct-date').textContent = '2026/11/20';
-      document.getElementById('next-deduct-amount').textContent = String(quotaTotal);
+      document.getElementById('next-deduct-amount').textContent = String(curContinuousPrice);
 
       // 3. 计算 WPS 365 基础套餐
       const planInfo = PLAN_CONFIG[state.basePlan];
@@ -4137,7 +4144,7 @@
       document.getElementById('summary-total-price').textContent = formatMoney(grandTotal);
 
       // 5. 同步支付页数据
-      const monthlyAmount = state.quotaSets * 980;
+      const monthlyAmount = state.quotaSets * CONTINUOUS_MONTH_UNIT_PRICE;
       document.getElementById('pay-page-amount').textContent = formatMoney(grandTotal);
       document.getElementById('pay-monthly-deduct-text').textContent = `￥${monthlyAmount}/月`;
       document.getElementById('pay-auto-renew-desc').style.display = isContinuous ? 'block' : 'none';
@@ -4326,15 +4333,15 @@
     }
 
     function quickTestOverLimitOnPurchase() {
-      // 确保购买套数 3 套（3 × 980 = 2940 元 > 2000 元上限），跳转购买页直接展示置灰与自动切换 1 个月效果
-      if (state.autoDebitLimit >= 2940) {
+      // 确保购买套数 3 套（3 × 833 = 2499 元 > 2000 元上限），跳转购买页直接展示置灰与自动切换 1 个月效果
+      if (state.autoDebitLimit >= 2499) {
         state.autoDebitLimit = 2000;
       }
-      state.quotaSets = Math.floor(state.autoDebitLimit / 980) + 1;
+      state.quotaSets = Math.floor(state.autoDebitLimit / CONTINUOUS_MONTH_UNIT_PRICE) + 1;
       document.getElementById('quota-sets-input').value = state.quotaSets;
       state.quotaDuration = 'month';
       switchConsoleView('purchase');
-      showToast(`已模拟选购 ${state.quotaSets} 套（¥${state.quotaSets * 980} > 上限 ¥${state.autoDebitLimit}），「连续包月」已置灰并自动切换到「1个月」`);
+      showToast(`已模拟选购 ${state.quotaSets} 套（连续包月 ¥${state.quotaSets * CONTINUOUS_MONTH_UNIT_PRICE} > 上限 ¥${state.autoDebitLimit}），「连续包月」已置灰并自动切换到「1个月」`);
     }
 
     /* ==================== 管理后台：发票合同 > 发票管理（按月/汇总开票 & 与一次性订单分拆不合并） ==================== */
@@ -4568,7 +4575,12 @@
     function renderPaymentTable(planInfo, durLabel) {
       const tbody = document.getElementById('pay-table-tbody');
       const quotaName = state.quotaPack === 'basic' ? 'AI 智点基础包' : 'AI 智点高级包';
-      const quotaExpire = state.quotaDuration === 'year' ? '2027-10-20' : '2026-11-20';
+      let quotaExpire = '2026-11-20';
+      if (state.quotaDuration === 'continuous') {
+        quotaExpire = '自动续期';
+      } else if (state.quotaDuration === 'year') {
+        quotaExpire = '2027-10-20';
+      }
       const rows = [];
 
       rows.push(`
