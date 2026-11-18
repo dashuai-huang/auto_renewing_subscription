@@ -2550,6 +2550,945 @@
       left: 20px;
     }
 
+    /* ==================== 购买页：价格明细上浮抽屉（参考截图1） ==================== */
+    .price-drawer-mask {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.36);
+      z-index: 1350;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .price-drawer-mask.open {
+      display: flex;
+    }
+
+    .price-drawer-sheet {
+      width: 100%;
+      background: #f5f6f8;
+      border-radius: 12px 12px 0 0;
+      padding: 20px 6% 28px;
+      box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.14);
+      animation: drawerSlideUp 0.18s ease-out;
+    }
+
+    @keyframes drawerSlideUp {
+      from { transform: translateY(24px); }
+      to { transform: translateY(0); }
+    }
+
+    .price-drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .price-drawer-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1f2329;
+    }
+
+    .price-drawer-collapse {
+      font-size: 13px;
+      color: #4e5969;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      user-select: none;
+    }
+
+    .price-drawer-collapse:hover {
+      color: #1f2329;
+    }
+
+    .price-drawer-card {
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 0 20px;
+      overflow-x: auto;
+    }
+
+    .price-drawer-card.summary-card {
+      margin-top: 8px;
+    }
+
+    .price-drawer-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      font-size: 13px;
+    }
+
+    .price-drawer-table th {
+      text-align: left;
+      font-weight: 600;
+      color: #1f2329;
+      padding: 14px 8px;
+      border-bottom: 1px solid #f2f3f5;
+    }
+
+    .price-drawer-table td {
+      padding: 15px 8px;
+      color: #1f2329;
+      border-bottom: 1px solid #f2f3f5;
+    }
+
+    .price-drawer-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .price-drawer-amount-red {
+      color: #f04134;
+      font-weight: 500;
+    }
+
+    /* ==================== 系统后台：企业信息（参考截图2） & 套餐编辑子页（参考截图3） ==================== */
+    .sys-ent-search-card {
+      margin-top: 14px;
+      background: #fafafa;
+      border: 1px solid #f0f0f0;
+      border-radius: 4px;
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .sys-ent-search-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: #595959;
+    }
+
+    .sys-ent-select {
+      width: 240px;
+      height: 30px;
+      border: 1px solid #d9d9d9;
+      border-radius: 3px;
+      background: #ffffff;
+      padding: 0 10px;
+      font-size: 12px;
+      color: #262626;
+      outline: none;
+    }
+
+    .sys-ent-recent-link {
+      color: #595959;
+      cursor: pointer;
+      margin-right: 36px;
+    }
+
+    .sys-ent-recent-link:hover {
+      color: #1890ff;
+    }
+
+    .sys-ent-tabs {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      border-bottom: 1px solid #e8e8e8;
+      margin-top: 16px;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    .sys-ent-tab {
+      padding: 10px 2px;
+      font-size: 12px;
+      color: #595959;
+      cursor: pointer;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .sys-ent-tab.active {
+      color: #1890ff;
+      font-weight: 600;
+    }
+
+    .sys-ent-tab.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2px;
+      background: #1890ff;
+    }
+
+    .sys-ent-section-title {
+      margin-top: 18px;
+      margin-bottom: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #262626;
+    }
+
+    .sys-ent-kv-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      border: 1px solid #f0f0f0;
+    }
+
+    .sys-ent-kv-table td {
+      padding: 10px 14px;
+      border: 1px solid #f0f0f0;
+      color: #262626;
+    }
+
+    .sys-ent-kv-label {
+      width: 16%;
+      background: #fafafa;
+      color: #595959;
+    }
+
+    .sys-ent-kv-val {
+      width: 34%;
+      background: #ffffff;
+    }
+
+    /* 套餐编辑子页面（参考截图3） */
+    .sys-edit-subbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 0;
+      font-size: 13px;
+      color: #595959;
+    }
+
+    .sys-edit-back {
+      color: #1890ff;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .sys-edit-panel {
+      border: 1px solid #e8e8e8;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      background: #ffffff;
+    }
+
+    .sys-edit-panel-header {
+      background: #f5f6f8;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      color: #262626;
+      border-bottom: 1px solid #e8e8e8;
+    }
+
+    .sys-edit-panel-body {
+      padding: 20px 28px;
+    }
+
+    .sys-edit-form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(260px, 380px));
+      gap: 16px 36px;
+      align-items: start;
+    }
+
+    .sys-edit-field {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      color: #595959;
+    }
+
+    .sys-edit-field.align-top {
+      align-items: flex-start;
+    }
+
+    .sys-edit-label {
+      width: 120px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .sys-edit-req {
+      color: #ff4d4f;
+      margin-right: 3px;
+    }
+
+    .sys-edit-control {
+      flex: 1;
+      height: 30px;
+      border: 1px solid #d9d9d9;
+      border-radius: 3px;
+      padding: 0 10px;
+      font-size: 12px;
+      color: #262626;
+      background: #ffffff;
+      outline: none;
+    }
+
+    .sys-edit-control:disabled {
+      background: #f5f5f5;
+      color: #8c8c8c;
+      cursor: not-allowed;
+    }
+
+    .sys-edit-textarea {
+      flex: 1;
+      min-height: 54px;
+      border: 1px solid #d9d9d9;
+      border-radius: 3px;
+      padding: 6px 10px;
+      font-size: 12px;
+      color: #262626;
+      resize: vertical;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .sys-edit-unit-group {
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+
+    .sys-edit-unit-group input {
+      flex: 1;
+      height: 30px;
+      border: 1px solid #d9d9d9;
+      border-right: none;
+      border-radius: 3px 0 0 3px;
+      padding: 0 10px;
+      font-size: 12px;
+      color: #262626;
+      outline: none;
+      min-width: 0;
+    }
+
+    .sys-edit-unit-addon {
+      height: 30px;
+      padding: 0 10px;
+      background: #f5f7fa;
+      border: 1px solid #d9d9d9;
+      border-radius: 0 3px 3px 0;
+      font-size: 12px;
+      color: #8c8c8c;
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    .sys-edit-footer {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+      padding-left: 132px;
+    }
+
+    /* ==================== 购买页：新购场景 / 变更签约场景切换栏 ==================== */
+    .purchase-scenario-bar {
+      max-width: 1180px;
+      margin: 18px auto 0;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .scenario-pills {
+      display: inline-flex;
+      background: #ffffff;
+      border: 1px solid #e5e6eb;
+      border-radius: 8px;
+      padding: 4px;
+      gap: 4px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+
+    .scenario-pill-btn {
+      border: none;
+      background: transparent;
+      color: #4e5969;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .scenario-pill-btn.active {
+      background: #3b5ff6;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .scenario-upgrade-banner {
+      display: none;
+      margin-top: 12px;
+      padding: 10px 14px;
+      background: #eef4ff;
+      border: 1px solid #bedaff;
+      border-radius: 8px;
+      font-size: 12px;
+      color: #1d42d8;
+      line-height: 1.6;
+    }
+
+    .quota-card-status-badge {
+      display: none;
+      margin-left: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    .quota-card-status-badge.current-plan {
+      background: #f2f3f5;
+      color: #4e5969;
+      border: 1px solid #dcdfe6;
+    }
+
+    .quota-card-status-badge.target-plan {
+      background: #e8f3ff;
+      color: #165dff;
+      border: 1px solid #bedaff;
+    }
+
+    .upgrade-summary-box {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 12px;
+      background: #f7f9ff;
+      border: 1px dashed #bedaff;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #4e5969;
+      line-height: 1.65;
+    }
+
+    /* ==================== 控制台状态：用户通知（站内消息参照截图1 + 短信通知） ==================== */
+    #page-notify {
+      display: none;
+      max-width: 1180px;
+      margin: 22px auto 48px;
+      padding: 0 20px;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .notify-top-card {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    }
+
+    .notify-filter-pills {
+      display: inline-flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .notify-filter-btn {
+      border: 1px solid #dcdfe6;
+      background: #ffffff;
+      color: #4e5969;
+      font-size: 12px;
+      padding: 5px 12px;
+      border-radius: 16px;
+      cursor: pointer;
+    }
+
+    .notify-filter-btn.active {
+      border-color: #3b5ff6;
+      background: #eef4ff;
+      color: #3b5ff6;
+      font-weight: 600;
+    }
+
+    .notify-columns {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .notify-channel-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 18px 20px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    }
+
+    .notify-channel-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1f2329;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* 站内消息 IM 窗口（精确复刻截图1） */
+    .im-window {
+      width: 100%;
+      border: 1px solid #e5e6eb;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #f5f6f8;
+    }
+
+    .im-topbar {
+      background: #ffffff;
+      padding: 10px 14px 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .im-topbar-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #3b5ff6;
+    }
+
+    .im-topbar-icons {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: #4e5969;
+      font-size: 15px;
+    }
+
+    .im-subbar {
+      background: #ffffff;
+      padding: 8px 14px 10px;
+      border-bottom: 1px solid #eceef2;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      color: #1f2329;
+      font-weight: 500;
+    }
+
+    .im-feed {
+      padding: 16px 14px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-height: 680px;
+      overflow-y: auto;
+    }
+
+    .im-time-divider {
+      text-align: center;
+      font-size: 11px;
+      color: #8f959e;
+      margin: 2px 0;
+    }
+
+    .im-msg-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .im-bot-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 6px;
+      background: #f7ba1e;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .im-msg-card {
+      flex: 1;
+      background: #ffffff;
+      border-radius: 10px;
+      border: 1px solid #e6eaf2;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+
+    .im-msg-card-header {
+      background: #d7e5ff;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #2b5bf5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .im-msg-card-header.warn {
+      background: #ffe8e6;
+      color: #d93025;
+    }
+
+    .im-msg-card-header.invite {
+      background: #fff3d6;
+      color: #c26a00;
+    }
+
+    .im-msg-card-body {
+      padding: 12px 14px;
+      font-size: 13px;
+      color: #1f2329;
+      line-height: 1.65;
+    }
+
+    .im-msg-card-footer {
+      padding: 0 14px 12px;
+    }
+
+    .im-msg-action-btn {
+      width: 100%;
+      height: 34px;
+      border: 1px solid #cad5ec;
+      background: #ffffff;
+      color: #2b5bf5;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .im-msg-action-btn:hover {
+      background: #f5f8ff;
+    }
+
+    /* 短信通知展示区 */
+    .sms-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .sms-item-box {
+      border: 1px solid #eceef2;
+      border-radius: 10px;
+      padding: 14px 16px;
+      background: #fafbfc;
+    }
+
+    .sms-item-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 12px;
+      color: #8f959e;
+    }
+
+    .sms-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .sms-tag.success { background: #e8ffea; color: #009a29; }
+    .sms-tag.fail { background: #ffece8; color: #f53f3f; }
+    .sms-tag.renew { background: #fff7e8; color: #d25f00; }
+
+    .sms-bubble {
+      background: #e9edf5;
+      color: #1f2329;
+      font-size: 13px;
+      line-height: 1.7;
+      padding: 12px 14px;
+      border-radius: 12px 12px 12px 4px;
+    }
+
+    /* ==================== 控制台状态：成员订单中心（参照截图2、3） ==================== */
+    #page-member {
+      display: none;
+      min-height: calc(100vh - 44px);
+      background: #f3f5f9;
+    }
+
+    .member-sidebar {
+      width: 184px;
+      flex-shrink: 0;
+      padding: 18px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .member-sidebar-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1f2329;
+      padding: 0 10px 12px;
+    }
+
+    .member-nav-item {
+      height: 36px;
+      padding: 0 12px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #4e5969;
+      cursor: pointer;
+    }
+
+    .member-nav-item:hover {
+      background: rgba(31, 35, 41, 0.04);
+    }
+
+    .member-nav-item.active {
+      background: #e3ecff;
+      color: #2b5bf5;
+      font-weight: 600;
+    }
+
+    .member-main {
+      flex: 1;
+      padding: 16px 20px 32px 4px;
+      min-width: 0;
+    }
+
+    .member-card {
+      background: #ffffff;
+      border-radius: 8px;
+      min-height: calc(100vh - 80px);
+      padding: 24px 28px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+
+    .member-page-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1f2329;
+      margin-bottom: 14px;
+    }
+
+    /* 成员订单中心：订单记录（参照截图3） */
+    .member-info-banner {
+      background: #eef4ff;
+      border: 1px solid #d4e3ff;
+      border-radius: 6px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 12px;
+      color: #1f2329;
+      margin-bottom: 16px;
+    }
+
+    .member-order-cols-head {
+      display: grid;
+      grid-template-columns: 2.2fr 0.8fr 1.4fr 1fr 1.2fr 1.2fr;
+      padding: 10px 16px;
+      font-size: 12px;
+      color: #4e5969;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .member-order-group {
+      border: 1px solid #ebedf0;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+
+    .member-order-group-head {
+      background: #f5f6f8;
+      padding: 9px 16px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: #8f959e;
+    }
+
+    .member-order-group-body {
+      display: grid;
+      grid-template-columns: 5.4fr 1.2fr;
+      background: #ffffff;
+    }
+
+    .member-order-rows {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .member-order-row {
+      display: grid;
+      grid-template-columns: 2.2fr 0.8fr 1.4fr 1fr 1.2fr;
+      align-items: center;
+      text-align: center;
+      padding: 18px 16px;
+      font-size: 13px;
+      color: #1f2329;
+      border-bottom: 1px solid #f2f3f5;
+    }
+
+    .member-order-row:last-child {
+      border-bottom: none;
+    }
+
+    .member-order-action-cell {
+      border-left: 1px solid #f2f3f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 14px 10px;
+      font-size: 12px;
+    }
+
+    /* 成员订单中心：发票申请表单（参照截图2） */
+    .member-inv-form {
+      max-width: 680px;
+      margin: 28px auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .member-inv-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+    }
+
+    .member-inv-label {
+      font-size: 13px;
+      color: #1f2329;
+    }
+
+    .member-inv-label .req {
+      color: #f53f3f;
+      margin-left: 3px;
+    }
+
+    .member-inv-control {
+      height: 36px;
+      border: 1px solid #e5e6eb;
+      border-radius: 6px;
+      padding: 0 12px;
+      font-size: 13px;
+      color: #1f2329;
+      background: #ffffff;
+      outline: none;
+    }
+
+    .member-inv-control:focus {
+      border-color: #3b5ff6;
+    }
+
+    .member-order-dropdown-trigger {
+      min-height: 36px;
+      border: 1px solid #e5e6eb;
+      border-radius: 6px;
+      padding: 6px 12px;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      font-size: 13px;
+      color: #1f2329;
+      gap: 8px;
+    }
+
+    .member-order-dropdown-panel {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      border: 1px solid #dcdfe6;
+      border-radius: 8px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      padding: 10px 12px;
+      z-index: 40;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+
+    .member-order-dropdown-panel.open {
+      display: block;
+    }
+
+    .member-order-opt {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      gap: 10px;
+    }
+
+    .member-order-opt:hover {
+      background: #f5f8ff;
+    }
+
+    .member-inv-btn-primary {
+      height: 34px;
+      padding: 0 18px;
+      border: none;
+      border-radius: 6px;
+      background: #1677ff;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .member-inv-btn-default {
+      height: 34px;
+      padding: 0 18px;
+      border: 1px solid #dcdfe6;
+      border-radius: 6px;
+      background: #ffffff;
+      color: #4e5969;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
     /* 协议弹窗与操作弹窗 */
     .toast-tip {
       position: fixed;
@@ -2668,7 +3607,7 @@
 
   <div id="toast" class="toast-tip"></div>
 
-  <!-- ==================== 顶部演示控制台切换栏（购买页 / 管理后台 / 系统后台） ==================== -->
+  <!-- ==================== 顶部演示控制台切换栏（购买页 / 管理后台 / 系统后台 / 用户通知 / 成员订单中心） ==================== -->
   <div class="demo-console-bar">
     <div class="demo-console-left">
       <span class="demo-console-badge">演示控制台</span>
@@ -2678,8 +3617,21 @@
       <button type="button" class="demo-console-tab active" id="console-tab-purchase" onclick="switchConsoleView('purchase')">购买页</button>
       <button type="button" class="demo-console-tab" id="console-tab-admin" onclick="switchConsoleView('admin')">管理后台</button>
       <button type="button" class="demo-console-tab" id="console-tab-sys" onclick="switchConsoleView('sys')">系统后台</button>
+      <button type="button" class="demo-console-tab" id="console-tab-notify" onclick="switchConsoleView('notify')">用户通知</button>
+      <button type="button" class="demo-console-tab" id="console-tab-member" onclick="switchConsoleView('member')">成员订单中心</button>
     </div>
-    <div class="demo-console-right">支持在「购买页 / 支付页 / 手机模拟支付 / 管理后台 / 系统后台」间完整闭环体验</div>
+    <div class="demo-console-right">支持在「购买页 / 管理后台 / 系统后台 / 用户通知 / 成员订单中心」间完整闭环体验</div>
+  </div>
+
+  <!-- 购买页场景切换栏：新购场景 / 变更签约 -->
+  <div class="purchase-scenario-bar" id="purchase-scenario-bar">
+    <div class="scenario-pills">
+      <button type="button" class="scenario-pill-btn active" id="scenario-tab-new" onclick="switchPurchaseScenario('new')">新购场景</button>
+      <button type="button" class="scenario-pill-btn" id="scenario-tab-upgrade" onclick="switchPurchaseScenario('upgrade')">变更签约（套餐A → 套餐B 升级重签）</button>
+    </div>
+    <div style="font-size:12px;color:#646a73;" id="purchase-scenario-hint">
+      当前演示：新购连续包月 AI 额度包流程
+    </div>
   </div>
 
   <!-- ==================== 页面 1：额度包购买页 ==================== -->
@@ -2691,10 +3643,19 @@
         <div class="section-header-title">AI 额度包 · 全企业共享</div>
         <div class="section-header-desc">免费企业最多支持 50 人共享，更多席位或其他 WPS 365 付费权益请按需购买套餐</div>
 
+        <!-- 变更签约场景说明横幅 -->
+        <div class="scenario-upgrade-banner" id="purchase-upgrade-banner">
+          🔄 <strong>变更签约场景：</strong>您当前已签约连续订阅 <strong>套餐A「AI 智点基础包（1套 · 连续包月 · ¥833/月 · 支付宝 138****4247）」</strong>。
+          升级为连续订阅 <strong>套餐B「AI 智点高级包」</strong> 需要重新签署代扣协议；新协议签约支付生效后，系统将自动解约原套餐A代扣协议，不会重复扣款。
+        </div>
+
         <div class="quota-cards-grid">
           <!-- AI 智点基础包 -->
           <div class="quota-card active" id="quota-card-basic" onclick="selectQuotaPack('basic')">
-            <div class="quota-card-title">AI 智点基础包</div>
+            <div class="quota-card-title">
+              AI 智点基础包
+              <span class="quota-card-status-badge current-plan" id="badge-plan-a">当前已签约（套餐A）</span>
+            </div>
             <div class="quota-card-sub">1.5万智点/月 · 18万智点/年</div>
             <ul class="quota-feature-list">
               <li>Comate智能助手、应用开发、Wiki知识库</li>
@@ -2707,9 +3668,10 @@
           <div class="quota-card" id="quota-card-pro" onclick="selectQuotaPack('pro')">
             <div class="quota-card-title">
               AI 智点高级包
-              <span class="badge-recommend">推荐</span>
+              <span class="badge-recommend" id="badge-pro-rec">推荐</span>
+              <span class="quota-card-status-badge target-plan" id="badge-plan-b">升级为（套餐B）</span>
             </div>
-            <div class="quota-card-sub">200万智点/年</div>
+            <div class="quota-card-sub">200万智点/年 · 3万智点/月</div>
             <ul class="quota-feature-list">
               <li>包含标准套餐所有权益</li>
               <li>Comate Studio智能体、API Hub</li>
@@ -2881,6 +3843,12 @@
             <div class="auto-renew-order-tip" id="auto-renew-order-tip">
               *自动续费下次扣款时间:<span id="next-deduct-date">2026/11/20</span> 金额￥<span id="next-deduct-amount">833</span>元
             </div>
+            <div class="upgrade-summary-box" id="upgrade-summary-box">
+              <div><strong>变更签约明细：</strong></div>
+              <div>· 原连续订阅（套餐A）：AI 智点基础包（¥833/月）</div>
+              <div>· 升级新订阅（套餐B）：<span id="upgrade-target-name">AI 智点高级包</span>（连续包月）</div>
+              <div>· 重新签约支付成功后，原套餐A代扣协议自动解约</div>
+            </div>
           </div>
 
           <div id="summary-base-pkg-block">
@@ -2918,7 +3886,7 @@
           <div class="total-price-val">
             <span class="yen">¥</span><span id="summary-total-price">1,975.00</span>
           </div>
-          <a class="price-detail-link" href="javascript:void(0)">价格明细 ▾</a>
+          <a class="price-detail-link" href="javascript:void(0)" onclick="openPriceDetailDrawer()">价格明细 ▾</a>
         </div>
 
         <button type="button" class="submit-order-btn" id="submit-order-btn" onclick="goToPaymentPage()">
@@ -2928,7 +3896,7 @@
         <div class="agreement-row" id="auto-renew-agreement-row">
           <span class="custom-checkbox checked" id="agree-renew-checkbox" onclick="toggleCheckbox('agree-renew-checkbox')"></span>
           <span onclick="toggleCheckbox('agree-renew-checkbox')" style="cursor:pointer;">我已阅读并同意</span>
-          <a href="javascript:void(0)" onclick="openAgreementModal(event)">《自动续费协议》</a>
+          <a href="javascript:void(0)" onclick="openAgreementModal(event)" id="agree-renew-link-text">《自动续费协议》</a>
         </div>
       </div>
     </div>
@@ -2939,11 +3907,15 @@
     <div class="pay-topbar">
       <div class="pay-topbar-inner">
         <span class="pay-logo-icon">✈</span>
-        <span>支付订单</span>
+        <span id="pay-topbar-title">支付订单</span>
       </div>
     </div>
 
     <div class="pay-main-card">
+      <div class="scenario-upgrade-banner" id="pay-upgrade-banner" style="margin-top:0;margin-bottom:16px;">
+        🔄 <strong>变更签约订单：</strong>您正在将连续包月 <strong>套餐A「AI 智点基础包」</strong> 升级变更为 <strong>套餐B「AI 智点高级包」</strong>。
+        请扫码重新签署新套餐代扣协议，新协议生效后原套餐A自动解约，不会重复扣费。
+      </div>
       <div class="pay-meta-row">
         <div class="pay-meta-left">
           <span>订单编号：P20261020120541000001</span>
@@ -3542,9 +4514,9 @@
     </div>
   </div>
 
-  <!-- ==================== 需求 1：W365 系统后台（参考截图1，运营管理 > 连续订阅设置） ==================== -->
+  <!-- ==================== 需求 1：W365 系统后台（运营管理：企业信息 / 套餐配置 / 连续订阅设置） ==================== -->
   <div id="page-sysadmin">
-    <!-- 顶部深蓝色导航栏（复刻截图1） -->
+    <!-- 顶部深蓝色导航栏（复刻截图） -->
     <div class="sys-topbar">
       <div class="sys-brand">
         <span class="sys-brand-w">W</span>
@@ -3557,138 +4529,805 @@
       </div>
     </div>
 
-    <!-- 主体：左侧运营管理菜单 + 右侧内容卡片 -->
+    <!-- 主体：左侧导航菜单 + 右侧内容卡片 -->
     <div class="sys-body">
       <aside class="sys-sidebar">
+        <div class="sys-nav-parent" onclick="showToast('当前演示重点为「运营管理」下的企业信息、套餐配置与连续订阅设置')">
+          <span>🧩 CRM</span>
+        </div>
+        <div class="sys-nav-parent" onclick="showToast('当前演示重点为「运营管理」下的企业信息、套餐配置与连续订阅设置')">
+          <span>📋 订单管理<span style="color:#ff4d4f;">*</span></span>
+          <span style="font-size:11px;color:#8c8c8c;">▾</span>
+        </div>
         <div class="sys-nav-parent">
-          <span>📊 运营管理</span>
+          <span>📊 运营管理<span style="color:#ff4d4f;">*</span></span>
           <span style="font-size:11px;color:#8c8c8c;">^</span>
         </div>
-        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">策略任务管理</div>
-        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">活动管理列表</div>
-        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">抽奖配置</div>
-        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">企业激活推广配置</div>
-        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">轮播广告管理</div>
-        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">帮助中心配置</div>
-        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">使用指南配置</div>
-        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">企业助手配置</div>
-        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">团队模板配置</div>
-        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">共享文件夹配置</div>
-        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">企业信息</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「企业信息」「套餐配置」与「连续订阅设置」')">策略任务管理</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「企业信息」「套餐配置」与「连续订阅设置」')">活动管理列表</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「企业信息」「套餐配置」与「连续订阅设置」')">抽奖配置</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「企业信息」「套餐配置」与「连续订阅设置」')">企业激活推广配置</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「企业信息」「套餐配置」与「连续订阅设置」')">轮播广告管理</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「企业信息」「套餐配置」与「连续订阅设置」')">帮助中心配置</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「企业信息」「套餐配置」与「连续订阅设置」')">使用指南配置</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「企业信息」「套餐配置」与「连续订阅设置」')">企业助手配置</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「企业信息」「套餐配置」与「连续订阅设置」')">团队模板配置</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「企业信息」「套餐配置」与「连续订阅设置」')">共享文件夹配置</div>
+        <div class="sys-nav-item" id="sys-nav-ent" onclick="switchSysSubPage('ent')">企业信息</div>
         <div class="sys-nav-item" id="sys-nav-pkg" onclick="switchSysSubPage('pkg')">套餐配置</div>
         <div class="sys-nav-item active" id="sys-nav-sub" onclick="switchSysSubPage('sub')">连续订阅设置</div>
-        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">标签管理</div>
-        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">企业模板配置</div>
-        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">企业用户查询</div>
-        <div class="sys-nav-item" onclick="showToast('当前演示重点为「连续订阅设置」与「套餐配置」')">重名企业申诉</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「企业信息」「套餐配置」与「连续订阅设置」')">标签管理</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「企业信息」「套餐配置」与「连续订阅设置」')">企业模板配置</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「企业信息」「套餐配置」与「连续订阅设置」')">企业用户查询</div>
+        <div class="sys-nav-item" onclick="showToast('当前演示重点为「企业信息」「套餐配置」与「连续订阅设置」')">重名企业申诉<span style="color:#ff4d4f;">*</span></div>
       </aside>
 
       <main class="sys-main">
         <div class="sys-card">
-          <!-- 顶部标题与操作按钮行 -->
-          <div class="sys-title-row">
-            <span class="sys-page-title" id="sys-page-title-text">连续订阅设置</span>
-            <button type="button" class="sys-top-btn" onclick="SwitchToPurchaseVerify()">前往购买页验证拦截效果</button>
-          </div>
+          <!-- 子视图 1：连续订阅设置（去掉搜索栏和表格） -->
+          <div id="sys-subview-sub">
+            <div class="sys-title-row">
+              <span class="sys-page-title">连续订阅设置</span>
+              <button type="button" class="sys-top-btn" onclick="SwitchToPurchaseVerify()">前往购买页验证拦截效果</button>
+            </div>
 
-          <!-- 自动扣款金额上限全局配置栏（直接可视化编辑 & 联动购买页） -->
-          <div class="sys-cap-config-bar">
-            <div class="sys-cap-left">
-              <span class="sys-cap-title">🛡️ 连续包月自动扣款金额上限设置：</span>
-              <div class="sys-cap-input-group">
-                <span>单笔自动续费订单金额上限</span>
-                <input type="number" class="sys-cap-input" id="sys-cap-limit-input" value="2000" min="100" step="100" />
-                <span>元</span>
-                <button type="button" class="sys-btn-query" onclick="saveAutoDebitCap()">保存上限配置</button>
+            <!-- 自动扣款金额上限全局配置栏 -->
+            <div class="sys-cap-config-bar">
+              <div class="sys-cap-left">
+                <span class="sys-cap-title">🛡️ 连续包月自动扣款金额上限设置：</span>
+                <div class="sys-cap-input-group">
+                  <span>单笔自动续费订单金额上限</span>
+                  <input type="number" class="sys-cap-input" id="sys-cap-limit-input" value="2000" min="100" step="100" />
+                  <span>元</span>
+                  <button type="button" class="sys-btn-query" onclick="saveAutoDebitCap()">保存上限配置</button>
+                </div>
+                <span class="sys-cap-hint" id="sys-cap-rule-desc">
+                  （当前生效上限：<strong id="sys-cap-current-val" style="color:#1890ff;">2000</strong> 元；当购买页所选连续包月商品金额超过该上限时，将自动置灰“连续包月”并切换至“1个月”，悬停提示“订单金额超过<span id="sys-cap-tip-preview">2000</span>元，无法选择自动续费，可选择单次采购”）
+                </span>
               </div>
-              <span class="sys-cap-hint" id="sys-cap-rule-desc">
-                （当前生效上限：<strong id="sys-cap-current-val" style="color:#1890ff;">2000</strong> 元；当购买页所选连续包月商品金额超过该上限时，将自动置灰“连续包月”并切换至“1个月”，悬停提示“订单金额超过<span id="sys-cap-tip-preview">2000</span>元，无法选择自动续费，可选择单次采购”）
-              </span>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;">
-              <button type="button" class="sys-btn-clear" style="border-color:#91caff;color:#1890ff;" onclick="quickTestOverLimitOnPurchase()">
-                ⚡ 一键模拟超限并跳转购买页预览
-              </button>
-            </div>
-          </div>
-
-          <!-- 灰底筛选区（复刻截图1） -->
-          <div class="sys-filter-box">
-            <div class="sys-filter-grid">
-              <div class="sys-filter-item">
-                <span class="sys-filter-label">关键字：</span>
-                <input type="text" class="sys-filter-control" id="sys-keyword-input" placeholder="请输入套餐编号/名称" />
+              <div style="display:flex;align-items:center;gap:8px;">
+                <button type="button" class="sys-btn-clear" style="border-color:#91caff;color:#1890ff;" onclick="quickTestOverLimitOnPurchase()">
+                  ⚡ 一键模拟超限并跳转购买页预览
+                </button>
               </div>
-              <div class="sys-filter-item">
-                <span class="sys-filter-label">套餐类型：</span>
-                <select class="sys-filter-control">
-                  <option>全部</option>
-                  <option>套餐叠加包</option>
-                  <option>基础套餐</option>
-                </select>
-              </div>
-              <div class="sys-filter-item">
-                <span class="sys-filter-label">授权产品：</span>
-                <select class="sys-filter-control">
-                  <option>全部</option>
-                  <option>云办公（公有云）</option>
-                  <option>云办公（私有云）</option>
-                </select>
-              </div>
-              <div class="sys-filter-item">
-                <span class="sys-filter-label">套餐分类：</span>
-                <select class="sys-filter-control">
-                  <option>全部</option>
-                  <option>AI 额度包</option>
-                </select>
-              </div>
-              <div class="sys-filter-item">
-                <span class="sys-filter-label">连续订阅：</span>
-                <select class="sys-filter-control" id="sys-filter-sub-status" onchange="renderSysProductTable()">
-                  <option value="all">全部</option>
-                  <option value="allowed">允许自动连续订阅</option>
-                  <option value="disabled">不允许连续订阅</option>
-                </select>
-              </div>
-              <div class="sys-filter-item">
-                <span class="sys-filter-label">渠道：</span>
-                <select class="sys-filter-control">
-                  <option>全部</option>
-                  <option>官网在线购买</option>
-                </select>
-              </div>
-            </div>
-            <div class="sys-filter-btns">
-              <button type="button" class="sys-btn-query" onclick="renderSysProductTable()">查询</button>
-              <button type="button" class="sys-btn-clear" onclick="resetSysFilter()">清空</button>
             </div>
           </div>
 
-          <!-- 结果数量与表格（复刻截图1列结构 + 允许自动连续订阅配置列） -->
-          <div class="sys-result-count">共 <span id="sys-total-count">910</span> 条结果</div>
+          <!-- 子视图 2：套餐配置（列表视图 + 编辑套餐子页面） -->
+          <div id="sys-subview-pkg" style="display:none;">
+            <!-- 2A：套餐配置列表视图（去掉顶部“连续包月自动扣款金额上限设置”横条和“前往购买页验证拦截效果”按钮，操作列改为“编辑、复制”） -->
+            <div id="sys-pkg-list-view">
+              <div class="sys-title-row">
+                <span class="sys-page-title">套餐配置</span>
+              </div>
 
-          <table class="sys-table">
-            <thead>
-              <tr>
-                <th>套餐编码</th>
-                <th>套餐名称</th>
-                <th>套餐类型</th>
-                <th>权益包类型</th>
-                <th>单月标准价</th>
-                <th>允许自动连续订阅</th>
-                <th>自动扣款金额上限</th>
-                <th>授权产品</th>
-                <th>新增时间</th>
-                <th>状态</th>
-                <th>操作</th>
-              </tr>
-            </thead>
-            <tbody id="sys-product-tbody">
-              <!-- 由 JS 渲染 -->
-            </tbody>
-          </table>
+              <!-- 灰底筛选区 -->
+              <div class="sys-filter-box">
+                <div class="sys-filter-grid">
+                  <div class="sys-filter-item">
+                    <span class="sys-filter-label">关键字：</span>
+                    <input type="text" class="sys-filter-control" id="sys-keyword-input" placeholder="请输入套餐编号/名称" />
+                  </div>
+                  <div class="sys-filter-item">
+                    <span class="sys-filter-label">套餐类型：</span>
+                    <select class="sys-filter-control">
+                      <option>全部</option>
+                      <option>套餐叠加包</option>
+                      <option>基础套餐</option>
+                    </select>
+                  </div>
+                  <div class="sys-filter-item">
+                    <span class="sys-filter-label">授权产品：</span>
+                    <select class="sys-filter-control">
+                      <option>全部</option>
+                      <option>云办公（公有云）</option>
+                      <option>云办公（私有云）</option>
+                    </select>
+                  </div>
+                  <div class="sys-filter-item">
+                    <span class="sys-filter-label">套餐分类：</span>
+                    <select class="sys-filter-control">
+                      <option>全部</option>
+                      <option>AI 额度包</option>
+                    </select>
+                  </div>
+                  <div class="sys-filter-item">
+                    <span class="sys-filter-label">连续订阅：</span>
+                    <select class="sys-filter-control" id="sys-filter-sub-status" onchange="renderSysProductTable()">
+                      <option value="all">全部</option>
+                      <option value="allowed">允许自动连续订阅</option>
+                      <option value="disabled">不允许连续订阅</option>
+                    </select>
+                  </div>
+                  <div class="sys-filter-item">
+                    <span class="sys-filter-label">渠道：</span>
+                    <select class="sys-filter-control">
+                      <option>全部</option>
+                      <option>官网在线购买</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="sys-filter-btns">
+                  <button type="button" class="sys-btn-query" onclick="renderSysProductTable()">查询</button>
+                  <button type="button" class="sys-btn-clear" onclick="resetSysFilter()">清空</button>
+                </div>
+              </div>
+
+              <!-- 结果数量与表格 -->
+              <div class="sys-result-count">共 <span id="sys-total-count">910</span> 条结果</div>
+
+              <table class="sys-table">
+                <thead>
+                  <tr>
+                    <th>套餐编码</th>
+                    <th>套餐名称</th>
+                    <th>套餐类型</th>
+                    <th>权益包类型</th>
+                    <th>单月标准价</th>
+                    <th>允许自动连续订阅</th>
+                    <th>授权产品</th>
+                    <th>新增时间</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody id="sys-product-tbody">
+                  <!-- 由 JS 渲染 -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- 2B：编辑套餐子页面（参考截图3 + 在“套餐定价”模块下新增“是否连续订阅”模块） -->
+            <div id="sys-pkg-edit-view" style="display:none;">
+              <div class="sys-title-row">
+                <span class="sys-page-title">套餐配置</span>
+              </div>
+
+              <div class="sys-edit-subbar">
+                <a href="javascript:void(0)" class="sys-edit-back" onclick="closeSysPkgEdit()">&lt; 返回</a>
+                <span style="color:#d9d9d9;">|</span>
+                <span>编辑套餐</span>
+              </div>
+
+              <!-- 模块 1：基本信息 -->
+              <div class="sys-edit-panel">
+                <div class="sys-edit-panel-header">
+                  <span>基本信息</span>
+                  <span style="color:#8c8c8c;font-size:11px;">^</span>
+                </div>
+                <div class="sys-edit-panel-body">
+                  <div class="sys-edit-form-grid">
+                    <div class="sys-edit-field">
+                      <span class="sys-edit-label"><span class="sys-edit-req">*</span>套餐类型</span>
+                      <select class="sys-edit-control" id="edit-pkg-type" disabled>
+                        <option value="套餐叠加包">套餐叠加包</option>
+                        <option value="基础套餐">基础套餐</option>
+                      </select>
+                    </div>
+                    <div class="sys-edit-field">
+                      <span class="sys-edit-label"><span class="sys-edit-req">*</span>授权产品</span>
+                      <select class="sys-edit-control" id="edit-pkg-product">
+                        <option value="云办公（公有云）">云办公（公有云）</option>
+                        <option value="云办公（私有云）">云办公（私有云）</option>
+                      </select>
+                    </div>
+                    <div class="sys-edit-field">
+                      <span class="sys-edit-label"><span class="sys-edit-req">*</span>套餐名称</span>
+                      <input type="text" class="sys-edit-control" id="edit-pkg-name" value="wps 365 AI 智点基础包001" />
+                    </div>
+                    <div class="sys-edit-field">
+                      <span class="sys-edit-label"><span class="sys-edit-req">*</span>套餐唯一标识</span>
+                      <input type="text" class="sys-edit-control" id="edit-pkg-uid" value="wps_comate_package_001" disabled />
+                    </div>
+                    <div class="sys-edit-field">
+                      <span class="sys-edit-label"><span class="sys-edit-req">*</span>允许创建的订单类型</span>
+                      <select class="sys-edit-control" id="edit-pkg-ordertype">
+                        <option value="新购">新购</option>
+                        <option value="新购/续费">新购/续费</option>
+                      </select>
+                    </div>
+                    <div class="sys-edit-field">
+                      <span class="sys-edit-label">权益包分类</span>
+                      <select class="sys-edit-control" id="edit-pkg-category">
+                        <option value="AI 额度专区">AI 额度专区</option>
+                        <option value="增值权益包">增值权益包</option>
+                      </select>
+                    </div>
+                    <div class="sys-edit-field">
+                      <span class="sys-edit-label"><span class="sys-edit-req">*</span>支持开电子合同</span>
+                      <select class="sys-edit-control" id="edit-pkg-contract">
+                        <option value="是">是</option>
+                        <option value="否">否</option>
+                      </select>
+                    </div>
+                    <div class="sys-edit-field align-top" style="grid-column: 1 / 2;">
+                      <span class="sys-edit-label">套餐备注信息</span>
+                      <textarea class="sys-edit-textarea" id="edit-pkg-remark" placeholder="请输入"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 模块 2：套餐定价 -->
+              <div class="sys-edit-panel">
+                <div class="sys-edit-panel-header">
+                  <span>套餐定价</span>
+                  <span style="color:#8c8c8c;font-size:11px;">^</span>
+                </div>
+                <div class="sys-edit-panel-body">
+                  <div class="sys-edit-form-grid">
+                    <div class="sys-edit-field">
+                      <span class="sys-edit-label"><span class="sys-edit-req">*</span>定价方式 <span style="color:#8c8c8c;">?</span></span>
+                      <select class="sys-edit-control" id="edit-pkg-pricing-mode">
+                        <option value="按人数计价">按人数计价</option>
+                        <option value="按套数计价">按套数计价</option>
+                      </select>
+                    </div>
+                    <div class="sys-edit-field">
+                      <span class="sys-edit-label"><span class="sys-edit-req">*</span>年单价</span>
+                      <div class="sys-edit-unit-group">
+                        <input type="number" id="edit-pkg-year-price" value="9800" />
+                        <span class="sys-edit-unit-addon">元/人/年</span>
+                      </div>
+                    </div>
+                    <div class="sys-edit-field">
+                      <span class="sys-edit-label"><span class="sys-edit-req">*</span>月单价</span>
+                      <div class="sys-edit-unit-group">
+                        <input type="number" id="edit-pkg-month-price" value="980" />
+                        <span class="sys-edit-unit-addon">元/人/月</span>
+                      </div>
+                    </div>
+                    <div class="sys-edit-field">
+                      <span class="sys-edit-label"><span class="sys-edit-req">*</span>日单价</span>
+                      <div class="sys-edit-unit-group">
+                        <input type="number" id="edit-pkg-day-price" value="35" />
+                        <span class="sys-edit-unit-addon">元/人/日</span>
+                      </div>
+                    </div>
+                    <div class="sys-edit-field" style="grid-column: 1 / -1;">
+                      <span class="sys-edit-label">启用计费周期</span>
+                      <div style="display:flex;align-items:center;gap:18px;font-size:12px;color:#595959;">
+                        <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;">
+                          <input type="checkbox" checked /> 按年计费
+                        </label>
+                        <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;">
+                          <input type="checkbox" checked /> 按月计费
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 模块 3（新增）：是否连续订阅（在套餐定价模块下，内含开关，开启时可设置首月优惠价格） -->
+              <div class="sys-edit-panel">
+                <div class="sys-edit-panel-header">
+                  <span>是否连续订阅</span>
+                  <span style="color:#8c8c8c;font-size:11px;">^</span>
+                </div>
+                <div class="sys-edit-panel-body">
+                  <div class="sys-edit-form-grid">
+                    <div class="sys-edit-field" style="grid-column: 1 / -1;">
+                      <span class="sys-edit-label">允许连续订阅</span>
+                      <div style="display:flex;align-items:center;gap:12px;">
+                        <div class="sys-switch on" id="edit-pkg-sub-switch" onclick="toggleEditPkgContinuous()">
+                          <div class="sys-switch-track">
+                            <div class="sys-switch-thumb"></div>
+                          </div>
+                          <span id="edit-pkg-sub-switch-text" style="font-size:12px;color:#1890ff;font-weight:600;">开启</span>
+                        </div>
+                        <span style="font-size:12px;color:#8c8c8c;">开启后，该商品将在购买页支持「连续包月」自动续费</span>
+                      </div>
+                    </div>
+
+                    <div class="sys-edit-field" id="edit-pkg-first-month-row" style="grid-column: 1 / 2;">
+                      <span class="sys-edit-label"><span class="sys-edit-req">*</span>首月优惠价格</span>
+                      <div class="sys-edit-unit-group">
+                        <input type="number" id="edit-pkg-first-month-price" value="833" min="0" />
+                        <span class="sys-edit-unit-addon">元/月</span>
+                      </div>
+                    </div>
+
+                    <div class="sys-edit-field" id="edit-pkg-first-month-hint" style="grid-column: 2 / 3;">
+                      <span style="font-size:12px;color:#8c8c8c;">开启连续订阅时首期可按此优惠价扣款</span>
+                    </div>
+
+                    <div class="sys-edit-field" id="edit-pkg-continuous-row" style="grid-column: 1 / 2;">
+                      <span class="sys-edit-label">连续包月价格</span>
+                      <div class="sys-edit-unit-group">
+                        <input type="number" id="edit-pkg-continuous-price" value="833" min="0" placeholder="留空则按月单价收费" />
+                        <span class="sys-edit-unit-addon">元/月</span>
+                      </div>
+                    </div>
+
+                    <div class="sys-edit-field" id="edit-pkg-continuous-hint" style="grid-column: 2 / 3;">
+                      <span style="font-size:12px;color:#8c8c8c;">留空则按套餐定价中的“月单价”收费</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sys-edit-footer">
+                <button type="button" class="sys-btn-query" onclick="saveSysPkgEdit()">保存</button>
+                <button type="button" class="sys-btn-clear" onclick="closeSysPkgEdit()">取消</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 子视图 3：企业信息（参考截图2，订单记录下增加“是否连续订阅”字段，值包含“是/否”） -->
+          <div id="sys-subview-ent" style="display:none;">
+            <div class="sys-title-row">
+              <span class="sys-page-title">企业信息</span>
+            </div>
+
+            <!-- 查询企业卡片 -->
+            <div class="sys-ent-search-card">
+              <div class="sys-ent-search-row">
+                <span style="width:68px;text-align:right;">查询企业：</span>
+                <select class="sys-ent-select" id="sys-ent-company-select" onchange="onSysEntCompanyChange()">
+                  <option value="冰淇淋公司">冰淇淋公司</option>
+                  <option value="巧克力工厂">巧克力工厂</option>
+                  <option value="测试注册动机">测试注册动机</option>
+                </select>
+              </div>
+              <div class="sys-ent-search-row">
+                <span style="width:68px;text-align:right;">最近查询：</span>
+                <div>
+                  <span class="sys-ent-recent-link" onclick="selectSysEntCompany('冰淇淋公司')">冰淇淋公司</span>
+                  <span class="sys-ent-recent-link" onclick="selectSysEntCompany('巧克力工厂')">巧克力工厂</span>
+                  <span class="sys-ent-recent-link" onclick="selectSysEntCompany('测试注册动机')">测试注册动机</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 企业详情 Tabs -->
+            <div class="sys-ent-tabs">
+              <div class="sys-ent-tab">基本信息</div>
+              <div class="sys-ent-tab">工商信息</div>
+              <div class="sys-ent-tab active">订单记录</div>
+              <div class="sys-ent-tab">权益信息</div>
+              <div class="sys-ent-tab">统计信息</div>
+              <div class="sys-ent-tab">企业标签</div>
+              <div class="sys-ent-tab">跟进记录</div>
+              <div class="sys-ent-tab">企业洞察</div>
+              <div class="sys-ent-tab">企业认证</div>
+              <div class="sys-ent-tab">金山协作数据</div>
+              <div class="sys-ent-tab">优惠券码记录</div>
+              <div class="sys-ent-tab">成员企微添加情况</div>
+              <div class="sys-ent-tab">企业应用数据</div>
+            </div>
+
+            <!-- 套餐信息 -->
+            <div class="sys-ent-section-title">套餐信息</div>
+            <table class="sys-ent-kv-table">
+              <tbody>
+                <tr>
+                  <td class="sys-ent-kv-label">产品套餐</td>
+                  <td class="sys-ent-kv-val" id="sys-ent-pkg-name">WPS 365 体验版</td>
+                  <td class="sys-ent-kv-label">购买人数</td>
+                  <td class="sys-ent-kv-val" id="sys-ent-seats">50</td>
+                </tr>
+                <tr>
+                  <td class="sys-ent-kv-label">到期时间</td>
+                  <td class="sys-ent-kv-val">2027-07-22 09:29:00 <span style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:#595959;color:#fff;font-size:10px;margin-left:2px;">?</span></td>
+                  <td class="sys-ent-kv-label">在期付费状态</td>
+                  <td class="sys-ent-kv-val">在期付费企业（线上）</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- 订单记录（含新增“是否连续订阅”字段，值包含“是/否”） -->
+            <div class="sys-ent-section-title">订单记录</div>
+            <div style="overflow-x:auto;">
+              <table class="sys-table">
+                <thead>
+                  <tr>
+                    <th>订单编号</th>
+                    <th>付费渠道</th>
+                    <th>订购内容</th>
+                    <th>权益包类型</th>
+                    <th>采购类型</th>
+                    <th>套餐授权</th>
+                    <th>订单类型</th>
+                    <th>业绩类型</th>
+                    <th>套餐类型</th>
+                    <th>购买数量</th>
+                    <th>购买时长</th>
+                    <th>是否连续订阅</th>
+                    <th>支付时间</th>
+                  </tr>
+                </thead>
+                <tbody id="sys-ent-orders-tbody">
+                  <!-- 由 JS 渲染 -->
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </main>
+    </div>
+  </div>
+
+  <!-- 购买页右下角“价格明细”上浮抽屉（参考截图1） -->
+  <div class="price-drawer-mask" id="price-detail-drawer-mask" onclick="closePriceDetailDrawerOnMask(event)">
+    <div class="price-drawer-sheet">
+      <div class="price-drawer-header">
+        <span class="price-drawer-title">待支付</span>
+        <span class="price-drawer-collapse" onclick="closePriceDetailDrawer()">⌄ 收起</span>
+      </div>
+
+      <div class="price-drawer-card">
+        <table class="price-drawer-table">
+          <colgroup>
+            <col style="width: 22%;" />
+            <col style="width: 10%;" />
+            <col style="width: 10%;" />
+            <col style="width: 12%;" />
+            <col style="width: 12%;" />
+            <col style="width: 12%;" />
+            <col style="width: 10%;" />
+            <col style="width: 12%;" />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>购买内容</th>
+              <th>购买人数</th>
+              <th>购买时长</th>
+              <th>到期时间</th>
+              <th>原价</th>
+              <th>优惠类型</th>
+              <th>优惠</th>
+              <th>应付金额</th>
+            </tr>
+          </thead>
+          <tbody id="price-drawer-tbody">
+            <!-- 由 JS 动态渲染 -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="price-drawer-card summary-card">
+        <table class="price-drawer-table">
+          <colgroup>
+            <col style="width: 22%;" />
+            <col style="width: 10%;" />
+            <col style="width: 10%;" />
+            <col style="width: 12%;" />
+            <col style="width: 12%;" />
+            <col style="width: 12%;" />
+            <col style="width: 10%;" />
+            <col style="width: 12%;" />
+          </colgroup>
+          <tbody id="price-drawer-summary-tbody">
+            <!-- 由 JS 动态渲染 -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 控制台状态：用户通知（站内消息参照截图1 + 短信通知） ==================== -->
+  <div id="page-notify">
+    <div class="notify-top-card">
+      <div>
+        <div style="font-size:16px;font-weight:600;color:#1f2329;">用户通知（站内消息 &amp; 短信触达模拟）</div>
+        <div style="font-size:12px;color:#646a73;margin-top:2px;">展示连续包月全生命周期消息触达：扣款成功权益生效通知、扣款失败通知、断约续购邀请/通知</div>
+      </div>
+      <div class="notify-filter-pills">
+        <button type="button" class="notify-filter-btn active" id="notify-filter-all" onclick="filterNotifyScene('all')">全部通知（3）</button>
+        <button type="button" class="notify-filter-btn" id="notify-filter-success" onclick="filterNotifyScene('success')">扣款成功权益生效</button>
+        <button type="button" class="notify-filter-btn" id="notify-filter-fail" onclick="filterNotifyScene('fail')">扣款失败提醒</button>
+        <button type="button" class="notify-filter-btn" id="notify-filter-renew" onclick="filterNotifyScene('renew')">断约续购邀请</button>
+      </div>
+    </div>
+
+    <div class="notify-columns">
+      <!-- 左侧：站内消息（参照截图1：全部聊天 / 订单助手） -->
+      <div class="notify-channel-card">
+        <div class="notify-channel-title">
+          <span>💬 站内消息（WPS 协作 · 订单助手）</span>
+          <span style="font-size:11px;color:#8f959e;font-weight:400;">参照截图1样式</span>
+        </div>
+
+        <div class="im-window">
+          <div class="im-topbar">
+            <span class="im-topbar-title">全部聊天</span>
+            <div class="im-topbar-icons">
+              <span>🔍</span>
+              <span>⊕</span>
+              <span>×</span>
+            </div>
+          </div>
+          <div class="im-subbar">
+            <span style="color:#646a73;">&lt;</span>
+            <span>订单助手</span>
+            <span style="font-size:13px;color:#3b5ff6;">🤖</span>
+          </div>
+
+          <div class="im-feed" id="notify-im-feed">
+            <!-- 通知 1：扣款成功权益生效 -->
+            <div class="notify-scene-item" data-scene="success">
+              <div class="im-time-divider">11月20日 08:00</div>
+              <div class="im-msg-row">
+                <div class="im-bot-avatar">🧾</div>
+                <div class="im-msg-card">
+                  <div class="im-msg-card-header">
+                    <span>扣款成功，权益已生效</span>
+                  </div>
+                  <div class="im-msg-card-body">
+                    您订购的「AI 智点基础包（连续包月）」已自动扣款 ¥833.00，本期 1.5万企业智点已发放至「香香的测试企业」，服务有效期自动顺延至 2026年12月20日。
+                  </div>
+                  <div class="im-msg-card-footer">
+                    <button type="button" class="im-msg-action-btn" onclick="switchConsoleView('member')">查看订单记录</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 通知 2：扣款失败（账号异常、余额不足等） -->
+            <div class="notify-scene-item" data-scene="fail">
+              <div class="im-time-divider">11月21日 09:30</div>
+              <div class="im-msg-row">
+                <div class="im-bot-avatar">🧾</div>
+                <div class="im-msg-card">
+                  <div class="im-msg-card-header warn">
+                    <span>自动扣款失败通知</span>
+                  </div>
+                  <div class="im-msg-card-body">
+                    您订阅的「AI 智点基础包（连续包月）」本期自动扣款（¥833.00）失败，原因：支付宝扣款账户余额不足 / 账号状态异常。为避免影响企业智点使用，请及时充值或更换扣款账户。
+                  </div>
+                  <div class="im-msg-card-footer">
+                    <button type="button" class="im-msg-action-btn" onclick="switchConsoleView('admin');switchAdminSubPage('paysettings');">更换扣款人 / 处理异常</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 通知 3：断约续购邀请/通知 -->
+            <div class="notify-scene-item" data-scene="renew">
+              <div class="im-time-divider">11月25日 10:00</div>
+              <div class="im-msg-row">
+                <div class="im-bot-avatar">🧾</div>
+                <div class="im-msg-card">
+                  <div class="im-msg-card-header invite">
+                    <span>连续订阅已断约，邀您续购</span>
+                  </div>
+                  <div class="im-msg-card-body">
+                    您企业的「AI 智点基础包（连续包月）」因多次扣款未成功已自动断约停止续费，当前智点权益将于 3 日后到期。现诚邀您重新续购连续包月，继续享受 85 折优惠（¥833/月）。
+                  </div>
+                  <div class="im-msg-card-footer">
+                    <button type="button" class="im-msg-action-btn" onclick="switchConsoleView('purchase');switchPurchaseScenario('new');">立即续购</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右侧：短信通知（SMS） -->
+      <div class="notify-channel-card">
+        <div class="notify-channel-title">
+          <span>📱 手机短信通知（SMS 触达）</span>
+          <span style="font-size:11px;color:#8f959e;font-weight:400;">接收人：企业超级管理员 / 签约扣款人（138****4247）</span>
+        </div>
+
+        <div class="sms-list">
+          <div class="sms-item-box notify-scene-item" data-scene="success">
+            <div class="sms-item-meta">
+              <span class="sms-tag success">扣款成功 · 权益生效短信</span>
+              <span>2026-11-20 08:00:12 · 发件号 10690365</span>
+            </div>
+            <div class="sms-bubble">
+              【WPS 365】扣款成功通知：您签约的「AI 智点基础包（连续包月）」已于11月20日成功自动扣款 833.00元，本期 1.5万企业智点已发放并生效，有效期至 2026-12-20。如需管理自动续费或开具发票，请前往企业管理后台或成员订单中心。
+            </div>
+          </div>
+
+          <div class="sms-item-box notify-scene-item" data-scene="fail">
+            <div class="sms-item-meta">
+              <span class="sms-tag fail">扣款失败（账号异常 / 余额不足）短信</span>
+              <span>2026-11-21 09:30:05 · 发件号 10690365</span>
+            </div>
+            <div class="sms-bubble">
+              【WPS 365】自动扣款失败提醒：您签约的「AI 智点基础包（连续包月）」本期扣款 833.00元 失败（失败原因：签约支付宝账户余额不足或账号授权异常）。系统将在宽限期内再次发起扣款，请及时充值或登录管理后台-支付设置更换扣款人。
+            </div>
+          </div>
+
+          <div class="sms-item-box notify-scene-item" data-scene="renew">
+            <div class="sms-item-meta">
+              <span class="sms-tag renew">断约续购邀请 / 通知短信</span>
+              <span>2026-11-25 10:00:00 · 发件号 10690365</span>
+            </div>
+            <div class="sms-bubble">
+              【WPS 365】断约续购邀请：您企业的「AI 智点基础包」连续订阅服务已因扣款失败自动断约，当前剩余智点权益将于3日后到期。点击 https://365.wps.cn/renew 立即重新续购连续包月，继续尊享月单价85折（833元/月）保障企业AI办公不断档！
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 控制台状态：成员订单中心（参照截图2、3，无“权益分配”菜单） ==================== -->
+  <div id="page-member">
+    <aside class="member-sidebar">
+      <div class="member-sidebar-title">订单中心</div>
+      <div class="member-nav-item active" id="member-nav-orders" onclick="switchMemberSubPage('orders')">
+        <span>📄</span>
+        <span>订单记录</span>
+      </div>
+      <div class="member-nav-item" id="member-nav-invoice" onclick="switchMemberSubPage('invoice')">
+        <span>🧾</span>
+        <span>发票管理</span>
+      </div>
+    </aside>
+
+    <main class="member-main">
+      <div class="member-card">
+        <!-- 子页面 1：订单记录（参照截图3，增加连续订阅订单展示） -->
+        <div id="member-subview-orders">
+          <div class="member-page-title">订单记录</div>
+
+          <div class="member-info-banner">
+            <div>
+              <span style="display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:#1677ff;color:#fff;font-size:10px;margin-right:6px;">i</span>
+              <span>当前生效：WPS 365超级会员（2026-08-01到期）</span>
+              <a href="javascript:void(0)" style="margin-left:10px;" onclick="switchConsoleView('purchase')">立即续费</a>
+              <span style="margin:0 12px;color:#d0d7e7;">|</span>
+              <span>连续订阅生效中：<strong>AI 智点基础包（连续包月 · 下次扣款 2026-11-20 · ¥833.00/月）</strong></span>
+              <a href="javascript:void(0)" style="margin-left:8px;" onclick="switchConsoleView('admin');switchAdminSubPage('paysettings');">管理自动续费</a>
+            </div>
+            <button type="button" class="member-inv-btn-primary" style="height:28px;padding:0 12px;font-size:12px;" onclick="jumpToMemberMergedInvoice()">
+              连续订阅订单合并开票
+            </button>
+          </div>
+
+          <div class="member-order-cols-head">
+            <div>购买商品</div>
+            <div>购买数量</div>
+            <div>到期时间</div>
+            <div>原价</div>
+            <div>实付</div>
+            <div>操作</div>
+          </div>
+
+          <div id="member-orders-list-container">
+            <!-- 由 JS 渲染（含连续订阅订单 + 普通订单 + 已取消订单） -->
+          </div>
+        </div>
+
+        <!-- 子页面 2：发票管理（参照截图2，支持连续订阅订单合并开票） -->
+        <div id="member-subview-invoice" style="display:none;">
+          <div class="member-page-title">发票管理</div>
+
+          <div class="invoice-tabs-bar" style="margin-top:0;">
+            <div class="invoice-tab-item active" id="mem-inv-tab-apply" onclick="switchMemberInvoiceTab('apply')">发票申请</div>
+            <div class="invoice-tab-item" id="mem-inv-tab-records" onclick="switchMemberInvoiceTab('records')">发票记录</div>
+            <div class="invoice-tab-item" id="mem-inv-tab-title" onclick="switchMemberInvoiceTab('title')">发票抬头</div>
+          </div>
+
+          <!-- Tab 1：发票申请（参照截图2表单结构 + 支持连续订阅多期合并开票） -->
+          <div id="mem-inv-panel-apply">
+            <div class="member-inv-form">
+              <div class="member-inv-field">
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <label class="member-inv-label">关联订单 <span class="req">*</span></label>
+                  <a href="javascript:void(0)" style="font-size:12px;" onclick="selectAllMemberContinuousOrders()">一键勾选全部连续订阅订单合并开票</a>
+                </div>
+
+                <div class="member-order-dropdown-trigger" id="mem-order-dropdown-trigger" onclick="toggleMemberOrderDropdown()">
+                  <span id="mem-selected-orders-text" style="color:#8f959e;">请选择要开票的订单（支持勾选多个连续订阅订单合并开票）</span>
+                  <span style="color:#8f959e;font-size:12px;">▾</span>
+                </div>
+
+                <div class="member-order-dropdown-panel" id="mem-order-dropdown-panel">
+                  <!-- 由 JS 渲染可选订单列表 -->
+                </div>
+
+                <div id="mem-selected-orders-summary" style="display:none;font-size:12px;color:#1677ff;background:#eef4ff;border:1px solid #bedaff;border-radius:6px;padding:7px 12px;">
+                  <!-- 动态展示已选订单汇总与连续订阅合并提示 -->
+                </div>
+              </div>
+
+              <div class="member-inv-field">
+                <label class="member-inv-label">发票抬头 <span class="req">*</span></label>
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <select class="member-inv-control" id="mem-inv-title-select" style="flex:1;">
+                    <!-- 由 JS 渲染抬头选项 -->
+                  </select>
+                  <button type="button" class="member-inv-btn-primary" onclick="openMemberAddTitleModal()">+ 新增抬头</button>
+                </div>
+              </div>
+
+              <div class="member-inv-field">
+                <label class="member-inv-label">收件邮箱/手机 <span class="req">*</span></label>
+                <input type="text" class="member-inv-control" id="mem-inv-recipient-input" placeholder="请输入收件邮箱或手机号" value="zhangshan@xiaoyuan-tech.com" />
+              </div>
+
+              <div class="member-inv-field">
+                <label class="member-inv-label">发票内容 <span class="req">*</span></label>
+                <div style="display:flex;align-items:center;gap:28px;font-size:13px;color:#1f2329;padding-top:2px;">
+                  <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;">
+                    <input type="radio" name="mem-inv-content" value="技术服务费" checked /> 技术服务费
+                  </label>
+                  <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;">
+                    <input type="radio" name="mem-inv-content" value="商品明细" /> 商品明细
+                  </label>
+                </div>
+              </div>
+
+              <div style="display:flex;align-items:center;gap:12px;margin-top:4px;">
+                <button type="button" class="member-inv-btn-primary" onclick="submitMemberInvoiceApply()">提交申请</button>
+                <button type="button" class="member-inv-btn-default" onclick="showToast('已保存发票申请草稿')">保存草稿</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 2：发票记录 -->
+          <div id="mem-inv-panel-records" style="display:none;margin-top:18px;">
+            <table class="pay-table">
+              <thead>
+                <tr>
+                  <th>申请单号</th>
+                  <th>开票方式</th>
+                  <th>关联订单号</th>
+                  <th>发票抬头</th>
+                  <th>发票内容</th>
+                  <th>开票金额</th>
+                  <th>收件人</th>
+                  <th>状态</th>
+                </tr>
+              </thead>
+              <tbody id="mem-inv-records-tbody">
+                <!-- 由 JS 渲染 -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Tab 3：发票抬头 -->
+          <div id="mem-inv-panel-title" style="display:none;margin-top:18px;">
+            <div style="display:flex;justify-content:flex-end;margin-bottom:12px;">
+              <button type="button" class="member-inv-btn-primary" onclick="openMemberAddTitleModal()">+ 新增抬头</button>
+            </div>
+            <table class="pay-table">
+              <thead>
+                <tr>
+                  <th>抬头名称</th>
+                  <th>纳税人识别号</th>
+                  <th>抬头类型</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="mem-inv-titles-tbody">
+                <!-- 由 JS 渲染 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- 成员订单中心：新增发票抬头弹窗 -->
+  <div class="modal-mask" id="member-add-title-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span>新增发票抬头</span>
+        <span class="modal-close" onclick="closeMemberAddTitleModal()">×</span>
+      </div>
+      <div class="modal-body">
+        <div class="form-field">
+          <label>抬头名称（单位/个人名称）</label>
+          <input type="text" class="form-input" id="mem-new-title-name" placeholder="请输入单位名称" />
+        </div>
+        <div class="form-field">
+          <label>纳税人识别号</label>
+          <input type="text" class="form-input" id="mem-new-title-taxno" placeholder="请输入税号（企业抬头必填）" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="modal-btn secondary" onclick="closeMemberAddTitleModal()">取消</button>
+        <button type="button" class="modal-btn" onclick="confirmMemberAddTitle()">保存抬头</button>
+      </div>
     </div>
   </div>
 
@@ -3840,10 +5479,17 @@
   <script>
     // 状态管理
     const state = {
-      consoleView: 'purchase',     // 'purchase' | 'admin' | 'sys'
+      consoleView: 'purchase',     // 'purchase' | 'admin' | 'sys' | 'notify' | 'member'
+      purchaseScenario: 'new',     // 'new' (新购场景) | 'upgrade' (变更签约)
+      notifyFilter: 'all',         // 'all' | 'success' | 'fail' | 'renew'
+      memberSubPage: 'orders',     // 'orders' | 'invoice'
+      memberInvoiceTab: 'apply',   // 'apply' | 'records' | 'title'
       adminSubPage: 'paysettings', // 'paysettings' | 'invoice'
       invoiceTab: 'apply',         // 'apply' | 'records' | 'title' | 'recipient'
-      sysSubPage: 'sub',           // 'sub' (连续订阅设置) | 'pkg' (套餐配置)
+      sysSubPage: 'sub',           // 'sub' (连续订阅设置) | 'pkg' (套餐配置) | 'ent' (企业信息)
+      editingPkgCode: null,
+      editingPkgAllowContinuous: true,
+      sysEnterprise: '冰淇淋公司',
       autoDebitLimit: 2000,        // 自动扣款金额上限（元），默认 2000 元
       quotaPack: 'basic',          // 'basic' | 'pro'
       quotaSets: 1,
@@ -3858,16 +5504,112 @@
       payerName: '张珊',
       payerChannel: '支付宝',
       payerAccount: '138****4247',
-      // 系统后台商品列表（参考截图1 + 连续订阅开关配置）
+      // 系统后台商品列表（参考截图 + 连续订阅开关、首月优惠价与连续包月价格配置）
       sysProducts: [
-        { code: '33109', name: 'wps 365 AI 智点基础包001', type: '套餐叠加包', pkgType: '不可分配', monthPrice: 980, allowContinuous: true, product: '云办公（公有云）', time: '2026-10-20 11:30:23', status: '在售中', bindKey: null },
-        { code: '33107', name: '额度测试（特殊权益）', type: '套餐叠加包', pkgType: '不可分配', monthPrice: 980, allowContinuous: false, product: '云办公（公有云）', time: '2026-10-19 15:30:52', status: '在售中', bindKey: null },
-        { code: '33105', name: 'WPS 365 AI 智点基础包', type: '套餐叠加包', pkgType: '不可分配', monthPrice: 980, allowContinuous: true, product: '云办公（公有云）', time: '2026-10-16 17:06:45', status: '在售中', bindKey: 'basic' },
-        { code: '33104', name: 'AI 智点高级包', type: '套餐叠加包', pkgType: '不可分配', monthPrice: 980, allowContinuous: true, product: '云办公（公有云）', time: '2026-10-16 14:49:12', status: '在售中', bindKey: 'pro' },
-        { code: '33102', name: '大额度权益包（套数）', type: '套餐叠加包', pkgType: '不可分配', monthPrice: 2980, allowContinuous: false, product: '云办公（公有云）', time: '2026-10-13 16:41:49', status: '在售中', bindKey: null },
-        { code: '33096', name: '涉密文档分级保护-单权益叠加包', type: '套餐叠加包', pkgType: '不可分配', monthPrice: 1500, allowContinuous: false, product: '云办公（私有云）', time: '2026-09-23 14:52:28', status: '在售中', bindKey: null },
-        { code: '33095', name: '【分保】知识库', type: '套餐叠加包', pkgType: '不可分配', monthPrice: 1200, allowContinuous: false, product: '云办公（公有云）', time: '2026-09-17 17:47:49', status: '在售中', bindKey: null },
-        { code: '33093', name: '【分保】模板库', type: '套餐叠加包', pkgType: '不可分配', monthPrice: 800, allowContinuous: false, product: '云办公（公有云）', time: '2026-09-15 10:34:05', status: '在售中', bindKey: null }
+        { code: '33109', name: 'wps 365 AI 智点基础包001', uid: 'wps_comate_package_001', type: '套餐叠加包', pkgType: '不可分配', monthPrice: 980, yearPrice: 9800, allowContinuous: true, firstMonthPrice: 833, continuousMonthPrice: 833, product: '云办公（公有云）', time: '2026-10-20 11:30:23', status: '在售中', bindKey: null },
+        { code: '33107', name: '额度测试（特殊权益）', uid: 'wps_quota_test_002', type: '套餐叠加包', pkgType: '不可分配', monthPrice: 980, yearPrice: 9800, allowContinuous: false, firstMonthPrice: 833, continuousMonthPrice: null, product: '云办公（公有云）', time: '2026-10-19 15:30:52', status: '在售中', bindKey: null },
+        { code: '33105', name: 'WPS 365 AI 智点基础包', uid: 'wps_ai_basic_pack', type: '套餐叠加包', pkgType: '不可分配', monthPrice: 980, yearPrice: 9800, allowContinuous: true, firstMonthPrice: 833, continuousMonthPrice: 833, product: '云办公（公有云）', time: '2026-10-16 17:06:45', status: '在售中', bindKey: 'basic' },
+        { code: '33104', name: 'AI 智点高级包', uid: 'wps_ai_pro_pack', type: '套餐叠加包', pkgType: '不可分配', monthPrice: 980, yearPrice: 9800, allowContinuous: true, firstMonthPrice: 833, continuousMonthPrice: 833, product: '云办公（公有云）', time: '2026-10-16 14:49:12', status: '在售中', bindKey: 'pro' },
+        { code: '33102', name: '大额度权益包（套数）', uid: 'wps_large_quota_pack', type: '套餐叠加包', pkgType: '不可分配', monthPrice: 2980, yearPrice: 29800, allowContinuous: false, firstMonthPrice: 2533, continuousMonthPrice: null, product: '云办公（公有云）', time: '2026-10-13 16:41:49', status: '在售中', bindKey: null },
+        { code: '33096', name: '涉密文档分级保护-单权益叠加包', uid: 'wps_sec_protect_pack', type: '套餐叠加包', pkgType: '不可分配', monthPrice: 1500, yearPrice: 15000, allowContinuous: false, firstMonthPrice: 1275, continuousMonthPrice: null, product: '云办公（私有云）', time: '2026-09-23 14:52:28', status: '在售中', bindKey: null },
+        { code: '33095', name: '【分保】知识库', uid: 'wps_wiki_protect_pack', type: '套餐叠加包', pkgType: '不可分配', monthPrice: 1200, yearPrice: 12000, allowContinuous: false, firstMonthPrice: 1020, continuousMonthPrice: null, product: '云办公（公有云）', time: '2026-09-17 17:47:49', status: '在售中', bindKey: null },
+        { code: '33093', name: '【分保】模板库', uid: 'wps_tpl_protect_pack', type: '套餐叠加包', pkgType: '不可分配', monthPrice: 800, yearPrice: 8000, allowContinuous: false, firstMonthPrice: 680, continuousMonthPrice: null, product: '云办公（公有云）', time: '2026-09-15 10:34:05', status: '在售中', bindKey: null }
+      ],
+      // 成员订单中心：订单记录（包含连续订阅订单 + 普通组合订单 + 已取消订单）
+      memberOrders: [
+        {
+          orderNo: 'SUB-20261020-001',
+          orderTime: '2026-10-20 12:08:15',
+          statusText: '已支付（连续订阅履约中）',
+          isContinuous: true,
+          periodLabel: '2026-10月期',
+          invoiced: false,
+          selectedForInvoice: true,
+          totalOriginal: 980.00,
+          totalPaid: 833.00,
+          discountNote: '连续包月已优惠147.00元',
+          items: [
+            { name: 'AI 智点基础包（连续包月 · 2026-10月期）', qty: '1套', expire: '自动续期（下期 2026-11-20）', original: '980.00元', paid: '833.00元', note: '连续包月已优惠147.00元' }
+          ]
+        },
+        {
+          orderNo: 'SUB-20260920-002',
+          orderTime: '2026-09-20 10:00:03',
+          statusText: '已支付（连续订阅已履约）',
+          isContinuous: true,
+          periodLabel: '2026-09月期',
+          invoiced: false,
+          selectedForInvoice: true,
+          totalOriginal: 980.00,
+          totalPaid: 833.00,
+          discountNote: '连续包月已优惠147.00元',
+          items: [
+            { name: 'AI 智点基础包（连续包月 · 2026-09月期）', qty: '1套', expire: '2026-10-20', original: '980.00元', paid: '833.00元', note: '连续包月已优惠147.00元' }
+          ]
+        },
+        {
+          orderNo: 'SUB-20260820-003',
+          orderTime: '2026-08-20 10:00:01',
+          statusText: '已支付（连续订阅已履约）',
+          isContinuous: true,
+          periodLabel: '2026-08月期',
+          invoiced: false,
+          selectedForInvoice: false,
+          totalOriginal: 980.00,
+          totalPaid: 833.00,
+          discountNote: '连续包月已优惠147.00元',
+          items: [
+            { name: 'AI 智点基础包（连续包月 · 2026-08月期）', qty: '1套', expire: '2026-09-20', original: '980.00元', paid: '833.00元', note: '连续包月已优惠147.00元' }
+          ]
+        },
+        {
+          orderNo: 'P20261020120541000001',
+          orderTime: '2026-10-20 12:08:15',
+          statusText: '已支付',
+          isContinuous: false,
+          periodLabel: '一次性订单',
+          invoiced: false,
+          selectedForInvoice: false,
+          totalOriginal: 2995.00,
+          totalPaid: 2995.00,
+          discountNote: '',
+          items: [
+            { name: 'WPS 365 商业基础版', qty: '5', expire: '2027-10-20 12:08:15', original: '2995.00元', paid: '2995.00元', note: '' }
+          ]
+        },
+        {
+          orderNo: 'P2026081516472208990',
+          orderTime: '2026-08-15 16:47:23',
+          statusText: '已取消',
+          isContinuous: false,
+          cancelled: true,
+          periodLabel: '已取消',
+          invoiced: false,
+          selectedForInvoice: false,
+          totalOriginal: 955.00,
+          totalPaid: 955.00,
+          discountNote: '',
+          items: [
+            { name: 'WPS 365 商业基础版', qty: '1', expire: '2026-08-15 16:47:23', original: '955.00元', paid: '955.00元', note: '' }
+          ]
+        }
+      ],
+      memberInvoiceTitles: [
+        { id: 'T1', name: '香香的测试企业科技有限公司', taxNo: '91110108MA01XXXX88', type: '企业单位' },
+        { id: 'T2', name: '张珊（个人）', taxNo: '-', type: '个人' }
+      ],
+      memberInvoiceRecords: [
+        { applyNo: 'MF202607250011', mode: '连续订阅合并开票（2期）', orderIds: 'SUB-20260620-001、SUB-20260720-002', title: '香香的测试企业科技有限公司', content: '技术服务费', amount: 1666.00, recipient: 'zhangshan@xiaoyuan-tech.com', status: '已开票' }
+      ],
+      // 系统后台：企业信息 > 订单记录（含“是否连续订阅”字段，值包含“是/否”）
+      sysEnterpriseOrders: [
+        { orderNo: 'P20261116192522000001', channel: '线上订单', content: '权益包', pkgType: '不可分配', buyType: '付费采购', license: '-', orderType: '仅新购', perfType: '新购', planType: '月松测试成员权益包', qty: '1套', duration: '1年', isContinuous: '否', payTime: '-' },
+        { orderNo: 'P20261116192302000001', channel: '线上订单', content: '权益包', pkgType: '不可分配', buyType: '付费采购', license: '-', orderType: '仅新购', perfType: '新购', planType: '月松测试成员权益包', qty: '1套', duration: '1年', isContinuous: '否', payTime: '-' },
+        { orderNo: 'P20261104122139000001', channel: '线上订单', content: '权益包', pkgType: '不可分配', buyType: '付费采购', license: '-', orderType: '新购', perfType: '新购', planType: 'WPS 365 AI 智点高级包', qty: '1套', duration: '1年', isContinuous: '否', payTime: '-' },
+        { orderNo: 'P20261103183350000001', channel: '线上订单', content: '权益包', pkgType: '不可分配', buyType: '付费采购', license: '-', orderType: '仅新购', perfType: '新购', planType: 'WPS 365 AI 智点基础包', qty: '1套', duration: '连续包月', isContinuous: '是', payTime: '2026-11-03' },
+        { orderNo: 'P20261023105051000001', channel: '线上订单', content: '权益包', pkgType: '可分配', buyType: '付费采购', license: '-', orderType: '续费(续期)', perfType: '续费(续期)', planType: 'WPS 365 大会员-1', qty: '1人', duration: '2年', isContinuous: '否', payTime: '2026-10-23' },
+        { orderNo: 'P20260909111051000001', channel: '线上订单', content: '权益包', pkgType: '可分配', buyType: '付费采购', license: '-', orderType: '续费(续期)', perfType: '续费(续期)', planType: 'WPS 365 AI 智点基础包', qty: '1套', duration: '连续包月', isContinuous: '是', payTime: '2026-09-09' },
+        { orderNo: 'P20260909093515000001', channel: '线上订单', content: '套餐', pkgType: '-', buyType: '付费采购', license: '-', orderType: '新购', perfType: '新购', planType: 'WPS 365 商业旗舰版', qty: '5人', duration: '3年', isContinuous: '否', payTime: '-' }
       ],
       // 管理后台：待开票订单列表（包含连续订阅按月履约单 & 一次性订单，支持按月/汇总开票，且两类严格分拆不合并）
       invoiceOrders: [
@@ -3909,20 +5651,60 @@
       }, 2800);
     }
 
-    /* 顶部控制台切换（购买页 / 管理后台 / 系统后台） */
+    /* 顶部控制台切换（购买页 / 管理后台 / 系统后台 / 用户通知 / 成员订单中心） */
     function switchConsoleView(view) {
       state.consoleView = view;
       document.getElementById('console-tab-purchase').classList.toggle('active', view === 'purchase');
       document.getElementById('console-tab-admin').classList.toggle('active', view === 'admin');
       document.getElementById('console-tab-sys').classList.toggle('active', view === 'sys');
+      document.getElementById('console-tab-notify').classList.toggle('active', view === 'notify');
+      document.getElementById('console-tab-member').classList.toggle('active', view === 'member');
 
+      document.getElementById('purchase-scenario-bar').style.display = view === 'purchase' ? 'flex' : 'none';
       document.getElementById('page-purchase').style.display = view === 'purchase' ? 'flex' : 'none';
       document.getElementById('page-payment').style.display = 'none';
       document.getElementById('page-admin').style.display = view === 'admin' ? 'flex' : 'none';
       document.getElementById('page-sysadmin').style.display = view === 'sys' ? 'flex' : 'none';
+      document.getElementById('page-notify').style.display = view === 'notify' ? 'flex' : 'none';
+      document.getElementById('page-member').style.display = view === 'member' ? 'flex' : 'none';
 
       updateUI();
+      if (view === 'member') {
+        renderMemberOrdersList();
+        renderMemberOrderDropdown();
+        renderMemberInvoiceTitles();
+        renderMemberInvoiceRecords();
+      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* 购买页场景切换：新购场景 vs 变更签约 */
+    function switchPurchaseScenario(scenario) {
+      state.purchaseScenario = scenario;
+      document.getElementById('scenario-tab-new').classList.toggle('active', scenario === 'new');
+      document.getElementById('scenario-tab-upgrade').classList.toggle('active', scenario === 'upgrade');
+
+      if (scenario === 'upgrade') {
+        state.quotaPack = 'pro';
+        state.quotaDuration = 'continuous';
+        state.basePkgChecked = false;
+        document.getElementById('base-pkg-checkbox').classList.remove('checked');
+        document.getElementById('quota-card-basic').classList.remove('active');
+        document.getElementById('quota-card-pro').classList.add('active');
+        document.getElementById('purchase-scenario-hint').textContent =
+          '当前演示：已签约连续订阅套餐A（AI 智点基础包），升级变更为连续订阅套餐B（AI 智点高级包）并重新签约';
+      } else {
+        state.quotaPack = 'basic';
+        state.quotaDuration = 'continuous';
+        state.basePkgChecked = true;
+        document.getElementById('base-pkg-checkbox').classList.add('checked');
+        document.getElementById('quota-card-basic').classList.add('active');
+        document.getElementById('quota-card-pro').classList.remove('active');
+        document.getElementById('purchase-scenario-hint').textContent =
+          '当前演示：新购连续包月 AI 额度包流程';
+      }
+      checkAndEnforceContinuousLimit();
+      updateUI();
     }
 
     /* 管理后台内部子页面切换：订单权益 > 支付设置 vs 订单权益 > 发票合同 > 发票管理 */
@@ -3959,11 +5741,24 @@
       }
     }
 
+    /* 获取当前所选商品的连续包月单价与单月原价（若系统后台“连续包月价格”留空，则按月单价收费） */
+    function getPackPricing(packKey) {
+      const key = packKey || state.quotaPack;
+      const prodObj = state.sysProducts.find(p => p.bindKey === key);
+      const monthUnitPrice = prodObj ? prodObj.monthPrice : SINGLE_MONTH_UNIT_PRICE;
+      const yearUnitPrice = prodObj && prodObj.yearPrice ? prodObj.yearPrice : YEAR_UNIT_PRICE;
+      const continuousUnitPrice =
+        prodObj && prodObj.continuousMonthPrice != null && prodObj.continuousMonthPrice !== ''
+          ? Number(prodObj.continuousMonthPrice)
+          : monthUnitPrice;
+      return { prodObj, monthUnitPrice, yearUnitPrice, continuousUnitPrice };
+    }
+
     /* 判断当前所选商品是否允许连续订阅 & 是否超过自动扣款金额上限 */
     function getContinuousAvailability() {
-      const prodObj = state.sysProducts.find(p => p.bindKey === state.quotaPack);
+      const { prodObj, continuousUnitPrice } = getPackPricing();
       const allowedByProduct = prodObj ? prodObj.allowContinuous : true;
-      const monthlyOrderPrice = state.quotaSets * CONTINUOUS_MONTH_UNIT_PRICE;
+      const monthlyOrderPrice = state.quotaSets * continuousUnitPrice;
       const overLimit = monthlyOrderPrice > state.autoDebitLimit;
       return {
         allowedByProduct,
@@ -3974,6 +5769,10 @@
     }
 
     function selectQuotaPack(pack) {
+      if (state.purchaseScenario === 'upgrade' && pack === 'basic') {
+        showToast('变更签约场景中，套餐A（AI 智点基础包）为当前已签约套餐，请选择升级目标套餐B（AI 智点高级包）');
+        return;
+      }
       state.quotaPack = pack;
       document.getElementById('quota-card-basic').classList.toggle('active', pack === 'basic');
       document.getElementById('quota-card-pro').classList.toggle('active', pack === 'pro');
@@ -4083,10 +5882,11 @@
         tooltipEl.textContent = `订单金额超过${state.autoDebitLimit}元，无法选择自动续费，可选择单次采购`;
       }
 
-      // 动态更新时长按钮上的价格展示（连续包月单价为1个月单价的85折向下取整：833元）
-      const curContinuousPrice = state.quotaSets * CONTINUOUS_MONTH_UNIT_PRICE;
-      const curMonthlyPrice = state.quotaSets * SINGLE_MONTH_UNIT_PRICE;
-      const curYearlyPrice = state.quotaSets * YEAR_UNIT_PRICE;
+      // 动态更新时长按钮上的价格展示（从系统后台套餐配置读取连续包月价格，若留空则按月单价收费）
+      const { monthUnitPrice, yearUnitPrice, continuousUnitPrice } = getPackPricing();
+      const curContinuousPrice = state.quotaSets * continuousUnitPrice;
+      const curMonthlyPrice = state.quotaSets * monthUnitPrice;
+      const curYearlyPrice = state.quotaSets * yearUnitPrice;
       const elPriceCont = document.getElementById('dur-price-continuous');
       const elPriceMonth = document.getElementById('dur-price-month');
       const elPriceYear = document.getElementById('dur-price-year');
@@ -4095,9 +5895,9 @@
       if (elPriceYear) elPriceYear.textContent = '¥' + curYearlyPrice.toLocaleString('en-US');
 
       // 1. 计算 AI 额度包价格与文案
-      let unitQuotaPrice = SINGLE_MONTH_UNIT_PRICE;
-      if (state.quotaDuration === 'continuous') unitQuotaPrice = CONTINUOUS_MONTH_UNIT_PRICE;
-      if (state.quotaDuration === 'year') unitQuotaPrice = YEAR_UNIT_PRICE;
+      let unitQuotaPrice = monthUnitPrice;
+      if (state.quotaDuration === 'continuous') unitQuotaPrice = continuousUnitPrice;
+      if (state.quotaDuration === 'year') unitQuotaPrice = yearUnitPrice;
       const quotaTotal = state.quotaSets * unitQuotaPrice;
       const pointsPerSet = state.quotaDuration === 'year' ? 18 : 1.5;
       const totalPoints = +(state.quotaSets * pointsPerSet).toFixed(1);
@@ -4114,6 +5914,19 @@
       if (state.quotaDuration === 'month') durLabel = '1个月';
       if (state.quotaDuration === 'year') durLabel = '1年';
       document.getElementById('summary-quota-sub').textContent = `${state.quotaSets}套 × ${durLabel}`;
+
+      // 变更签约场景 UI 同步
+      const isUpgrade = state.purchaseScenario === 'upgrade';
+      document.getElementById('purchase-upgrade-banner').style.display = isUpgrade ? 'block' : 'none';
+      document.getElementById('badge-plan-a').style.display = isUpgrade ? 'inline-block' : 'none';
+      document.getElementById('badge-plan-b').style.display = isUpgrade ? 'inline-block' : 'none';
+      document.getElementById('badge-pro-rec').style.display = isUpgrade ? 'none' : 'inline-block';
+      document.getElementById('upgrade-summary-box').style.display = isUpgrade ? 'block' : 'none';
+      document.getElementById('upgrade-target-name').textContent = quotaPackTitle;
+      document.getElementById('submit-order-btn').textContent = isUpgrade ? '确认变更并重新签约' : '提交订单';
+      document.getElementById('agree-renew-link-text').textContent = isUpgrade ? '《自动续费协议》与《订阅变更解约协议》' : '《自动续费协议》';
+      document.getElementById('pay-upgrade-banner').style.display = isUpgrade ? 'block' : 'none';
+      document.getElementById('pay-topbar-title').textContent = isUpgrade ? '支付订单（变更签约）' : '支付订单';
 
       // 2. 连续包月下：已选连续包月商品下方显示下次扣款时间与金额，按钮下方显示自动续费协议
       const isContinuous = state.quotaDuration === 'continuous';
@@ -4144,24 +5957,31 @@
       document.getElementById('summary-total-price').textContent = formatMoney(grandTotal);
 
       // 5. 同步支付页数据
-      const monthlyAmount = state.quotaSets * CONTINUOUS_MONTH_UNIT_PRICE;
+      const monthlyAmount = state.quotaSets * continuousUnitPrice;
       document.getElementById('pay-page-amount').textContent = formatMoney(grandTotal);
       document.getElementById('pay-monthly-deduct-text').textContent = `￥${monthlyAmount}/月`;
       document.getElementById('pay-auto-renew-desc').style.display = isContinuous ? 'block' : 'none';
 
-      // 6. 同步手机模拟支付界面文案（WPS 365 内容）
+      // 6. 同步手机模拟支付界面文案（WPS 365 内容，兼容新购与变更签约）
       document.getElementById('wx-mobile-total-amount').textContent = grandTotal.toFixed(2);
-      document.getElementById('wx-mobile-service-name').textContent = `WPS 365 ${quotaPackTitle}每月自动续费`;
-      document.getElementById('wx-mobile-service-desc').textContent =
-        `该线上 ${quotaPackTitle}服务每月自动续费，扣费金额为${monthlyAmount}元/月。服务到期当天自动通过微信支付为你发起扣费，自动延长服务有效期。服务关闭后将不再继续扣费。`;
+      document.getElementById('wx-mobile-service-name').textContent = isUpgrade
+        ? `WPS 365 ${quotaPackTitle}每月自动续费（变更签约 · 替换套餐A）`
+        : `WPS 365 ${quotaPackTitle}每月自动续费`;
+      document.getElementById('wx-mobile-service-desc').textContent = isUpgrade
+        ? `本次为变更签约：升级为「${quotaPackTitle}」每月自动续费，扣费金额为${monthlyAmount}元/月。新协议签约成功后将自动解约原「AI 智点基础包」代扣协议。`
+        : `该线上 ${quotaPackTitle}服务每月自动续费，扣费金额为${monthlyAmount}元/月。服务到期当天自动通过微信支付为你发起扣费，自动延长服务有效期。服务关闭后将不再继续扣费。`;
 
       document.getElementById('ali-mobile-total-amount').textContent = grandTotal.toFixed(2);
-      document.getElementById('ali-mobile-service-name').textContent = quotaPackTitle;
+      document.getElementById('ali-mobile-service-name').textContent = isUpgrade
+        ? `${quotaPackTitle}（变更签约替换套餐A）`
+        : quotaPackTitle;
       document.getElementById('ali-mobile-monthly-price').textContent = monthlyAmount.toFixed(2);
       document.getElementById('ali-mobile-sets-text').textContent = `共计${state.quotaSets}套额度包`;
 
       // 7. 同步管理后台支付设置页数据
-      document.getElementById('admin-sub-name').textContent = `${quotaPackTitle}（连续包月）`;
+      document.getElementById('admin-sub-name').textContent = isUpgrade
+        ? `${quotaPackTitle}（连续包月 · 已从套餐A升级重签）`
+        : `${quotaPackTitle}（连续包月）`;
       document.getElementById('cancel-modal-pack-name').textContent = quotaPackTitle;
       document.getElementById('admin-payer-account').textContent = `${state.payerChannel}（${state.payerAccount} · ${state.payerName}）`;
       document.getElementById('admin-deduct-amount').textContent = `¥${formatMoney(monthlyAmount)} / 月`;
@@ -4200,18 +6020,132 @@
       if (capTipPreview) capTipPreview.textContent = state.autoDebitLimit;
 
       renderPaymentTable(planInfo, durLabel);
+      renderPriceDetailDrawer();
       renderSysProductTable();
+      renderSysEnterpriseOrdersTable();
       renderInvoiceOrderTable();
       renderInvoiceRecordsTable();
     }
 
-    /* ==================== 系统后台：连续订阅设置交互逻辑 ==================== */
+    /* ==================== 购买页：价格明细上浮抽屉逻辑 ==================== */
+    function openPriceDetailDrawer() {
+      renderPriceDetailDrawer();
+      document.getElementById('price-detail-drawer-mask').classList.add('open');
+    }
+
+    function closePriceDetailDrawer() {
+      document.getElementById('price-detail-drawer-mask').classList.remove('open');
+    }
+
+    function closePriceDetailDrawerOnMask(e) {
+      if (e.target.id === 'price-detail-drawer-mask') {
+        closePriceDetailDrawer();
+      }
+    }
+
+    function renderPriceDetailDrawer() {
+      const tbody = document.getElementById('price-drawer-tbody');
+      const sumBody = document.getElementById('price-drawer-summary-tbody');
+      if (!tbody || !sumBody) return;
+
+      const { monthUnitPrice, yearUnitPrice, continuousUnitPrice } = getPackPricing();
+      const quotaName = state.quotaPack === 'basic' ? 'AI 智点基础包' : 'AI 智点高级包';
+      let durLabel = '1个月';
+      let expireLabel = '2026-11-20';
+      let originalQuotaPrice = state.quotaSets * monthUnitPrice;
+      let payableQuotaPrice = state.quotaSets * monthUnitPrice;
+      let discountType = '-';
+      let discountAmount = 0;
+
+      if (state.quotaDuration === 'continuous') {
+        durLabel = '连续包月';
+        expireLabel = '自动续期';
+        originalQuotaPrice = state.quotaSets * monthUnitPrice;
+        payableQuotaPrice = state.quotaSets * continuousUnitPrice;
+        discountAmount = Math.max(0, originalQuotaPrice - payableQuotaPrice);
+        discountType = discountAmount > 0 ? '连续包月优惠' : '-';
+      } else if (state.quotaDuration === 'year') {
+        durLabel = '1年';
+        expireLabel = '2027-10-20';
+        originalQuotaPrice = state.quotaSets * monthUnitPrice * 12;
+        payableQuotaPrice = state.quotaSets * yearUnitPrice;
+        discountAmount = Math.max(0, originalQuotaPrice - payableQuotaPrice);
+        discountType = discountAmount > 0 ? '年付省17%' : '-';
+      }
+
+      const rows = [];
+      rows.push(`
+        <tr>
+          <td>${quotaName}</td>
+          <td>${state.quotaSets}套</td>
+          <td>${durLabel}</td>
+          <td>${expireLabel}</td>
+          <td>¥${formatMoney(originalQuotaPrice)}</td>
+          <td>${discountType}</td>
+          <td>${discountAmount > 0 ? '-¥' + formatMoney(discountAmount) : '-'}</td>
+          <td class="price-drawer-amount-red">¥${formatMoney(payableQuotaPrice)}</td>
+        </tr>
+      `);
+
+      let totalOriginal = originalQuotaPrice;
+      let totalPayable = payableQuotaPrice;
+      let totalDiscount = discountAmount;
+      let peopleSummary = `${state.quotaSets}套`;
+
+      if (state.basePkgChecked) {
+        const planInfo = PLAN_CONFIG[state.basePlan];
+        const baseTotal = planInfo.price * state.seatCount * state.seatYears;
+        const pkgExpireYear = 2026 + state.seatYears;
+        totalOriginal += baseTotal;
+        totalPayable += baseTotal;
+        peopleSummary = `${state.quotaSets}套 / ${state.seatCount}人`;
+
+        rows.push(`
+          <tr>
+            <td>${planInfo.fullName}</td>
+            <td>${state.seatCount}人</td>
+            <td>${state.seatYears}年</td>
+            <td>${pkgExpireYear}-10-20</td>
+            <td>¥${formatMoney(baseTotal)}</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="price-drawer-amount-red">¥${formatMoney(baseTotal)}</td>
+          </tr>
+        `);
+      }
+
+      tbody.innerHTML = rows.join('');
+      sumBody.innerHTML = `
+        <tr>
+          <td style="font-weight:600;">总计：</td>
+          <td>${peopleSummary}</td>
+          <td>-</td>
+          <td>-</td>
+          <td>¥${formatMoney(totalOriginal)}</td>
+          <td>-</td>
+          <td>${totalDiscount > 0 ? '-¥' + formatMoney(totalDiscount) : '-'}</td>
+          <td class="price-drawer-amount-red" style="font-weight:600;">¥${formatMoney(totalPayable)}</td>
+        </tr>
+      `;
+    }
+
+    /* ==================== 系统后台：子页面切换（连续订阅设置 / 套餐配置 / 企业信息） ==================== */
     function switchSysSubPage(sub) {
       state.sysSubPage = sub;
-      document.getElementById('sys-nav-pkg').classList.toggle('active', sub === 'pkg');
       document.getElementById('sys-nav-sub').classList.toggle('active', sub === 'sub');
-      document.getElementById('sys-page-title-text').textContent = sub === 'pkg' ? '套餐配置' : '连续订阅设置';
-      renderSysProductTable();
+      document.getElementById('sys-nav-pkg').classList.toggle('active', sub === 'pkg');
+      document.getElementById('sys-nav-ent').classList.toggle('active', sub === 'ent');
+
+      document.getElementById('sys-subview-sub').style.display = sub === 'sub' ? 'block' : 'none';
+      document.getElementById('sys-subview-pkg').style.display = sub === 'pkg' ? 'block' : 'none';
+      document.getElementById('sys-subview-ent').style.display = sub === 'ent' ? 'block' : 'none';
+
+      if (sub === 'pkg') {
+        closeSysPkgEdit();
+        renderSysProductTable();
+      } else if (sub === 'ent') {
+        renderSysEnterpriseOrdersTable();
+      }
     }
 
     function renderSysProductTable() {
@@ -4233,7 +6167,7 @@
 
       tbody.innerHTML = filtered.map(item => `
         <tr>
-          <td><a href="javascript:void(0)" style="color:#1890ff;">${item.code}</a></td>
+          <td><a href="javascript:void(0)" style="color:#1890ff;" onclick="openSysPkgEdit('${item.code}')">${item.code}</a></td>
           <td>
             ${item.name}
             ${item.bindKey ? '<span style="margin-left:6px;font-size:11px;color:#1890ff;background:#e6f7ff;border:1px solid #91caff;padding:1px 6px;border-radius:3px;">联动购买页</span>' : ''}
@@ -4242,30 +6176,169 @@
           <td>${item.pkgType}</td>
           <td>¥${item.monthPrice.toLocaleString('en-US')}/月</td>
           <td>
-            <div class="sys-switch ${item.allowContinuous ? 'on' : ''}" onclick="toggleProductContinuous('${item.code}')">
-              <div class="sys-switch-track">
-                <div class="sys-switch-thumb"></div>
-              </div>
-              <span style="font-size:12px;color:${item.allowContinuous ? '#1890ff' : '#8c8c8c'};font-weight:${item.allowContinuous ? '600' : '400'};">
-                ${item.allowContinuous ? '允许连续订阅' : '未开启'}
-              </span>
-            </div>
-          </td>
-          <td>
-            ${item.allowContinuous
-              ? `<span style="color:#262626;font-weight:500;">¥${state.autoDebitLimit.toLocaleString('en-US')}</span> <span style="color:#8c8c8c;font-size:11px;">(超限置灰)</span>`
-              : `<span style="color:#bfbfbf;">—</span>`}
+            <span style="color:${item.allowContinuous ? '#1890ff' : '#8c8c8c'};font-weight:${item.allowContinuous ? '600' : '400'};">
+              ${item.allowContinuous ? '允许连续订阅' : '未开启'}
+            </span>
           </td>
           <td>${item.product}</td>
           <td>${item.time}</td>
           <td>${item.status}</td>
           <td>
-            <div style="display:flex;align-items:center;gap:8px;">
-              <a href="javascript:void(0)" style="color:#1890ff;" onclick="openSysCapModal()">设置上限</a>
-              <a href="javascript:void(0)" style="color:#1890ff;" onclick="toggleProductContinuous('${item.code}')">${item.allowContinuous ? '关闭续订' : '开启续订'}</a>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <a href="javascript:void(0)" style="color:#1890ff;" onclick="openSysPkgEdit('${item.code}')">编辑</a>
+              <a href="javascript:void(0)" style="color:#1890ff;" onclick="copySysProduct('${item.code}')">复制</a>
               <a href="javascript:void(0)" style="color:#ff4d4f;" onclick="showToast('演示环境暂不下架在售商品')">下架</a>
             </div>
           </td>
+        </tr>
+      `).join('');
+    }
+
+    function openSysPkgEdit(code) {
+      const target = state.sysProducts.find(p => p.code === code) || state.sysProducts[0];
+      if (!target) return;
+      state.editingPkgCode = target.code;
+      state.editingPkgAllowContinuous = !!target.allowContinuous;
+
+      document.getElementById('edit-pkg-type').value = target.type;
+      document.getElementById('edit-pkg-product').value = target.product;
+      document.getElementById('edit-pkg-name').value = target.name;
+      document.getElementById('edit-pkg-uid').value = target.uid || ('wps_pkg_' + target.code);
+      document.getElementById('edit-pkg-year-price').value = target.yearPrice || (target.monthPrice * 10);
+      document.getElementById('edit-pkg-month-price').value = target.monthPrice;
+      document.getElementById('edit-pkg-first-month-price').value =
+        target.firstMonthPrice != null ? target.firstMonthPrice : Math.floor(target.monthPrice * 0.85);
+      document.getElementById('edit-pkg-continuous-price').value =
+        target.continuousMonthPrice != null ? target.continuousMonthPrice : '';
+
+      syncEditPkgSwitchUI();
+      document.getElementById('sys-pkg-list-view').style.display = 'none';
+      document.getElementById('sys-pkg-edit-view').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function closeSysPkgEdit() {
+      document.getElementById('sys-pkg-edit-view').style.display = 'none';
+      document.getElementById('sys-pkg-list-view').style.display = 'block';
+    }
+
+    function toggleEditPkgContinuous() {
+      state.editingPkgAllowContinuous = !state.editingPkgAllowContinuous;
+      syncEditPkgSwitchUI();
+    }
+
+    function syncEditPkgSwitchUI() {
+      const sw = document.getElementById('edit-pkg-sub-switch');
+      const swText = document.getElementById('edit-pkg-sub-switch-text');
+      const firstMonthRow = document.getElementById('edit-pkg-first-month-row');
+      const firstMonthHint = document.getElementById('edit-pkg-first-month-hint');
+      const continuousRow = document.getElementById('edit-pkg-continuous-row');
+      const continuousHint = document.getElementById('edit-pkg-continuous-hint');
+      const isOn = state.editingPkgAllowContinuous;
+
+      if (sw) sw.classList.toggle('on', isOn);
+      if (swText) {
+        swText.textContent = isOn ? '开启' : '关闭';
+        swText.style.color = isOn ? '#1890ff' : '#8c8c8c';
+      }
+      if (firstMonthRow) firstMonthRow.style.display = isOn ? 'flex' : 'none';
+      if (firstMonthHint) firstMonthHint.style.display = isOn ? 'flex' : 'none';
+      if (continuousRow) continuousRow.style.display = isOn ? 'flex' : 'none';
+      if (continuousHint) continuousHint.style.display = isOn ? 'flex' : 'none';
+    }
+
+    function saveSysPkgEdit() {
+      const target = state.sysProducts.find(p => p.code === state.editingPkgCode);
+      if (!target) return;
+      const newName = document.getElementById('edit-pkg-name').value.trim();
+      const newProduct = document.getElementById('edit-pkg-product').value;
+      const newMonthPrice = parseFloat(document.getElementById('edit-pkg-month-price').value);
+      const newYearPrice = parseFloat(document.getElementById('edit-pkg-year-price').value);
+      const newFirstMonthPrice = parseFloat(document.getElementById('edit-pkg-first-month-price').value);
+      const rawContinuousVal = document.getElementById('edit-pkg-continuous-price').value.trim();
+      const newContinuousPrice = rawContinuousVal === '' ? null : parseFloat(rawContinuousVal);
+
+      if (newName) target.name = newName;
+      target.product = newProduct;
+      if (!isNaN(newMonthPrice) && newMonthPrice > 0) target.monthPrice = newMonthPrice;
+      if (!isNaN(newYearPrice) && newYearPrice > 0) target.yearPrice = newYearPrice;
+      target.allowContinuous = state.editingPkgAllowContinuous;
+      if (target.allowContinuous) {
+        if (!isNaN(newFirstMonthPrice) && newFirstMonthPrice >= 0) {
+          target.firstMonthPrice = newFirstMonthPrice;
+        }
+        target.continuousMonthPrice = (newContinuousPrice !== null && !isNaN(newContinuousPrice) && newContinuousPrice >= 0)
+          ? newContinuousPrice
+          : null;
+      }
+
+      checkAndEnforceContinuousLimit();
+      updateUI();
+      closeSysPkgEdit();
+      if (!target.allowContinuous) {
+        showToast(`已保存「${target.name}」配置（连续订阅：关闭）`);
+      } else {
+        const effectiveContPrice = target.continuousMonthPrice != null ? target.continuousMonthPrice : target.monthPrice;
+        const contNote = target.continuousMonthPrice != null ? `¥${effectiveContPrice}/月` : `留空，按月单价 ¥${target.monthPrice}/月`;
+        showToast(`已保存「${target.name}」配置（首月优惠：¥${target.firstMonthPrice}/月，连续包月价：${contNote}）`);
+      }
+    }
+
+    function copySysProduct(code) {
+      const target = state.sysProducts.find(p => p.code === code);
+      if (!target) return;
+      const copyCode = String(Number(state.sysProducts[0].code) + 1);
+      state.sysProducts.unshift({
+        ...target,
+        code: copyCode,
+        name: target.name + '_副本',
+        uid: (target.uid || 'wps_pkg') + '_copy',
+        bindKey: null,
+        time: '2026-11-17 19:25:00'
+      });
+      renderSysProductTable();
+      showToast(`已复制套餐「${target.name}」为新套餐编码 ${copyCode}`);
+    }
+
+    /* 系统后台：企业信息 > 订单记录渲染 */
+    function selectSysEntCompany(company) {
+      state.sysEnterprise = company;
+      const sel = document.getElementById('sys-ent-company-select');
+      if (sel) sel.value = company;
+      renderSysEnterpriseOrdersTable();
+      showToast(`已切换查询企业：${company}`);
+    }
+
+    function onSysEntCompanyChange() {
+      const sel = document.getElementById('sys-ent-company-select');
+      if (sel) {
+        state.sysEnterprise = sel.value;
+        renderSysEnterpriseOrdersTable();
+      }
+    }
+
+    function renderSysEnterpriseOrdersTable() {
+      const tbody = document.getElementById('sys-ent-orders-tbody');
+      if (!tbody) return;
+      tbody.innerHTML = state.sysEnterpriseOrders.map(row => `
+        <tr>
+          <td><a href="javascript:void(0)" style="color:#1890ff;">${row.orderNo}</a></td>
+          <td>${row.channel}</td>
+          <td>${row.content}</td>
+          <td>${row.pkgType}</td>
+          <td>${row.buyType}</td>
+          <td>${row.license}</td>
+          <td>${row.orderType}</td>
+          <td>${row.perfType}</td>
+          <td>${row.planType}</td>
+          <td>${row.qty}</td>
+          <td>${row.duration}</td>
+          <td>
+            <span style="color:${row.isContinuous === '是' ? '#1890ff' : '#595959'};font-weight:${row.isContinuous === '是' ? '600' : '400'};">
+              ${row.isContinuous}
+            </span>
+          </td>
+          <td>${row.payTime}</td>
         </tr>
       `).join('');
     }
@@ -4635,8 +6708,11 @@
       document.getElementById('console-tab-purchase').classList.add('active');
       document.getElementById('console-tab-admin').classList.remove('active');
       updateUI();
+      document.getElementById('purchase-scenario-bar').style.display = 'none';
       document.getElementById('page-purchase').style.display = 'none';
       document.getElementById('page-admin').style.display = 'none';
+      document.getElementById('page-notify').style.display = 'none';
+      document.getElementById('page-member').style.display = 'none';
       document.getElementById('page-payment').style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -4644,6 +6720,9 @@
     function backToPurchasePage() {
       document.getElementById('page-payment').style.display = 'none';
       document.getElementById('page-admin').style.display = 'none';
+      document.getElementById('page-notify').style.display = 'none';
+      document.getElementById('page-member').style.display = 'none';
+      document.getElementById('purchase-scenario-bar').style.display = 'flex';
       document.getElementById('page-purchase').style.display = 'flex';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -4714,10 +6793,344 @@
       state.payerChannel = ch === 'wx' ? '微信支付' : '支付宝';
       state.subActive = true;
       closeMobileSimulateModal();
-      showToast(`已通过${state.payerChannel}完成支付并开通连续包月！正在为您跳转至管理后台-支付设置页...`);
+      if (state.purchaseScenario === 'upgrade') {
+        showToast(`已完成「AI 智点高级包」重新签约！原「AI 智点基础包」代扣协议已自动解约，正在跳转至管理后台...`);
+      } else {
+        showToast(`已通过${state.payerChannel}完成支付并开通连续包月！正在为您跳转至管理后台-支付设置页...`);
+      }
       setTimeout(() => {
         switchConsoleView('admin');
+        switchAdminSubPage('paysettings');
       }, 900);
+    }
+
+    /* ==================== 控制台状态：用户通知交互 ==================== */
+    function filterNotifyScene(scene) {
+      state.notifyFilter = scene;
+      document.getElementById('notify-filter-all').classList.toggle('active', scene === 'all');
+      document.getElementById('notify-filter-success').classList.toggle('active', scene === 'success');
+      document.getElementById('notify-filter-fail').classList.toggle('active', scene === 'fail');
+      document.getElementById('notify-filter-renew').classList.toggle('active', scene === 'renew');
+
+      document.querySelectorAll('.notify-scene-item').forEach(el => {
+        const s = el.getAttribute('data-scene');
+        el.style.display = (scene === 'all' || scene === s) ? 'block' : 'none';
+      });
+    }
+
+    /* ==================== 控制台状态：成员订单中心（订单记录 & 发票管理） ==================== */
+    function switchMemberSubPage(sub) {
+      state.memberSubPage = sub;
+      document.getElementById('member-nav-orders').classList.toggle('active', sub === 'orders');
+      document.getElementById('member-nav-invoice').classList.toggle('active', sub === 'invoice');
+
+      document.getElementById('member-subview-orders').style.display = sub === 'orders' ? 'block' : 'none';
+      document.getElementById('member-subview-invoice').style.display = sub === 'invoice' ? 'block' : 'none';
+
+      if (sub === 'orders') {
+        renderMemberOrdersList();
+      } else {
+        renderMemberOrderDropdown();
+        renderMemberInvoiceTitles();
+        renderMemberInvoiceRecords();
+      }
+    }
+
+    function renderMemberOrdersList() {
+      const container = document.getElementById('member-orders-list-container');
+      if (!container) return;
+
+      container.innerHTML = state.memberOrders.map(order => {
+        const rowsHtml = order.items.map(it => `
+          <div class="member-order-row">
+            <div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;">
+              ${order.isContinuous ? '<span class="invoice-type-tag sub">连续订阅</span>' : ''}
+              <span>${it.name}</span>
+            </div>
+            <div>${it.qty}</div>
+            <div style="color:#4e5969;font-size:12px;">${it.expire}</div>
+            <div style="color:#8f959e;text-decoration:line-through;">${it.original}</div>
+            <div>
+              <div style="font-weight:500;">${it.paid}</div>
+              ${it.note ? `<div style="font-size:11px;color:#f04134;margin-top:2px;">${it.note}</div>` : ''}
+            </div>
+          </div>
+        `).join('');
+
+        const totalRowHtml = order.isContinuous ? '' : (!order.cancelled ? `
+          <div class="member-order-row" style="background:#fafbfc;">
+            <div style="font-weight:600;">合计</div>
+            <div></div>
+            <div></div>
+            <div style="color:#8f959e;text-decoration:line-through;">${order.totalOriginal.toFixed(2)}元</div>
+            <div style="font-weight:600;">${order.totalPaid.toFixed(2)}元</div>
+          </div>
+        ` : '');
+
+        let actionHtml = '';
+        if (order.cancelled) {
+          actionHtml = '<span style="color:#8f959e;">已取消订单</span>';
+        } else if (order.invoiced) {
+          actionHtml = '<span style="color:#009a29;">已申请开票</span>';
+        } else if (order.isContinuous) {
+          actionHtml = `
+            <a href="javascript:void(0)" onclick="openAgreementModal(event)">查看签约协议</a>
+            <a href="javascript:void(0)" onclick="jumpToMemberOrderInvoice('${order.orderNo}')">开具发票</a>
+          `;
+        } else {
+          actionHtml = `<a href="javascript:void(0)" onclick="jumpToMemberOrderInvoice('${order.orderNo}')">开具发票</a>`;
+        }
+
+        return `
+          <div class="member-order-group">
+            <div class="member-order-group-head">
+              <span>下单时间：${order.orderTime}</span>
+              <span>订单编号：${order.orderNo}</span>
+              <span>订单状态：${order.statusText}</span>
+              <span>报价单：<a href="javascript:void(0)" onclick="showToast('已下载订单报价单')">点击下载</a></span>
+            </div>
+            <div class="member-order-group-body">
+              <div class="member-order-rows">
+                ${rowsHtml}
+                ${totalRowHtml}
+              </div>
+              <div class="member-order-action-cell">
+                ${actionHtml}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function jumpToMemberOrderInvoice(orderNo) {
+      state.memberOrders.forEach(o => {
+        o.selectedForInvoice = (o.orderNo === orderNo && !o.invoiced && !o.cancelled);
+      });
+      switchMemberSubPage('invoice');
+      switchMemberInvoiceTab('apply');
+    }
+
+    function jumpToMemberMergedInvoice() {
+      selectAllMemberContinuousOrders(true);
+      switchMemberSubPage('invoice');
+      switchMemberInvoiceTab('apply');
+    }
+
+    function switchMemberInvoiceTab(tab) {
+      state.memberInvoiceTab = tab;
+      document.getElementById('mem-inv-tab-apply').classList.toggle('active', tab === 'apply');
+      document.getElementById('mem-inv-tab-records').classList.toggle('active', tab === 'records');
+      document.getElementById('mem-inv-tab-title').classList.toggle('active', tab === 'title');
+
+      document.getElementById('mem-inv-panel-apply').style.display = tab === 'apply' ? 'block' : 'none';
+      document.getElementById('mem-inv-panel-records').style.display = tab === 'records' ? 'block' : 'none';
+      document.getElementById('mem-inv-panel-title').style.display = tab === 'title' ? 'block' : 'none';
+
+      if (tab === 'records') renderMemberInvoiceRecords();
+      if (tab === 'title') renderMemberInvoiceTitles();
+    }
+
+    function toggleMemberOrderDropdown() {
+      const panel = document.getElementById('mem-order-dropdown-panel');
+      if (panel) panel.classList.toggle('open');
+    }
+
+    function renderMemberOrderDropdown() {
+      const panel = document.getElementById('mem-order-dropdown-panel');
+      const textEl = document.getElementById('mem-selected-orders-text');
+      const summaryEl = document.getElementById('mem-selected-orders-summary');
+      if (!panel || !textEl || !summaryEl) return;
+
+      const available = state.memberOrders.filter(o => !o.cancelled && !o.invoiced);
+      const selected = available.filter(o => o.selectedForInvoice);
+      const activeType = selected.length > 0 ? (selected[0].isContinuous ? 'sub' : 'normal') : null;
+
+      if (available.length === 0) {
+        panel.innerHTML = '<div style="padding:12px;text-align:center;color:#8f959e;font-size:12px;">暂无可开票订单</div>';
+      } else {
+        panel.innerHTML = available.map(o => {
+          const isSub = o.isContinuous;
+          const conflict = activeType && ((activeType === 'sub' && !isSub) || (activeType === 'normal' && isSub));
+          return `
+            <div class="member-order-opt" onclick="toggleMemberOrderCheck('${o.orderNo}')" style="${conflict ? 'opacity:0.45;' : ''}">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span class="custom-checkbox ${o.selectedForInvoice ? 'checked' : ''}"></span>
+                <span class="invoice-type-tag ${isSub ? 'sub' : 'onetime'}">${isSub ? '连续订阅 · ' + o.periodLabel : '一次性订单'}</span>
+                <span style="font-weight:500;">${o.orderNo}</span>
+                <span style="color:#646a73;">${o.items[0].name}</span>
+              </div>
+              <span style="font-weight:600;color:#1f2329;">¥${formatMoney(o.totalPaid)}</span>
+            </div>
+          `;
+        }).join('');
+      }
+
+      if (selected.length === 0) {
+        textEl.textContent = '请选择要开票的订单（支持勾选多个连续订阅订单合并开票）';
+        textEl.style.color = '#8f959e';
+        summaryEl.style.display = 'none';
+      } else {
+        const total = selected.reduce((s, o) => s + o.totalPaid, 0);
+        textEl.textContent = selected.map(o => `${o.orderNo}（¥${formatMoney(o.totalPaid)}）`).join('、');
+        textEl.style.color = '#1f2329';
+        summaryEl.style.display = 'block';
+        if (selected[0].isContinuous) {
+          summaryEl.innerHTML = selected.length > 1
+            ? `✅ 已选 <strong>${selected.length} 笔连续订阅订单合并开票</strong>，合并开票总金额：<strong>¥${formatMoney(total)}</strong>`
+            : `✅ 已选 <strong>1 笔连续订阅订单（按单期开票）</strong>，开票金额：<strong>¥${formatMoney(total)}</strong>（可继续勾选其他期次合并开票）`;
+        } else {
+          summaryEl.innerHTML = `✅ 已选 <strong>${selected.length} 笔一次性订单</strong>，开票金额：<strong>¥${formatMoney(total)}</strong>`;
+        }
+      }
+    }
+
+    function toggleMemberOrderCheck(orderNo) {
+      const target = state.memberOrders.find(o => o.orderNo === orderNo && !o.cancelled && !o.invoiced);
+      if (!target) return;
+      const selected = state.memberOrders.filter(o => !o.cancelled && !o.invoiced && o.selectedForInvoice);
+      if (!target.selectedForInvoice && selected.length > 0) {
+        const sameType = selected[0].isContinuous === target.isContinuous;
+        if (!sameType) {
+          showToast('连续订阅订单支持多期合并开票，但需与一次性订单分拆开具，不支持混合勾选');
+          return;
+        }
+      }
+      target.selectedForInvoice = !target.selectedForInvoice;
+      renderMemberOrderDropdown();
+    }
+
+    function selectAllMemberContinuousOrders(silent) {
+      const available = state.memberOrders.filter(o => !o.cancelled && !o.invoiced);
+      let count = 0;
+      available.forEach(o => {
+        o.selectedForInvoice = o.isContinuous;
+        if (o.isContinuous) count++;
+      });
+      renderMemberOrderDropdown();
+      if (!silent) {
+        showToast(count > 0 ? `已选中全部 ${count} 笔连续订阅订单，支持合并开票` : '当前暂无可合并开票的连续订阅订单');
+      }
+    }
+
+    function submitMemberInvoiceApply() {
+      const selected = state.memberOrders.filter(o => !o.cancelled && !o.invoiced && o.selectedForInvoice);
+      if (selected.length === 0) {
+        showToast('请先在“关联订单”中选择要开票的订单');
+        return;
+      }
+      const titleSelect = document.getElementById('mem-inv-title-select');
+      const titleName = titleSelect && titleSelect.value ? titleSelect.value : '';
+      if (!titleName) {
+        showToast('请先选择或新增发票抬头');
+        return;
+      }
+      const recipient = document.getElementById('mem-inv-recipient-input').value.trim();
+      if (!recipient) {
+        showToast('请输入收件邮箱或手机号');
+        return;
+      }
+      const contentRadio = document.querySelector('input[name="mem-inv-content"]:checked');
+      const contentVal = contentRadio ? contentRadio.value : '技术服务费';
+      const total = selected.reduce((s, o) => s + o.totalPaid, 0);
+      const isSub = selected[0].isContinuous;
+      const modeText = isSub
+        ? (selected.length > 1 ? `连续订阅合并开票（${selected.length}期）` : '连续订阅单期开票')
+        : '普通订单开票';
+
+      state.memberInvoiceRecords.unshift({
+        applyNo: 'MF20261118' + String(Math.floor(1000 + Math.random() * 9000)),
+        mode: modeText,
+        orderIds: selected.map(o => o.orderNo).join('、'),
+        title: titleName,
+        content: contentVal,
+        amount: total,
+        recipient,
+        status: '开票成功（已发送）'
+      });
+
+      selected.forEach(o => {
+        o.invoiced = true;
+        o.selectedForInvoice = false;
+      });
+      const panel = document.getElementById('mem-order-dropdown-panel');
+      if (panel) panel.classList.remove('open');
+
+      renderMemberOrdersList();
+      renderMemberOrderDropdown();
+      renderMemberInvoiceRecords();
+      switchMemberInvoiceTab('records');
+      showToast(`已提交发票申请（${modeText}），金额 ¥${formatMoney(total)}`);
+    }
+
+    function renderMemberInvoiceRecords() {
+      const tbody = document.getElementById('mem-inv-records-tbody');
+      if (!tbody) return;
+      tbody.innerHTML = state.memberInvoiceRecords.map(r => `
+        <tr>
+          <td style="font-weight:500;">${r.applyNo}</td>
+          <td><span class="invoice-type-tag ${r.mode.includes('连续订阅') ? 'sub' : 'onetime'}">${r.mode}</span></td>
+          <td style="font-size:12px;color:#646a73;">${r.orderIds}</td>
+          <td>${r.title}</td>
+          <td>${r.content}</td>
+          <td style="font-weight:600;">¥${formatMoney(r.amount)}</td>
+          <td style="font-size:12px;color:#646a73;">${r.recipient}</td>
+          <td><span style="color:#009a29;">${r.status}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    function renderMemberInvoiceTitles() {
+      const sel = document.getElementById('mem-inv-title-select');
+      const tbody = document.getElementById('mem-inv-titles-tbody');
+      if (sel) {
+        const curVal = sel.value;
+        sel.innerHTML = state.memberInvoiceTitles.map(t =>
+          `<option value="${t.name}">${t.name}${t.taxNo !== '-' ? '（' + t.taxNo + '）' : ''}</option>`
+        ).join('');
+        if (curVal && state.memberInvoiceTitles.some(t => t.name === curVal)) {
+          sel.value = curVal;
+        }
+      }
+      if (tbody) {
+        tbody.innerHTML = state.memberInvoiceTitles.map(t => `
+          <tr>
+            <td style="font-weight:500;">${t.name}</td>
+            <td>${t.taxNo}</td>
+            <td>${t.type}</td>
+            <td><a href="javascript:void(0)" style="color:#1677ff;" onclick="showToast('当前设为默认发票抬头：${t.name}')">设为默认</a></td>
+          </tr>
+        `).join('');
+      }
+    }
+
+    function openMemberAddTitleModal() {
+      document.getElementById('mem-new-title-name').value = '';
+      document.getElementById('mem-new-title-taxno').value = '';
+      document.getElementById('member-add-title-modal').style.display = 'flex';
+    }
+
+    function closeMemberAddTitleModal() {
+      document.getElementById('member-add-title-modal').style.display = 'none';
+    }
+
+    function confirmMemberAddTitle() {
+      const name = document.getElementById('mem-new-title-name').value.trim();
+      const taxNo = document.getElementById('mem-new-title-taxno').value.trim() || '-';
+      if (!name) {
+        showToast('请输入抬头名称');
+        return;
+      }
+      state.memberInvoiceTitles.unshift({
+        id: 'T' + Date.now(),
+        name,
+        taxNo,
+        type: taxNo !== '-' ? '企业单位' : '个人'
+      });
+      renderMemberInvoiceTitles();
+      document.getElementById('mem-inv-title-select').value = name;
+      closeMemberAddTitleModal();
+      showToast(`已新增发票抬头：${name}`);
     }
 
     /* 管理后台：关闭自动续费 & 更换扣款人 */
@@ -4795,6 +7208,31 @@
       switchAdminSubPage('invoice');
     } else if (window.location.hash === '#sys') {
       switchConsoleView('sys');
+      switchSysSubPage('sub');
+    } else if (window.location.hash === '#sys-pkg') {
+      switchConsoleView('sys');
+      switchSysSubPage('pkg');
+    } else if (window.location.hash === '#sys-pkg-edit') {
+      switchConsoleView('sys');
+      switchSysSubPage('pkg');
+      openSysPkgEdit('33109');
+    } else if (window.location.hash === '#sys-ent') {
+      switchConsoleView('sys');
+      switchSysSubPage('ent');
+    } else if (window.location.hash === '#notify') {
+      switchConsoleView('notify');
+    } else if (window.location.hash === '#member') {
+      switchConsoleView('member');
+      switchMemberSubPage('orders');
+    } else if (window.location.hash === '#member-invoice') {
+      switchConsoleView('member');
+      switchMemberSubPage('invoice');
+    } else if (window.location.hash === '#purchase-upgrade') {
+      switchConsoleView('purchase');
+      switchPurchaseScenario('upgrade');
+    } else if (window.location.hash === '#price-drawer') {
+      switchConsoleView('purchase');
+      openPriceDetailDrawer();
     } else if (window.location.hash === '#purchase-overlimit') {
       state.autoDebitLimit = 2000;
       state.quotaSets = 3;
